@@ -6,7 +6,7 @@
 	$now = getdate();
 
 	/* Database Setting */
-	$dburl = "luthertsai.com";
+	$dburl = " ";
 	$dbuser = " ";
 	$dbpass = " ";
 	$db = "2015softwareengineering";
@@ -28,9 +28,10 @@
         if($row['c'] == 1)
 		{
 			session_start();
-			$_SESSION['sessionid'] = md5("{$row['uid']}{$now['year']}{$now['mon']}{$now['mday']}{$now['hours']}{$now['minutes']}{$now['seconds']}");
+			$sid = md5("{$row['uid']}{$now['year']}{$now['mon']}{$now['mday']}{$now['hours']}{$now['minutes']}{$now['seconds']}");
+			$_SESSION['sessionid'] = $sid;
+			$sqli->query("UPDATE user_info SET user_session='" . $sid . "' WHERE uid=" . $row['uid'] . " AND account_id='" . $user . "';") or die('Query error');
 			session_write_close();
-			
 			
 			$feedback = array();
 			$feedback['success'] = '1';
