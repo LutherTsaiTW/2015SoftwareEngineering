@@ -1,5 +1,5 @@
 <?php
-	/* Database Setting */
+	/* [CLY] Database Setting */
 	$dburl = "";
 	$dbuser = "";
 	$dbpass = "";
@@ -7,7 +7,7 @@
 
 	$user_session = null;
 	session_start();
-	$user_session = $_SESSION['sessionid']; // Get Session ID
+	$user_session = $_SESSION['sessionid']; // [CLY] Get Session ID
 	session_write_close();
 	
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -20,7 +20,7 @@
 	}
 	
 	$sqli->query("SET NAMES 'UTF8'");
-	$result = $sqli->query("SELECT COUNT(uid) AS c, uid, name, previlege FROM user_info WHERE user_session='" . $user_session . "';") or die('Session query error'); // Get user info
+	$result = $sqli->query("SELECT COUNT(uid) AS c, uid, name, previlege FROM user_info WHERE user_session='" . $user_session . "';") or die('Session query error'); // [CLY] Get user info
 	
 	$feedback = array();
 	$uid = null;
@@ -30,7 +30,7 @@
 		{
 			$uid = $row['uid'];
 			
-			$feedback['name'] = urlencode($row['name']); // urlencode : Let Chinese charcters show correctly
+			$feedback['name'] = urlencode($row['name']); // [CLY] urlencode : Let Chinese charcters show correctly
 			$feedback['previlege'] = $row['previlege'];
 		}
 		else
@@ -42,7 +42,7 @@
 		}
     }
     
-    /* Get project list */
+    /* [CLY] Get project list */
     $result = $sqli->query("SELECT p.p_id, p.p_name, p.p_des, p.p_company, p.p_owner, p.p_start_time, p.p_end_time FROM project AS p LEFT JOIN project_team AS t ON t.user_id = " . $uid . " AND p.p_id = t.project_id;") or die('Project query error');
     
 	$feedback['projects'] = array();
@@ -58,5 +58,5 @@
 		$feedback['success'] = '1';
 		$feedback['message'] = 'ok';
     }
-	echo(urldecode(json_encode($feedback))); // urldecode : Decode html code to let it show correctly
+	echo(urldecode(json_encode($feedback))); // [CLY] urldecode : Decode html code to let it show correctly
 ?>
