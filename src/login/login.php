@@ -20,7 +20,7 @@
 		exit();
 	}
 
-	$sqli->query("SET NAMES 'UTF8'");
+	$sqli->query("SET NAMES 'UTF8'"); // Let Chinese charcters show correctly
 	$result = $sqli->query("SELECT COUNT(uid) AS c, uid, name, previlege FROM user_info WHERE account_id='" . $user . "' AND password='" . md5($password) . "';") or die('Query error');
 	
 	while($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -28,18 +28,19 @@
         if($row['c'] == 1)
 		{
 			session_start();
-			$sid = md5("{$row['uid']}{$now['year']}{$now['mon']}{$now['mday']}{$now['hours']}{$now['minutes']}{$now['seconds']}");
-			$_SESSION['sessionid'] = $sid;
-			$sqli->query("UPDATE user_info SET user_session='" . $sid . "' WHERE uid=" . $row['uid'] . " AND account_id='" . $user . "';") or die('Query error');
+			$sid = md5("{$row['uid']}{$now['year']}{$now['mon']}{$now['mday']}{$now['hours']}{$now['minutes']}{$now['seconds']}"); // Generate Session ID
+			$_SESSION['sessionid'] = $sid; // Save Session ID
+			$sqli->query("UPDATE user_info SET user_session='" . $sid . "' WHERE uid=" . $row['uid'] . " AND account_id='" . $user . "';") or die('Query error'); // Upload Session ID
 			session_write_close();
 			
 			$feedback = array();
 			$feedback['success'] = '1';
 			$feedback['message'] = 'ok';
 			$feedback['uid'] = $row['uid'];
-			$feedback['name'] = urlencode($row['name']);
+			$feedback['name'] = urlencode($row['name']); // urlencode : Let Chinese charcters show correctly
 			$feedback['previlege'] = $row['previlege'];
 			
+			// Redirect to projectlist.php
 			header("Location: ./projectlist.php");
 			exit();
 		}
