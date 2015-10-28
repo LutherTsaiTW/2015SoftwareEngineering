@@ -39,8 +39,8 @@
 			$feedback['uid'] = $row['uid'];
 			$feedback['name'] = urlencode($row['name']);
 			$feedback['previlege'] = $row['previlege'];
-			echo(json_encode($feedback));
-			//echo(urldecode(json_encode($feedback)));
+			//echo(json_encode($feedback));
+			echo(urldecode(json_encode($feedback)));
 		}
 		else
 		{
