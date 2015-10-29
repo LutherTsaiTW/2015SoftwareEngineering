@@ -1,0 +1,95 @@
+﻿<html>
+	<head>
+		<title>Register</title>
+		<meta http-equiv="Content-Type" content ="text/html;charset=UTF-8">
+		<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	</head>
+	
+	<style>
+		.title
+		{
+			color:white;
+			text-align:center;
+		}
+		.titleText
+		{
+			background-color:grey;
+			border-radius:5px
+		}
+		.fastAccount
+		{
+			background-color:grey;
+			border-radius:5px;
+			float:right;
+		}
+		.fastAccountBlock
+		{
+			width:10;
+			float:right;
+		}
+		.formBlock
+		{
+			background-color:rgb(40, 40, 40);
+			border-radius: 15px;
+			width:400;
+		}
+	</style>
+	
+	<body class="w3-container" style="background-color:rgb(60, 60, 60)">
+		<br/>
+		
+		<div class="w3-row ">
+			<div class="w3-container fastAccount">
+				Login
+			</div>
+			<div class="fastAccountBlock">
+			<p/>
+			</div>
+			<div class="w3-container fastAccount">
+				Register
+			</div>
+		</div>
+		
+		<div class="w3-row title">
+			<h1 class="titleText">
+				Project Tracing System
+			</h1>
+		</div>
+		
+		<div class="w3-row">
+			<div class="w3-col">
+				<form action="register.php" method="POST"><br/>
+					<div class="w3-row formBlock" style>
+						<div class="w3-col m2"><p/></div>
+						<div class="w3-col m4">
+							<br/>
+							<a style="color:white">UserID:</a><br/>
+								<input type="text" name="AccountID" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
+							<a style="color:white">Password:</a><br/>
+								<input type="password" name="Password" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
+							<br/>
+						</div>
+					</div>
+					<div class="w3-row"><p/></div>
+					<div class="w3-row formBlock">
+						<div class="w3-col m2"><p/></div>
+						<div class="w3-col m4">	
+							<br/>
+							<a style="color:white">Username:</a><br/>
+								<input type="text" name="Name" autofocus required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
+							<a style="color:white">Email:</a><br/>
+								<input type="text" name="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]" style="border-radius: 3px"/><br/>
+							<a style="color:white">Company:</a><br/>
+								<input type="text" name="Company" style="border-radius: 3px"/><br/>
+							<a style="color:white">Previlege:</a><br/>
+								<input type="text" name="Previlege" style="border-radius: 3px"/><br/>
+								<br/>
+								<input type="submit" name="submit" value="Register" class="w3-teal">
+							<br/><br/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
