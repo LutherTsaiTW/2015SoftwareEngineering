@@ -3,9 +3,41 @@
 <meta http-equiv="Content-Type" content ="text/html;charset=UTF-8">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
+
+<style>
+	.fastAccount
+			{
+				background-color:grey;
+				border-radius:5px;
+				float:right;
+			}
+			.fastAccountBlock
+		{
+			width:10;
+			float:right;
+		}
+</style>
+		
+
 <body class="w3-container"  style="background-color:rgb(61, 61, 61)">
-<div class ="w3-row " style ="Height:30%;color:white;text-align:center"><br><br><br><h1 style="background-color:grey;border-radius:5px">Project Tracing System</h1>
+		<br/>
+<div class="w3-row ">
+	<div class="w3-container fastAccount">
+		Login
+	</div>		
+	<div class="fastAccountBlock">
+			<p/>
+			</div>
+	<div class="w3-container fastAccount">
+		Register
+	</div>
 </div>
+<div class ="w3-row " style ="Height:30%;color:white;text-align:center">
+
+			<h1 style="background-color:grey;border-radius:5px">
+				Project Tracing System
+			</h1>
+	</div>
 <div class ="w3-row "style ="Height:40%">
 	<div class="w3-col m4"><p></p></div>
 	<div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px" >
@@ -22,14 +54,13 @@
 			<br />
 			<br />
 			<input type="submit" name="submit" value="Login" class="w3-teal">
-			<a style="color:white " >Sign Up?</a>
 		<input type="hidden" name="refer" value="<?php echo (isset($_GET['refer'])) ? $_GET['refer'] : 'index.php'; ?>">
 			</form>
 			<div class="w3-col m4"><p></p></div>
 	</div>
 	<div class="w3-col m4"><p></p></div>
 </div>
-<div class ="w3-row " style ="Height:20%"><p></p>
+<div class ="w3-row " style ="Height:rest"><p></p>
 </div>
 
 
