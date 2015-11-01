@@ -1,5 +1,5 @@
 <html>
-<head><title>Login</title>
+<head><title>Project List</title>
 <meta http-equiv="Content-Type" content ="text/html;charset=UTF-8">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
@@ -11,10 +11,38 @@
 				border-radius:5px;
 				float:right;
 			}
-			.fastAccountBlock
+	.fastAccountBlock
 		{
 			width:10;
 			float:right;
+		}	
+	.listTable
+		{	
+			table-layout: fixed;
+			word-wrap:break-word;
+			border-collapse: separate; 
+			overflow:hidden
+			font-size:18;
+			border-spacing: 0 10px; 
+			margin-top: -10px;
+		}
+	.listTable td
+		{	
+			color:white;
+			padding:10px;			
+			background-color:rgb(40, 40, 40);
+			valign:center;
+		}
+	.listTable td:first-child
+		{			
+			border-top-left-radius: 10px; 
+			border-bottom-left-radius: 10px;
+		}
+	.listTable td:last-child
+		{			
+			text-align:right;
+			border-bottom-right-radius: 10px; 
+			border-top-right-radius: 10px; 
 		}
 </style>
 		
@@ -26,47 +54,40 @@
 		<img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30"/>
 	</div>
 	<div class="w3-container fastAccount">
-		Login
-	</div>		
+		Logout
+	</div>
 	<div class="fastAccountBlock">
 			<p/>
-			</div>
-	<div class="w3-container fastAccount">
-		Register
+	</div>
+	<div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
+		Welcome!
 	</div>
 </div>
-<div class ="w3-row " style ="Height:30%;color:white;text-align:center">
+<div class ="w3-row " style ="Height:15%;color:white;text-align:center">
 
 			<h1 style="background-color:grey;border-radius:5px">
-				Login
+				Project List
 			</h1>
 	</div>
 <div class ="w3-row "style ="Height:40%">
-	<div class="w3-col m4"><p></p></div>
-	<div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px" >
-			
+	<div >
+	
 			<div class="w3-col m4"><p></p></div>
 			
-			<form action="login.php" method="POST" class="w3-col m4 " >
-			<br/>
-			<a style="color:white">Account:</a><br />
-			<input type="text" name="account"  autofocus required pattern="[A-Za-z0-9]{4,12}"style="border-radius: 3px"  >
-			<br />
-			<a style="color:white">Password:</a><br />
-			<input type="password" name="password"  required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
-			<br />
-			<br />
-			<input type="submit" name="submit" value="Login" class="w3-teal">
-			</form>
+			<div class="w3-col m4" id="listTable">
+				
+			</div>
+				
 			<div class="w3-col m4"><p></p></div>
 	</div>
-	<div class="w3-col m4"><p></p></div>
 </div>
 <div class ="w3-row " style ="Height:rest"><p></p>
 </div>
 
 
 </body>
+<script type="text/javascript" src="showProjectList.js"></script>
+
 
 <footer style ="Height:rest;text-align:center">
 <span style="text-decoration:underline;color:white">About Us</span>
