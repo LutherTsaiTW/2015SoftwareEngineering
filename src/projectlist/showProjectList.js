@@ -18,7 +18,7 @@ function myFunction(response) {
     var i;
     var out = "<table class=\"listTable\">";
 
-    for(i = 0; i < project.length; i++) {
+    for(i = 1; i < project.length; i++) {
         out += "<tr><td>" + 
         project[i].name +
         "</td><td>" +
