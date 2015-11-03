@@ -15,9 +15,9 @@ xmlhttp.onreadystatechange=function() {
 function myFunction(response) {
     var arr = JSON.parse(response);
 	var project=arr.projects;
+	project = Object.keys(project).map(function(k) { return project[k] });
     var i;
     var out = "<table class=\"listTable\">";
-
     for(i = 0; i < project.length; i++) {
         out += "<tr><td>" + 
         project[i].name +
