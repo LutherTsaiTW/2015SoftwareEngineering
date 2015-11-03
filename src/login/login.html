@@ -1,75 +1,79 @@
 <html>
-<head><title>Login</title>
-<meta http-equiv="Content-Type" content ="text/html;charset=UTF-8">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+<head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
-
 <style>
-	.fastAccount
-			{
-				background-color:grey;
-				border-radius:5px;
-				float:right;
-			}
-			.fastAccountBlock
-		{
-			width:10;
-			float:right;
-		}
+.fastAccount {
+    background-color: grey;
+    border-radius: 5px;
+    float: right;
+}
+
+.fastAccountBlock {
+    width: 10;
+    float: right;
+}
 </style>
-		
 
-<body class="w3-container"  style="background-color:rgb(61, 61, 61)">
-		<br/>
-<div class="w3-row ">
-	<div style="float:left">
-		<img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30"/>
-	</div>
-	<div class="w3-container fastAccount">
-		Login
-	</div>		
-	<div class="fastAccountBlock">
-			<p/>
-			</div>
-	<div class="w3-container fastAccount">
-		Register
-	</div>
-</div>
-<div class ="w3-row " style ="Height:30%;color:white;text-align:center">
-
-			<h1 style="background-color:grey;border-radius:5px">
+<body class="w3-container" style="background-color:rgb(61, 61, 61)">
+    <br/>
+    <div class="w3-row ">
+        <div style="float:left">
+            <img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+        </div>
+        <div class="w3-container fastAccount">
+            Login
+        </div>
+        <div class="fastAccountBlock">
+            <p/>
+        </div>
+        <div class="w3-container fastAccount">
+            Register
+        </div>
+    </div>
+    <div class="w3-row " style="Height:30%;color:white;text-align:center">
+        <h1 style="background-color:grey;border-radius:5px">
 				Login
 			</h1>
-	</div>
-<div class ="w3-row "style ="Height:40%">
-	<div class="w3-col m4"><p></p></div>
-	<div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px" >
-			
-			<div class="w3-col m4"><p></p></div>
-			
-			<form action="login.php" method="POST" class="w3-col m4 " >
-			<br/>
-			<a style="color:white">Account:</a><br />
-			<input type="text" name="account"  autofocus required pattern="[A-Za-z0-9]{4,12}"style="border-radius: 3px"  >
-			<br />
-			<a style="color:white">Password:</a><br />
-			<input type="password" name="password"  required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
-			<br />
-			<br />
-			<input type="submit" name="submit" value="Login" class="w3-teal">
-			</form>
-			<div class="w3-col m4"><p></p></div>
-	</div>
-	<div class="w3-col m4"><p></p></div>
-</div>
-<div class ="w3-row " style ="Height:rest"><p></p>
-</div>
-
-
+    </div>
+    <div class="w3-row " style="Height:40%">
+        <div class="w3-col m4">
+            <p></p>
+        </div>
+        <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px">
+            <div class="w3-col m4">
+                <p></p>
+            </div>
+            <form action="login.php" method="POST" class="w3-col m4 ">
+                <br/>
+                <a style="color:white">Account:</a>
+                <br />
+                <input type="text" name="account" autofocus required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
+                <br />
+                <a style="color:white">Password:</a>
+                <br />
+                <input type="password" name="password" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
+                <br />
+                <br />
+                <input type="submit" name="submit" value="Login" class="w3-teal">
+            </form>
+            <div class="w3-col m4">
+                <p></p>
+            </div>
+        </div>
+        <div class="w3-col m4">
+            <p></p>
+        </div>
+    </div>
+    <div class="w3-row " style="Height:rest">
+        <p></p>
+    </div>
 </body>
-
-<footer style ="Height:rest;text-align:center">
-<span style="text-decoration:underline;color:white">About Us</span>
-
+<footer style="Height:rest;text-align:center">
+    <span style="text-decoration:underline;color:white">About Us</span>
 </footer>
+
 </html>
