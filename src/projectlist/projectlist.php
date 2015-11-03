@@ -1,5 +1,5 @@
 <?php
-	/* [CLY] Database Setting */
+	/* [AC] Database Setting */
 	$dburl = "";
 	$dbuser = "";
 	$dbpass = "";
@@ -42,7 +42,7 @@
 		}
     }
     
-    /* [CLY] Get project list */
+    /* [AC] Get project list */
     $result = $sqli->query("SELECT p.p_id, p.p_name, p.p_des, p.p_company, p.p_owner, p.p_start_time, p.p_end_time FROM project AS p LEFT JOIN project_team AS t ON t.user_id = " . $uid . " AND p.p_id = t.project_id;") or die('Project query error');
     
 	$feedback['projects'] = array();
