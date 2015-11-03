@@ -1,95 +1,139 @@
 ﻿<html>
-	<head>
-		<title>Register</title>
-		<meta http-equiv="Content-Type" content ="text/html;charset=UTF-8">
-		<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-	</head>
-	
-	<style>
-		.title
-		{
-			color:white;
-			text-align:center;
-		}
-		.titleText
-		{
-			background-color:grey;
-			border-radius:5px
-		}
-		.fastAccount
-		{
-			background-color:grey;
-			border-radius:5px;
-			float:right;
-		}
-		.fastAccountBlock
-		{
-			width:10;
-			float:right;
-		}
-		.formBlock
-		{
-			background-color:rgb(40, 40, 40);
-			border-radius: 15px;
-			width:400;
-		}
-	</style>
-	
-	<body class="w3-container" style="background-color:rgb(60, 60, 60)">
-		<br/>
-		
-		<div class="w3-row ">
-			<div class="w3-container fastAccount">
-				Login
-			</div>
-			<div class="fastAccountBlock">
-			<p/>
-			</div>
-			<div class="w3-container fastAccount">
-				Register
-			</div>
-		</div>
-		
-		<div class="w3-row title">
-			<h1 class="titleText">
-				Project Tracing System
+
+<head>
+    <title>註冊帳號</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="../css/w3.css">
+</head>
+<style>
+a:link {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+.titleText {
+    background-color: grey;
+    border-radius: 5px
+}
+
+.fastAccount {
+    background-color: grey;
+    border-radius: 5px;
+    float: right;
+}
+
+.fastAccountBlock {
+    width: 10;
+    float: right;
+}
+
+.formBlock {
+    background-color: rgb(40, 40, 40);
+    border-radius: 15px;
+    width: 400;
+}
+</style>
+
+<body class="w3-container" style="background-color:rgb(60, 60, 60)">
+    <br/>
+    <div class="w3-row ">
+        <div style="float:left">
+            <img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+        </div>
+        <div class="w3-container fastAccount">
+            <a href="../login/login.html" target="_self">Login</a>
+        </div>
+        <div class="fastAccountBlock">
+            <p/>
+        </div>
+    </div>
+    <div class="w3-row title">
+        <h1 class="titleText">
+				註冊帳號
 			</h1>
-		</div>
-		
-		<div class="w3-row">
-			<div class="w3-col">
-				<form action="register.php" method="POST"><br/>
-					<div class="w3-row formBlock" style>
-						<div class="w3-col m2"><p/></div>
-						<div class="w3-col m4">
-							<br/>
-							<a style="color:white">UserID:</a><br/>
-								<input type="text" name="AccountID" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
-							<a style="color:white">Password:</a><br/>
-								<input type="password" name="Password" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
-							<br/>
-						</div>
-					</div>
-					<div class="w3-row"><p/></div>
-					<div class="w3-row formBlock">
-						<div class="w3-col m2"><p/></div>
-						<div class="w3-col m4">	
-							<br/>
-							<a style="color:white">Username:</a><br/>
-								<input type="text" name="Name" autofocus required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px"/><br/>
-							<a style="color:white">Email:</a><br/>
-								<input type="text" name="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]" style="border-radius: 3px"/><br/>
-							<a style="color:white">Company:</a><br/>
-								<input type="text" name="Company" style="border-radius: 3px"/><br/>
-							<a style="color:white">Previlege:</a><br/>
-								<input type="text" name="Previlege" style="border-radius: 3px"/><br/>
-								<br/>
-								<input type="submit" name="submit" value="Register" class="w3-teal">
-							<br/><br/>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</body>
+    </div>
+    <div class="w3-row" align="center">
+        <div class="w3-col">
+            <form action="register.php" method="POST">
+                <br/>
+                <div class="w3-row formBlock" style>
+                    <div class="w3-col m2">
+                        <p/>
+                    </div>
+                    <div class="w3-third" align="left">
+                        <br/>
+                        <a style="color:white">帳號:</a>
+                        <br/>
+                        <input type="text" name="AccountID" required pattern="(?=.*^\w+$)(?=.*\d).{8,14}" style="border-radius: 3px" placeholder="Enter a Account ID" title="帳號需至少包含8個字元與一個英文字母、一個阿拉伯數字，不包含特出字元"/>
+                        <a style="color:white">密碼:</a>
+                        <br/>
+                        <input type="password" name="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Enter a password" title="密碼需至少包含6個字元與一個小寫英文字母、大寫英文字母、一個阿拉伯數字" />
+                        <br/>
+                        <a style="color:white">確認密碼:</a>
+                        <br/>
+                        <input type="password" name="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Re-Type your password" />
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <p/>
+                </div>
+                <div class="w3-row formBlock">
+                    <div class="w3-col m2">
+                        <p/>
+                    </div>
+                    <div class="w3-col m4" align="left">
+                        <br/>
+                        <a style="color:white">Username:</a>
+                        <br/>
+                        <input type="text" name="Name" autofocus required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px" />
+                        <br/>
+                        <a style="color:white">Email:</a>
+                        <br/>
+                        <input type="text" name="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]" style="border-radius: 3px" />
+                        <br/>
+                        <a style="color:white">Company:</a>
+                        <br/>
+                        <input type="text" name="Company" style="border-radius: 3px" />
+                        <br/>
+                        <a style="color:white">Previlege:</a>
+                        <br/>
+                        <input type="text" name="Previlege" style="border-radius: 3px" />
+                        <br/>
+                        <br/>
+                        <input type="submit" name="submit" value="Register" class="w3-teal">
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
 </html>
