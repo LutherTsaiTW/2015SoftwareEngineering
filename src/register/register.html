@@ -1,9 +1,10 @@
-﻿<html>
+<html>
 
 <head>
     <title>註冊帳號</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="stylesheet" href="../css/w3.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <style>
 a:link {
@@ -57,15 +58,16 @@ a:active {
     width: 400;
 }
 </style>
+<script type="text/javascript" src="js/registerCheck.js"></script>
 
 <body class="w3-container" style="background-color:rgb(60, 60, 60)">
     <br/>
     <div class="w3-row ">
         <div style="float:left">
-            <img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+            <img src="imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
         </div>
         <div class="w3-container fastAccount">
-            <a href="../login/login.html" target="_self">Login</a>
+            <a href="login.html" target="_self">Login</a>
         </div>
         <div class="fastAccountBlock">
             <p/>
@@ -78,7 +80,7 @@ a:active {
     </div>
     <div class="w3-row" align="center">
         <div class="w3-col">
-            <form action="register.php" method="POST">
+            <form action="javascript:checkRegisterInput();">
                 <br>
                 <div class="w3-row formBlock" style>
                     <div class="w3-col m2">
@@ -88,14 +90,14 @@ a:active {
                         <br>
                         <font color="white">帳號:</font>
                         <br>
-                        <input type="text" name="AccountID" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{8,14}" style="border-radius: 3px" placeholder="Enter a Account ID" title="帳號需至少包含8個字元與一個英文字母、一個阿拉伯數字，不包含特出字元" />
+                        <input id="account" type="text" name="AccountID" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{8,14}" style="border-radius: 3px" placeholder="Enter a Account ID" title="帳號需至少包含8個字元與一個英文字母、一個阿拉伯數字，不包含特出字元" />
                         <font color="white">密碼:</font>
                         <br>
-                        <input type="password" name="Password" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Enter a password" title="密碼需至少包含6個字元與一個小寫英文字母、大寫英文字母、一個阿拉伯數字" />
+                        <input id="password" type="password" name="Password" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Enter a password" title="密碼需至少包含6個字元與一個小寫英文字母、大寫英文字母、一個阿拉伯數字" />
                         <br>
                         <font color="white">確認密碼:</font>
                         <br>
-                        <input type="password" name="Password" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Re-Type your password" />
+                        <input id="pwdConfirm" type="password" name="PasswordConfirm" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Re-Type your password" />
                         <br>
                         <br>
                     </div>
@@ -111,18 +113,18 @@ a:active {
                         <br>
                         <font color="white">真實姓名:</font>
                         <br>
-                        <input type="text" name="Name" autofocus required pattern="(?=.*[\u4E00-\u9fa5A-Za-z]+$).{3,}" style="border-radius: 3px" placeholder="Enter your name" title="僅接受中文或英文姓名" />
+                        <input id="realName" type="text" name="Name" autofocus required pattern="(?=.*[\u4E00-\u9fa5A-Za-z]+$).{3,}" style="border-radius: 3px" placeholder="Enter your name" title="僅接受中文或英文姓名" />
                         <br>
                         <font color="white">電子郵件:</font>
                         <br>
-                        <input type="email" name="Email" required style="border-radius: 3px" placeholder="Enter your email" title="請輸入有效的帳號密碼" />
+                        <input id="email" type="email" name="Email" required style="border-radius: 3px" placeholder="Enter your email" title="請輸入有效的帳號密碼" />
                         <br>
                         <font color="white">公司名稱:</font>
                         <br>
-                        <input type="text" name="Company" required style="border-radius: 3px" placeholder="Enter your company" />
+                        <input id="company" type="text" name="Company" required style="border-radius: 3px" placeholder="Enter your company" />
                         <br>
                         <br>
-                        <input type="hidden" name="Previlege" value="111" style="border-radius: 3px" />
+                        <input id="privilege" type="hidden" name="Previlege" value="111" style="border-radius: 3px" />
                         <input type="submit" name="submit" value="Register" class="w3-teal">
                         <br>
                         <br>
