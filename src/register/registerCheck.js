@@ -5,9 +5,9 @@ function checkRegisterInput() {
 
     if (n != 0) {
         alert("密碼輸入不一致");
+    } else {
+        checkAccountID();
     }
-
-    checkAccountID();
 }
 
 function checkAccountID() {
@@ -34,19 +34,25 @@ function checkAccountID() {
 }
 
 function register() {
+    var accountInput = document.getElementById("account").value;
+    var PswdInput = document.getElementById("password").value;
+    var nameInput = document.getElementById("realName").value;
+    var emailInput = document.getElementById("email").value;
+    var companyInput = document.getElementById("company").value;
+    var privilegeInput = document.getElementById("privilege").value;
+
     var postToReg = $.post("register.php", {
-        AccountID: document.getElementById("account").value,
-        Password: document.getElementById("password").value,
-        Name: document.getElementById("realName").value,
-        Email: document.getElementById("email").value,
-        Company: document.getElementById("company").value,
-        Previlege: document.getElementById("privilege").value
+        AccountID: accountInput,
+        PasswordInput: PswdInput,
+        Name: nameInput,
+        Email: emailInput,
+        Company: companyInput,
+        Privilege: privilegeInput
     });
 
-    postToReg.done(function(data) {
-        var response = $.parseJSON(data);
-        console.log(response);
-        if (response.success == 1) {
+    postToReg.done(function(dataRespnse) {
+        var postResponse = $.parseJSON(dataRespnse);
+        if (postResponse.success == 1) {
             alert("註冊成功！！！");
             window.location.href = "login.html";
         } else {
