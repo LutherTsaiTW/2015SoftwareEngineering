@@ -22,7 +22,7 @@
     <br/>
     <div class="w3-row ">
         <div style="float:left">
-            <img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+            <img src="imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
         </div>
         <div class="w3-container fastAccount">
             Login
@@ -51,11 +51,11 @@
                 <br/>
                 <a style="color:white">Account:</a>
                 <br />
-                <input type="text" name="account" autofocus required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
+                <input type="text" name="account" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{1,}" style="border-radius: 3px">
                 <br />
                 <a style="color:white">Password:</a>
                 <br />
-                <input type="password" name="password" required pattern="[A-Za-z0-9]{4,12}" style="border-radius: 3px">
+                <input type="password" name="password" required pattern=".{1,}" style="border-radius: 3px">
                 <br />
                 <br />
                 <input type="submit" name="submit" value="Login" class="w3-teal">
