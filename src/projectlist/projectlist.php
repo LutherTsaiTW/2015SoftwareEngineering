@@ -20,6 +20,7 @@
 		$feedback['projects'][$pid]['owner'] = urlencode($row_owner['name']);
 		$feedback['projects'][$pid]['start_time'] = urlencode($row['p_start_time']);
 		$feedback['projects'][$pid]['end_time'] = urlencode($row['p_end_time']);
+		$feedback['projects'][$pid]['status'] = urlencode($row['status']);
 		$feedback['success'] = '1';
 		$feedback['message'] = 'ok';
     }
