@@ -67,7 +67,7 @@ a:active {
     <br/>
     <div class="w3-row ">
         <div style="float:left">
-            <img src="../imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+            <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
         <div class="w3-container fastAccount">
             <a href="login.html" target="_self">Logout</a>
@@ -78,15 +78,15 @@ a:active {
     </div>
     <div class="w3-row title">
         <h1 class="titleText">
-				Add Project
-			</h1>
+                Add Project
+            </h1>
     </div>
     <div class="w3-row" align="center">
         <div class="w3-col">
             <form action="javascript:checkRegisterInput();">
                 <br>
                 <div class="w3-row formBlock" style>
-                    <div class="w3-col m2">
+                    <div class="w3-col m4">
                         <p/>
                     </div>
                     <div class="w3-third" align="left">
@@ -101,11 +101,19 @@ a:active {
                         <br>
                         <font color="white">Start Time:</font>
                         <br>
-                        <input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value=""/>
+                        <input id="date-range200" name="startTime" required style="border-radius: 3px" value="" />
                         <br>
                         <font color="white">End Time:</font>
                         <br>
-                        <input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value=""/>
+                        <input id="date-range201" name="endTime" required style="border-radius: 3px" value="" />
+                        <br>
+                        <font color="white">Status:</font>
+                        <br>
+                        <select>
+                            <option name="status" value="0">Close</option>
+                            <option name="status" value="1">Open</option>
+                            <option name="status" value="2">Terminated</option>
+                        </select>
                         <br>
                         <font color="white">Description:</font>
                         <br>
