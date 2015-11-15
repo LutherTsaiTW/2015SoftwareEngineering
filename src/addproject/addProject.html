@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Add Project</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="../css/w3.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="daterangepicker.css" />
+    <script src="moment.min.js"></script>
+    <script src="jquery.daterangepicker.js"></script>
+</head>
+<style>
+a:link {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+.titleText {
+    background-color: grey;
+    border-radius: 5px
+}
+
+.fastAccount {
+    background-color: grey;
+    border-radius: 5px;
+    float: right;
+}
+
+.fastAccountBlock {
+    width: 10;
+    float: right;
+}
+
+.formBlock {
+    background-color: rgb(40, 40, 40);
+    border-radius: 15px;
+    width: 400;
+}
+</style>
+<script type="text/javascript" src="js/registerCheck.js"></script>
+
+<body class="w3-container" style="background-color:rgb(60, 60, 60)">
+    <br/>
+    <div class="w3-row ">
+        <div style="float:left">
+            <img src="imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+        </div>
+        <div class="w3-container fastAccount">
+            <a href="login.html" target="_self">Logout</a>
+        </div>
+        <div class="fastAccountBlock">
+            <p/>
+        </div>
+    </div>
+    <div class="w3-row title">
+        <h1 class="titleText">
+				Add Project
+			</h1>
+    </div>
+    <div class="w3-row" align="center">
+        <div class="w3-col">
+            <form action="javascript:checkRegisterInput();">
+                <br>
+                <div class="w3-row formBlock" style>
+                    <div class="w3-col m2">
+                        <p/>
+                    </div>
+                    <div class="w3-third" align="left">
+                        <br>
+                        <font color="white">Name:</font>
+                        <br>
+                        <input id="project_name" type="text" name="Name" autofocus required style="border-radius: 3px" placeholder="Enter a Project Name" />
+                        <br>
+                        <font color="white">Company:</font>
+                        <br>
+                        <input id="project_company" type="text" name="Company" autofocus required style="border-radius: 3px" placeholder="Enter the company" />
+                        <br>
+                        <font color="white">Description:</font>
+                        <br>
+                        <input id="project_company" type="text" name="Company" autofocus required style="border-radius: 3px" placeholder="Enter the company" />
+                        <br>
+                        <input type="submit" name="submit" value="Register" class="w3-teal">
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
