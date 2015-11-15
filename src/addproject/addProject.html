@@ -5,10 +5,10 @@
     <title>Add Project</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="stylesheet" href="../css/w3.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/dateRangePicker.css" />
-    <script type="text/javascript" src="../js/moment.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.daterangepicker.js"></script>
+    <link rel="stylesheet" href="../css/dateRangePicker.css">
+    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="../js/moment-with-locales.js"></script>
+    <script src="../js/jquery.daterangepicker.js"></script>
 </head>
 <style>
 a:link {
@@ -62,7 +62,6 @@ a:active {
     width: 400;
 }
 </style>
-<script type="text/javascript" src="js/registerCheck.js"></script>
 
 <body class="w3-container" style="background-color:rgb(60, 60, 60)">
     <br/>
@@ -100,9 +99,17 @@ a:active {
                         <br>
                         <input id="project_company" type="text" name="Company" autofocus required style="border-radius: 3px" placeholder="Enter the company" />
                         <br>
+                        <font color="white">Start Time:</font>
+                        <br>
+                        <input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value=""/>
+                        <br>
+                        <font color="white">End Time:</font>
+                        <br>
+                        <input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value=""/>
+                        <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea name="Description" cols="40" rows="5"></textarea>
+                        <textarea id="project_des" name="Description" cols="40" rows="5"></textarea>
                         <br>
                         <input type="submit" name="submit" value="Register" class="w3-teal">
                         <br>
