@@ -3,7 +3,7 @@
 	$pid = $_POST['pid'];
 
 	/* [CLY] Database Setting */
-	$dburl = "luthertsai.com";
+	$dburl = "";
 	$dbuser = "";
 	$dbpass = "";
 	$db = "";

@@ -3,9 +3,33 @@
 <head>
     <title>Login</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="css/w3.css">
 </head>
 <style>
+a:link {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
 .fastAccount {
     background-color: grey;
     border-radius: 5px;
@@ -22,16 +46,16 @@
     <br/>
     <div class="w3-row ">
         <div style="float:left">
-            <img src="imgs/pts_icon.png" alt="ICON" width="100" Height="30" />
+            <img src="imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
         <div class="w3-container fastAccount">
-            Login
+            <a href="login.html" target="_self">Login</a>
         </div>
         <div class="fastAccountBlock">
             <p/>
         </div>
         <div class="w3-container fastAccount">
-            Register
+            <a href="register.html" target="_self">Register</a>
         </div>
     </div>
     <div class="w3-row " style="Height:30%;color:white;text-align:center">
@@ -44,18 +68,18 @@
             <p></p>
         </div>
         <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px">
-            <div class="w3-col m4">
+            <div class="w3-col m2">
                 <p></p>
             </div>
             <form action="login.php" method="POST" class="w3-col m4 ">
                 <br/>
-                <a style="color:white">Account:</a>
+                <font color="white">Account:</font>
                 <br />
-                <input type="text" name="account" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{1,}" style="border-radius: 3px">
+                <input type="text" name="account_id" autofocus required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
                 <br />
-                <a style="color:white">Password:</a>
+                <font color="white">Password:</font>
                 <br />
-                <input type="password" name="password" required pattern=".{1,}" style="border-radius: 3px">
+                <input type="password" name="password" required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
                 <br />
                 <br />
                 <input type="submit" name="submit" value="Login" class="w3-teal">

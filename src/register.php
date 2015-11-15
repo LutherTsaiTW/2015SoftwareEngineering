@@ -4,16 +4,17 @@ header("Content-Type:text/html; charset=utf-8");
 
 $aName = $_POST["Name"];
 $aAccount = $_POST["AccountID"];
-$aPassword = md5($_POST["Password"]);
+$psdReceive = $_POST["PasswordInput"];
+$aPassword = md5($psdReceive);
 $aEmail = $_POST["Email"];
 $aCompany = $_POST["Company"];
-$aPrevilege = intval($_POST["Previlege"]);
+$aPrivilege = intval($_POST["Privilege"]);
 
 /* Database Setting */
 $dburl = "";
 $dbuser = "";
 $dbpass = "";
-$db = "2015softwareengineering";
+$db = "";
 	
 // Create connection
 $conn = mysqli_connect($dburl, $dbuser, $dbpass, $db);
@@ -26,7 +27,7 @@ if (!$conn) {
 mysqli_query($conn, "SET NAMES 'UTF8'");
 
 //Insert Course Criticize to SQL
-$insert = "INSERT INTO user_info (`uid`, `name`, `account_id`, `password`, `email`, `company`, `previlege`, `user_session`) VALUES (NULL, '$aName', '$aAccount', '$aPassword', '$aEmail', '$aCompany', '$aPrevilege', NULL)";
+$insert = "INSERT INTO user_info (`uid`, `name`, `account_id`, `password`, `email`, `company`, `previlege`, `user_session`) VALUES (NULL, '$aName', '$aAccount', '$aPassword', '$aEmail', '$aCompany', '$aPrivilege', NULL)";
 
 if (mysqli_query($conn, $insert)) {
 	$feedback = array();
