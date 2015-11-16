@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="stylesheet" href="../css/w3.css">
     <link rel="stylesheet" href="../css/dateRangePicker.css">
-    <script src="../js/jquery-2.1.4.min.js"></script>
-    <script src="../js/moment-with-locales.js"></script>
-    <script src="../js/jquery.daterangepicker.js"></script>
+    <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="../js/jquery.daterangepicker.js"></script>
 </head>
 <style>
 a:link {
@@ -69,12 +69,13 @@ a:active {
         <div style="float:left">
             <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
-        <div class="w3-container fastAccount">
-            <a href="login.html" target="_self">Logout</a>
-        </div>
         <div class="fastAccountBlock">
             <p/>
         </div>
+        <div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
+            Welcome!
+        </div>
+        <script type="text/javascript" src="../js/getUser.js"></script>
     </div>
     <div class="w3-row title">
         <h1 class="titleText">
@@ -83,7 +84,7 @@ a:active {
     </div>
     <div class="w3-row" align="center">
         <div class="w3-col">
-            <form action="javascript:checkRegisterInput();">
+            <form action="addProject.php" method="POST">
                 <br>
                 <div class="w3-row formBlock" style>
                     <div class="w3-col m4">
@@ -101,25 +102,67 @@ a:active {
                         <br>
                         <font color="white">Start Time:</font>
                         <br>
-                        <input id="date-range200" name="startTime" required style="border-radius: 3px" value="" />
-                        <br>
-                        <font color="white">End Time:</font>
-                        <br>
-                        <input id="date-range201" name="endTime" required style="border-radius: 3px" value="" />
+                        <div id="date_picker">
+                            <input id="startTime" type="datetime" name="StartTime" required style="border-radius: 3px" value="" />
+                            <br>
+                            <font color="white">End Time:</font>
+                            <br>
+                            <input id="endTime" type="datetime" name="EndTime" required style="border-radius: 3px" value="" />
+                        </div>
+                        <script>
+                        function getExceptDays() {
+                            var startTimeObj = document.getElementById("startTime");
+                            var startTime = startTimeObj.value;
+                            var endTimeObj = document.getElementById("endTime");
+                            var endTime = endTimeObj.value;
+                            var days = document.getElementById("days");
+                            startTime = moment(startTime, "YYYY-MM-DD HH:mm:ss");
+                            endTime = moment(endTime, "YYYY-MM-DD HH:mm:ss");
+                            var diffDays = endTime.diff(startTime, 'days') + 1;
+                            days.innerHTML = "Except: " + diffDays.toString() + " Days";
+                        }
+
+                        $("#date_picker").dateRangePicker({
+                            separator: 'to',
+                            format: 'YYYY-MM-DD HH:mm:ss',
+                            getValue: function() {
+                                if ($('#startTime').val() && $('#endTime').val())
+                                    return $('#startTime').val() + ' to ' + $('#endTime').val();
+                                else
+                                    return '';
+                            },
+                            setValue: function(s, s1, s2) {
+                                $('#startTime').val(s1);
+                                $('#endTime').val(s2);
+                                getExceptDays();
+                            }
+                        });
+                        </script>
+                        <font color="gray"><span id="days">Expect:</span></font>
+                        <script>
+                        $(document).ready(function() {
+                            getExceptDays();
+                            var startTimeObj = document.getElementById("startTime");
+                            var endTimeObj = document.getElementById("endTime");
+                            startTimeObj.onchange = getExceptDays;
+                            endTimeObj.onchange = getExceptDays;
+                        });
+                        </script>
                         <br>
                         <font color="white">Status:</font>
                         <br>
-                        <select>
-                            <option name="status" value="0">Close</option>
-                            <option name="status" value="1">Open</option>
-                            <option name="status" value="2">Terminated</option>
+                        <select name="Status">
+                            <option value="0">Close</option>
+                            <option value="1">Open</option>
+                            <option value="2">Terminated</option>
                         </select>
                         <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea id="project_des" name="Description" cols="40" rows="5"></textarea>
+                        <textarea id="project_des" name="Description" cols="40" rows="5" required></textarea>
                         <br>
-                        <input type="submit" name="submit" value="Register" class="w3-teal">
+                        <input id="submitBtn" type="submit" name="submit" value="Add" class="w3-teal">
+                        <input type="button" name="exit" value="Cancel" class="w3-teal" onclick="location.href='projectList.html';">
                         <br>
                         <br>
                         <br>
