@@ -237,7 +237,7 @@ a:active {
                 require_once('getMember.php');
                 for($j =0;$j<$countMember;$j++)
                 {
-                    echo" <option value=\"" ,$members[$j][0], "\">",$members[$j][0] ,"</option>";
+                    echo" <option value=\"" ,$members[$j][2], "\">",$members[$j][0] ,"</option>";
                 }
             ?>
             </select>
