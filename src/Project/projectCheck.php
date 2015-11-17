@@ -2,6 +2,7 @@
 
 	header("Content-Type:text/html; charset=utf-8");
 
+	$pID = $_POST["ProjectID"];
 	$pCompany = $_POST["Company"];
 	$pName = $_POST["Project_Name"];
 
@@ -22,7 +23,7 @@
 	mysqli_query($conn, "SET NAMES 'UTF8'");
 
 	//Select SQL Statement FOR check ACCOUNT
-	$select = "SELECT * FROM project WHERE `p_name` = '$pName' AND `p_company` = '$pCompany'";
+	$select = "SELECT `p_name` FROM project WHERE `p_id` != '$pID' AND`p_name` = '$pName' AND `p_company` = '$pCompany'";
 	$searchResult = mysqli_query($conn, $select);
 	$searchResultCount = mysqli_num_rows($searchResult);
 
