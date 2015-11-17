@@ -1,0 +1,8 @@
+Start:  YYYY/MM/DD
+End:    YYYY/MM/DD
+Expected:  XX Days
+Owner:  owner_name
+Company:   company
+Members: name1,   
+name2, name3...   
+Status:     status
