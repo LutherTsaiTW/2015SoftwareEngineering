@@ -6,6 +6,11 @@
 	$pCompany = $_POST["Company"];
 	$pName = $_POST["Project_Name"];
 
+	if ($pID == null)
+	{
+         $pID = 0;
+	}
+
 	/* Database Setting */
 	$dburl = "";
 	$dbuser = "";
