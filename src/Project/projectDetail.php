@@ -222,6 +222,7 @@ a:active {
     $projectdetail = array_merge($project, $member);
 
     // [BC] 把Owner從ID轉成STRING
+
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
     require_once('../assist/getUserInfo.php');
 ?>
@@ -268,8 +269,16 @@ a:active {
         </div>
         <div class="w3-row " style="Height:15%;color:white;text-align:center">
             <h1 id="projectName" style="background-color:grey;border-radius:5px">
-                    ProjectName <a id="edit" style="float:right;padding-right:10px" <?php echo "href=\"editProjectView.php?pid=",$pid,"\""?> >Edit</a>
+
+                   ProjectName 
+                <?php   
+                if($projectdetail['p_owner']==$user['name'])
+                {
+                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$pid,"\" >Edit </a>";
+                }
+             ?> 
             </h1>
+
         </div>
         <div class="w3-row " style="Height:rest">
             <div class="detailBox ">
