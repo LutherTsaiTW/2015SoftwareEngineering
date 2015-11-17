@@ -8,22 +8,13 @@
 	header("Content-Type:text/html; charset=utf-8");
 	$session = $_SESSION['sessionid'];
 
-	/* [CLY] Database Setting */
-	$dburl = "";
-	$dbuser = "";
-	$dbpass = "";
-	$db = "";
-	
-	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
-	$errno = mysqli_connect_errno();
-	if($errno)
-	{
-		$user = array('success' => 0, 'message' => 'db_error');
-		echo(json_encode($user));
-		exit();
+	// [BC] 取得連線
+	include_once 'getDataBaseConnection.php';
+	$sqli = getDBConnection();
+	if(is_null($sqli)){
+		exit("connection_error");
 	}
-	//Show Chinese Chracters Correctly
-	$sqli->query("SET NAMES 'UTF8'");
+	
 
 	//Insert Course Criticize to SQL
 	$query = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
