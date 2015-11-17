@@ -4,7 +4,10 @@
 
 	function getDBConnection(){
 		// [BC] 抓DataBase的設定進來
-		require_once 'DBConfig.php';
+		$dburl = "";
+		$dbuser = "";
+		$dbpass = "";
+		$db = "";
 
 		// [BC] Get Connection
 		$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
