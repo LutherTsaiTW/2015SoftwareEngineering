@@ -183,7 +183,7 @@ a:active {
 
     // [BC] 取得GET的參數，也就是pid
     $pid = $_GET['pid'];
-
+    $p_id=$pid;
     // [BC] include一個可以呼叫函式，取得資料庫連線的的php
     include_once '../assist/getDataBaseConnection.php';
     $sqli = getDBConnection();
@@ -227,8 +227,15 @@ a:active {
     require_once('../assist/getUserInfo.php');
 ?>
 
+<!--addmember畫面-->
+<?php
+    $memberToAdd=array();
+    $memberToRemove=array();
+?>
+
 <body class="w3-container" style="height: 100%;background-color:rgb(61, 61, 61)">
     <div id="block"></div>
+    <!--AddMemberWindow-->
     <div>
         <div id="addMemberWindow" class="addMemberWindow">
             <p onclick="back()" class="backButton"> x </p>
@@ -247,6 +254,7 @@ a:active {
             <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe> 
         </div>
     </div>
+
     <div id="successWindow" class="successWindow">
         <p style="color:white;  font-weight: 600;font-size: 25">Add Member Success!</p>
          <button onclick="back()" style=";background-color:green" >OK</button>
@@ -255,7 +263,7 @@ a:active {
     <div style="z-index:1;">
         <div class="w3-row ">
             <div style="float:left">
-                <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
+               <a href="projectList.html"><img  src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" /></a>
             </div>
             <div class="w3-container fastAccount">
                 <a href="../logout.php">Logout</a>
@@ -267,14 +275,14 @@ a:active {
                <?php echo "Welcome! ",$user['name']; ?>
             </div>
         </div>
-        <div class="w3-row " style="Height:15%;color:white;text-align:center">
+        <div class="w3-row " style="Height:70px;color:white;text-align:center">
             <h1 id="projectName" style="background-color:grey;border-radius:5px">
 
                    ProjectName 
                 <?php   
                 if($projectdetail['p_owner']==$user['name'])
                 {
-                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$pid,"\" >Edit </a>";
+                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
                 }
              ?> 
             </h1>
@@ -310,7 +318,7 @@ a:active {
                         ?>
                     </div>
                     <div class="listButton">
-                        <a>Request</a>
+                        <a>Requirement</a>
                     </div>
                     <div class="listButton">
                         <a>Test Case</a>
