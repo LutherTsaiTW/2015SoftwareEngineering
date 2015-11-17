@@ -3,11 +3,8 @@
 	// 這個檔案提供了DataBase的相關設定參數
 
 	function getDBConnection(){
-		// [BC] DataBase的設定
-		$dburl = "";
-		$dbuser = "";
-		$dbpass = "";
-		$db = "";
+		// [BC] 抓DataBase的設定進來
+		require_once 'DBConfig.php';
 
 		// [BC] Get Connection
 		$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -20,7 +17,7 @@
 		}
 		//Show Chinese Chracters Correctly
 		$sqli->query("SET NAMES 'UTF8'");
-
+		
 		return $sqli;
 	}
 ?>
