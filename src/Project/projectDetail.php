@@ -4,6 +4,7 @@
     <title>ProjectDetail</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <script type="text/javascript" src="../js/projectDetailWindowController.js"></script>
+        <script type="text/javascript" src="../js/moment-with-locales.js"></script>
     <link rel="stylesheet" href="../css/w3.css">
 </head>
 <style>
@@ -150,6 +151,12 @@ a:active {
     z-index: 999;
     visibility: hidden;
     border-radius: 15px;
+
+}
+.detailBoxFont
+{
+    font-size: 16;
+
 }
 </style>
 <?php
@@ -233,14 +240,15 @@ a:active {
     $memberToRemove=array();
 ?>
 
+
 <body class="w3-container" style="height: 100%;background-color:rgb(61, 61, 61)">
     <div id="block"></div>
     <!--AddMemberWindow-->
     <div>
         <div id="addMemberWindow" class="addMemberWindow">
             <p onclick="back()" class="backButton"> x </p>
-            <form action="addMember.php" method="POST"  target="id_iframe">
-            <select multiple id="memberMutiSelect" class="memberMutiSelect">
+            <form action="addMember.php" method="POST"  target="_iframe">
+            <select  multiple name="addusers" id="memberMutiSelect" class="memberMutiSelect">
             <?php
                 require_once('getMember.php');
                 for($j =0;$j<$countMember;$j++)
@@ -249,9 +257,9 @@ a:active {
                 }
             ?>
             </select>
-            <input type="submit" onclick="showSuccessWindow()" name="submit" value="Add" " class="addButton"> 
+              <input type="submit" onclick="showSuccessWindow()" name="submit" value="Add" class="addButton" > 
             </form>
-            <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe> 
+            <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
     </div>
 
@@ -292,29 +300,31 @@ a:active {
             <div class="detailBox ">
                 <div id="description" class="detail" style="height:800px;Width:450px;float: left; margin-right: 10px;">
                 <?php
-                    echo $projectdetail['p_des'];   
+                    echo "<font style=\"font-size:24\"><b>Description:</b></font><br>",$projectdetail['p_des'];   
                 ?>
                 </div>
                 <div style="float: left;Width:330px;">
                     <div id="detail" class="detail">
                         <?php
-                            echo "Company:",$projectdetail['p_company'],"<br/>";  
-                            echo "Owner:",$projectdetail['p_owner'],"<br/>"; 
-                            echo "Start Time:<br/><font style=\"color:green\">",$projectdetail['p_start_time'],"</font><br/>";
-                            echo "End Time:</br><font style=\"color:green\">",$projectdetail['p_end_time'],"</font><br/>"; 
-                            echo "Status:";
-                            if($projectdetail['status']==0) echo "Close <br/>";
-                            if($projectdetail['status']==1) echo "Open <br/>";
-                            if($projectdetail['status']==2) echo "Terminated <br/>";
-                            if($projectdetail['status']==3) echo "Delete <br/>";
-                            echo "Member:<br/>";
+                          
+                            echo "<font class=\"detailBoxFont\"> <b>End Time:<b/></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen\">",$projectdetail['p_end_time'],"</font><br/>";
+                            echo "<font class=\"detailBoxFont\"> <b>Start Time:<b/></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen\">",$projectdetail['p_start_time'],"</font><br/>";
+                            echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right\"></font><br/>";  
+                            echo "<font class=\"detailBoxFont\"> <b>Company:<b/>",$projectdetail['p_company'],"</font><br/>"; 
+                            echo "<font class=\"detailBoxFont\"> <b>Owner:<b/>",$projectdetail['p_owner'],"<br/>"; 
+                            
+                            echo "<font class=\"detailBoxFont\"> <b>Members:<b/>";
                             for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
                             {
                                 if($i==$projectdetail['memberCount']-1)
-                                    echo $projectdetail[$i];
+                                    echo $projectdetail[$i],"</font><br/>";
                                 else
                                  echo $projectdetail[$i],",";   
-                            }                 
+                            }            
+                            echo "<font class=\"detailBoxFont\"> <b>Status:<b/>";     
+                            if($projectdetail['status']==0) echo "Close </font><br/>";
+                            if($projectdetail['status']==1) echo "Open </font><br/>";
+                            if($projectdetail['status']==2) echo "Terminated </font><br/>";
                         ?>
                     </div>
                     <div class="listButton">
@@ -330,7 +340,7 @@ a:active {
                         <a>Report</a>
                     </div>
                     <div class="listButton">
-                        <a onclick="showAddMemberWindow()">Add Member</a>
+                        <a onclick="showAddMemberWindow()">Edit Members</a>
                     </div>
                 </div>
             </div>
@@ -340,5 +350,17 @@ a:active {
         </div>
     </div>
 </body>
+
+//計算預期天數
+<script type="text/javascript">
+
+        var startTime = moment("<?php echo $projectdetail['p_start_time']; ?>", "YYYY-MM-DD HH:mm:ss");
+        var endTime = moment("<?php echo $projectdetail['p_end_time']; ?>", "YYYY-MM-DD HH:mm:ss");
+        var diffDays = endTime.diff(startTime, 'days') + 1;
+        document.getElementById("days").innerHTML ="Expect"+  diffDays.toString() + " Days";
+
+        
+</script>
+
 
 </html>
