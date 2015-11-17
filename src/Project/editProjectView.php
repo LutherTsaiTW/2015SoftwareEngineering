@@ -166,7 +166,7 @@
                         <input id="submitBtn" type="button" value="Add" class="w3-teal">
                         <script>
 							$('#submitBtn').click(function() {
-								$.post("projectCheck.php",{Company:$("#company").val(), Project_Name:$("#name").val()})
+								$.post("projectCheck.php",{Company:$("#company").val(), Project_Name:$("#name").val(), ProjectID: $("#pid").val()})
 									.done(function(data) {
 										var check_result = $.parseJSON(data);
 										console.log("Check: " + check_result.SUCCESS);
