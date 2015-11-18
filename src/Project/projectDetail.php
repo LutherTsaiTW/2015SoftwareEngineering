@@ -160,8 +160,8 @@ a:active {
 }
 </style>
 <?php
-
-    // [BC]
+    session_start();
+    $session=$_SESSION['sessionid'];
     // [BC]
     // 此函式是藉由使用者ID取得使用者名稱的
     // 參數如下
@@ -201,38 +201,58 @@ a:active {
     $result = $sqli->query($selectProject);
     if(!$result)
     {
-        $error = array('success' => 0, 'message' => 'there is an error when SELECT project by pid');
+        $error = array('success' => 0, 'message' => 'there is an error when SELECT project by pid in projectdetail.php');
         echo(json_encode($error));
         exit();
     }
     $project = $result->fetch_array(MYSQLI_ASSOC);
-
+    
     // [BC] 取得參與專案人員
     $selectMember = "SELECT * FROM project_team WHERE project_id=" . $pid;
     $result = $sqli->query($selectMember);
     if(!$result)
     {
-        $error = array('success' => 0, 'message' => 'there is an error when SELECT project_team');
+        $error = array('success' => 0, 'message' => 'there is an error when SELECT project_team in projectdetail.php');
         echo(json_encode($error));
         exit();
     }
 
     $member = array();
     $memberCount = 0;
-    while ($data = $result->fetch_assoc()) 
+    while ($data = $result->fetch_assoc())
     {
         $memberCount++;
         array_push($member, getUser($data['user_id'], $sqli));
     }
     $member['memberCount'] = $memberCount;
-
     // [BC] Merge兩個ARRAY
     $projectdetail = array_merge($project, $member);
 
     // [BC] 把Owner從ID轉成STRING
-
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
-    require_once('../assist/getUserInfo.php');
+    //echo "project detail => " . json_encode($projectdetail) . "<br>";
+    
+    // [BC] Get User Info
+    $selectUser = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
+    $result = $sqli->query($selectUser);
+    if(!$result)
+    {
+        $error = array('success' => 0, 'message' => 'there is an error when SELECT user_info in project detail');
+        echo(json_encode($error));
+        exit();
+    }
+    $user = $result->fetch_array(MYSQLI_ASSOC);
+    // echo json_encode($user) . "<br>";
+
+    // [BC]
+    // 此API取得在PROJECT中的人員以及不在PROJECT中的人員
+    // 總共有四個變數，別如下
+    // $countMemberNotInProject -> 沒有在當前專案的人員數量
+    // $memberNotInProject -> 沒有在當前專案的人員資料，[$i][0]是名稱，[$i][1]是公司名稱，[$i][2]是ID
+    // $countMemberInProject -> 有在當前專案的人員數量
+    // $memberInProject -> 有在當前專案的人員資料，[$i][0]是名稱，[$i][1]是公司名稱，[$i][2]是ID
+    require_once 'getMember.php';
+    // [BC] 分別給memberToAdd和memberToRemove
 ?>
 
 <!--addmember畫面-->
@@ -254,11 +274,11 @@ a:active {
                 require_once('getMember.php');
                 for($j =0;$j<$countMember;$j++)
                 {
-                    echo" <option value=\"" ,$members[$j][2], "\">",$members[$j][0] ,"</option>";
+                    echo" <option value=\"" ,$members[$j][2], "\">",$members[$j][0] ,'-',$members[$j][1],"</option>";
                 }
             ?>
             </select>
-              <input type="submit" onclick="showSuccessWindow()" name="submit" value="Add" class="addButton" > 
+                <input type="submit" onclick="showSuccessWindow()" name="submit" value="Add" class="addButton" > 
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -289,11 +309,11 @@ a:active {
 
                    ProjectName 
                 <?php   
-                if($projectdetail['p_owner']==$user['name'])
-                {
-                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
-                }
-             ?> 
+                    if($projectdetail['p_owner']==$user['name'])
+                    {
+                        echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                    }
+                ?> 
             </h1>
 
         </div>

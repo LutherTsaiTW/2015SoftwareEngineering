@@ -26,4 +26,5 @@
 		$feedback['message'] = 'ok';
     }
 	echo(urldecode(json_encode($feedback))); // [CLY] urldecode : Decode html code to let it show correctly
+	$feedback=json_encode($feedback);
 ?>

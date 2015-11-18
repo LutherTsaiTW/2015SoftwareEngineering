@@ -11,11 +11,8 @@ $aCompany = $_POST["Company"];
 $aPrivilege = intval($_POST["Privilege"]);
 
 /* Database Setting */
-$dburl = "";
-$dbuser = "";
-$dbpass = "";
-$db = "";
-	
+require_once('assist/DBConfig.php');
+
 // Create connection
 $conn = mysqli_connect($dburl, $dbuser, $dbpass, $db);
 // Check connection

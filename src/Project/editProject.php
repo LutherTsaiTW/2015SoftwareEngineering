@@ -11,11 +11,8 @@
 	$pDes = $_POST["des"];
 	$pStatus = $_POST["status"];
 	
-	// [AC]Set the DataBase 
-	$dburl = "";
-	$dbuser = "";
-	$dbpass = "";
-	$db = "";
+	// [BC] Set the DataBase 
+	require_once '../assist/DBConfig.php';
 	
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	$errno = mysqli_connect_errno();

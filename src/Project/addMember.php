@@ -3,10 +3,7 @@
 	$pid = $_POST['pid'];
 
 	/* [CLY] Database Setting */
-	$dburl = "";
-	$dbuser = "";
-	$dbpass = "";
-	$db = "";
+	require_once '../assist/DBConfig.php';
 
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	$errno = mysqli_connect_errno();

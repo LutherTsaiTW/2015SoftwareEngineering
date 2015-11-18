@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 	// [BC]
 	// 此FUNCTION是用來取得PROJECT資訊的
 	// 參數如下
@@ -35,8 +35,6 @@
 	// 反之，SUCCESS等於 0
 	// MESSAGE則是代表任何錯誤訊息
 
-	require_once("../assist/getUserInfo.php");
-
 	header("Content-Type:text/html; charset=utf-8");
 
 	// [BC] 網頁應該要用POST傳進來的資訊
@@ -47,12 +45,10 @@
 	$pStartTime = $_POST["StartTime"];
 	$pEndTime = $_POST["EndTime"];
 	$pStatus = $_POST["Status"];
-
+	$session = $_SESSION['sessionid'];
+	
 	// [AC]Database Setting 
-	$dburl = "";
-	$dbuser = "";
-	$dbpass = "";
-	$db = "";
+	require_once '../assist/DBConfig.php';
 	
 	// [AC]Create connection
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -63,14 +59,21 @@
 		echo(json_encode($user));
 		exit();
 	}
-	// [AC]Show Chinese Chracters Correctly
 	$sqli->query("SET NAMES 'UTF8'");
-	// [BC]get user info
-	echo "in Add Project<br>" . json_encode($user) . "<br>";
-
+	
+	// [BC] get user info
+	$query = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
+	$result = $sqli->query($query) or die('Query Error when SELECT USER in addProject.php');
+	
+	if ($user = $result->fetch_array(MYSQLI_ASSOC)) {
+		$user['success'] = '1';
+	}else {
+		$user = array('success' => 0, 'message' => 'there is an error when fetch user array into array in addProject.php');
+	}
+	
 	// [BC] mysql query
 	$insertProject = "INSERT INTO project (p_id, p_name, p_des, p_company, p_owner, p_start_time, p_end_time, status) VALUES (" . "NULL, \"" . trim($pName) . "\", \"" . trim($pDescription) . "\", \"" . trim($pCompany) . "\", " . $user['uid'] . ", \"" . $pStartTime . "\", \"" . $pEndTime . "\", " . $pStatus . ")";
-	echo "insert project -> " . $insertProject . "<br>";
+
 	// [BC] 執行新增專案的Query
 	$result = $sqli->query($insertProject);
 	if (!$result)
@@ -78,13 +81,13 @@
 		$response = array('SUCCESS' => 0, 'MESSAGE' => 'there is an error when executing INSERT PROJECT');
 		exit(json_encode($response));
 	}
-	echo "string 2<br>";
+
 	// [BC] 取得新增的專案資料
 	$pid = getProject(trim($pName), trim($pDescription), trim($pCompany), $sqli);
-	echo "test pid = " . $pid . " uid = " . $user['uid'] . "<br>";
+
 	// [BC] 將新增專案的人，也就是owner加到該PROJECT中的team中
 	$insertTeamMember = "INSERT INTO project_team (project_id, user_id) VALUES (" . $pid . ", " . $user['uid'] . ")";
-	echo $insertTeamMember . "<br>";
+
 
 	// [BC] 執行將擁有專案的擁有人加到project_team這個表格中的QUERY
 	$result = $sqli->query($insertTeamMember);
