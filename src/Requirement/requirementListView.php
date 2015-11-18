@@ -19,8 +19,8 @@
 	}
 	</style>
 	<body class="w3-container" style="background-color:rgb(61, 61, 61)">
-		<?php $pid = $_GET['pid']; ?>
 		<?php
+			$pid = $_GET['pid'];
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
 			{
