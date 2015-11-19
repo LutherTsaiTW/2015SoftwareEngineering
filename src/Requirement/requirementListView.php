@@ -19,9 +19,8 @@
 	}
 	</style>
 	<body class="w3-container" style="background-color:rgb(61, 61, 61)">
-		<?php $pid = $_GET['pid']; ?>
-	</body>
-			<?php
+		<?php
+			$pid = $_GET['pid'];
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
 			{
@@ -45,27 +44,16 @@
 			}
 			
 			$result = $sqli->query("SELECT u.uid, u.name FROM project_team AS p RIGHT JOIN user_info AS u ON u.uid = p.user_id AND p.project_id=" . $pid . ";");
-			if($row = $result->fetch_array())
+			while($row = $result->fetch_array())
 			{
 				
-			}
-			else
-			{
-				$feedback = array('success' => 0, 'message' => 'project_team_fetch_error');
-				echo(json_encode($feedback));
-				exit;
 			}
 			
 			$result = $sqli->query("SELECT * FROM req WHERE rproject=" . $pid . " AND rstatus != 3 ORDER BY rpriority;");
-			if($row = $result->fetch_array())
+			while($row = $result->fetch_array())
 			{
 				
 			}
-			else
-			{
-				$feedback = array('success' => 0, 'message' => 'requirement_error');
-				echo(json_encode($feedback));
-				exit;
-			}
 		?>
+	</body>
 </html>
