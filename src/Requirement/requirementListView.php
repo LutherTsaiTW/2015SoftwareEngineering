@@ -26,7 +26,7 @@
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
 			{
-				$feedback = array('success' => 0, 'message' => 'db_error');
+				$feedback = array('success' => 0, 'message' => $sqli->connect_error);
 				echo(json_encode($feedback));
 				exit;
 			}
@@ -34,7 +34,9 @@
 			//Show Chinese Chracters Correctly
 			$sqli->query("SET NAMES 'UTF8'");
 			
+			session_start();
 			$session = $_SESSION['sessionid'];
+			
 			$result = $sqli->query("SELECT * FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
 			if (!($userinfo = $result->fetch_array()))
 			{
