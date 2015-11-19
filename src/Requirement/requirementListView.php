@@ -36,44 +36,41 @@
 			
 			session_start();
 			$session = $_SESSION['sessionid'];
+			session_write_close();
 			
-			$result = $sqli->query("SELECT * FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
-			if (!($userinfo = $result->fetch_array()))
+			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
+			if (!($userinfo = $result->fetch_array(MYSQLI_ASSOC)))
 			{
 				$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
 				echo(json_encode($feedback));
 				exit;
 			}
-			var_dump($userinfo);
 			
-			$result = $sqli->query("SELECT * FROM project WHERE p_id=" . $pid . ";") or die($sqli->error);
-			if(!($project_info = $result->fetch_array()))
+			$result = $sqli->query("SELECT p.p_id, p.p_name, p.p_des, p.p_company, u.name AS owner, p.p_start_time, p.p_end_time, p.status FROM project AS p LEFT JOIN user_info AS u ON p.p_owner = u.uid WHERE p_id=" . $pid . ";") or die($sqli->error);
+			if(!($project_info = $result->fetch_array(MYSQLI_ASSOC)))
 			{
 				$feedback = array('success' => 0, 'message' => 'project_fetch_error');
 				echo(json_encode($feedback));
 				exit;
 			}
-			var_dump($project_info);
 			
 			$result = $sqli->query("SELECT u.name FROM project_team AS p RIGHT JOIN user_info AS u ON u.uid = p.user_id AND p.project_id=" . $pid . ";") or die($sqli->error);
-			while($row = $result->fetch_array())
+			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$members[]['name'] = $row['name'];
 			}
-			var_dump($members);
 			
 			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 3 ORDER BY rpriority;") or die($sqli->error);
-			while($row = $result->fetch_array())
+			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
-				$reqs[]['id'] = $row['rid'];
-				$reqs[]['name'] = $row['rname'];
-				$reqs[]['type'] = $row['rtype'];
-				$reqs[]['des'] = $row['rdes'];
-				$reqs[]['status'] = $row['rstatus'];
-				$reqs[]['priority'] = $row['rpriority'];
-				$reqs[]['owner'] = $row['owner'];
+				$reqs[$row['rid']]['id'] = $row['rid'];
+				$reqs[$row['rid']]['name'] = $row['rname'];
+				$reqs[$row['rid']]['type'] = $row['rtype'];
+				$reqs[$row['rid']]['des'] = $row['rdes'];
+				$reqs[$row['rid']]['status'] = $row['rstatus'];
+				$reqs[$row['rid']]['priority'] = $row['rpriority'];
+				$reqs[$row['rid']]['owner'] = $row['owner'];
 			}
-			var_dump($reqs);
 		?>
 	</body>
 </html>
