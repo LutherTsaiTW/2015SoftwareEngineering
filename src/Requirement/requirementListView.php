@@ -5,8 +5,50 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="../css/w3.css">
 		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 	</head>
 	<style>
+	#block {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(0, 0, 0, 0.6);
+		margin: =0;
+		padding: =0;
+		z-index: 998;
+		visibility: hidden;
+	}
+
+	a {
+		cursor: pointer;
+	}
+
+	a:link {
+		color: lightgrey;
+		background-color: transparent;
+		text-decoration: none;
+	}
+
+	a:visited {
+		color: lightgrey;
+		background-color: transparent;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: white;
+		background-color: transparent;
+		text-decoration: underline;
+	}
+
+	a:active {
+		color: white;
+		background-color: transparent;
+		text-decoration: underline;
+	}
+
 	.fastAccount {
 		background-color: grey;
 		border-radius: 5px;
@@ -16,6 +58,151 @@
 	.fastAccountBlock {
 		width: 10;
 		float: right;
+	}
+
+	#footer {
+		position: fixed;
+		width: 100%;
+		bottom: 0;
+		z-index: 1;
+		text-align: center;
+	}
+
+	.detailBox {
+		height: 900px;
+		width: 900px;
+		margin: 0px auto;
+		border-radius: 15px;
+	}
+
+	.listButton {
+		background-color: grey;
+		height: 75px;
+		border-radius: 15px;
+		float: top;
+		margin-top: 5px;
+		padding-left: 6px;
+		text-align: center;
+		font-size: 35;
+		color: white;
+		font-weight: 600;
+		line-height: 75px;
+	}
+
+	.detail {
+		background-color: rgb(40, 40, 40);
+		border-radius: 15px;
+		float: top;
+		padding-left: 15px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		font-size: 25;
+		color: white;
+	}
+
+	.addMemberWindow {
+		position: fixed;
+		top: 30%;
+		left: 40%;
+		margin: 0px auto;
+		height: 400px;
+		width: 300px;
+		background-color: rgb(80, 80, 80);
+		z-index: 999;
+		visibility: hidden;
+		border-radius: 15px;
+	}
+
+	.backButton {
+		float: right;
+		margin-top: 10px;
+		margin-right: 10px;
+		height: 30px;
+		width: 20px;
+		cursor: pointer;
+	}
+
+	.addButton {
+		float: right;
+		margin-right: 5px;
+		margin-top: 300px;
+		height: 30px;
+		width: 60px;
+		background-color:green;
+	}
+
+	.memberMutiSelect {
+		float: left;
+		margin-top: 10px;
+		margin-left: 10px;
+		height: 380px;
+		width: 200px;
+	}
+
+	.successWindow {
+		text-align: center;
+		position: fixed;
+		top: 30%;
+		left: 40%;
+		margin: 0px auto;
+		height: 150px;
+		width: 400px;
+		background-color: rgb(80, 80, 80);
+		z-index: 999;
+		visibility: hidden;
+		border-radius: 15px;
+
+	}
+	
+	.detailBoxFont
+	{
+		font-size: 20px;
+	}
+	
+	.listTable {
+		text-decoration: none;
+		table-layout: fixed;
+		word-wrap: break-word;
+		border-collapse: separate;
+		overflow: hidden font-size: 18;
+		border-spacing: 0 10px;
+		margin-top: -10px;
+	}
+	
+	.listTable .items {
+		font-size: 20px;
+	}
+	
+	.listTable #header,.listTable #link
+	{
+		font-size: 22px;
+	}
+
+	.listTable td {
+		color: white;
+		padding: 10px;
+		background-color: rgb(40, 40, 40);
+		valign: center;
+	}
+	
+	.listTable .nonfunctional td {
+		background-color: rgb(127, 106, 0);
+	}
+	
+	.listTable .functional td {
+		background-color: rgb(82, 127, 63);
+	}
+
+	.listTable td:first-child {
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		width: 264px;
+	}
+
+	.listTable td:last-child {
+		text-align: right;
+		border-bottom-right-radius: 10px;
+		border-top-right-radius: 10px;
 	}
 	</style>
 	<body class="w3-container" style="background-color:rgb(61, 61, 61)">
@@ -36,6 +223,7 @@
 			
 			session_start();
 			$session = $_SESSION['sessionid'];
+			$_SESSION['sessionid'] = '6058d61d181af47018ffe999d5ea0347';
 			session_write_close();
 			
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
@@ -60,7 +248,7 @@
 				$members[]['name'] = $row['name'];
 			}
 			
-			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 3 ORDER BY rpriority;") or die($sqli->error);
+			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 3 ORDER BY rpriority DESC;") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$reqs[$row['rid']]['id'] = $row['rid'];
@@ -72,5 +260,143 @@
 				$reqs[$row['rid']]['owner'] = $row['owner'];
 			}
 		?>
+		<br>
+		<div style="z-index:1;">
+			<div class="w3-row ">
+				<div style="float:left">
+					<img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
+				</div>
+				<div class="w3-container fastAccount">
+					<a href="../logout.php">Logout</a>
+				</div>
+				<div class="fastAccountBlock">
+					<p></p>
+				</div>
+				<div class="w3-container" id="userName" style="float:right;color:white;font-size:18px">
+				   Welcome! <?= $userinfo['name']; ?></div>
+				</div>
+			<div class="w3-row " style="Height:30%;color:white;text-align:center">
+				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetail.php?pid=<?=$pid; ?>">Back</a>
+				<h1 style="background-color:grey;border-radius:5px"><?= $project_info['p_name']; ?> Requirements</h1>
+			</div>
+			<div class="w3-row " style="Height:40%">
+				<div style="position:absolute;float:left;width:330px">
+					<div id="detail" class="detail" style="height: 255px;">
+						<font class="detailBoxFont" style="float:left;width:108px;margin-right:5px">
+							<b>Start Time:</b>
+						</font>
+						<font id="startTime"  class="detailBoxFont" style="float:left;color:lightgreen">
+							<?=$project_info["p_start_time"]; ?>
+						</font>
+						<br>
+						<font class="detailBoxFont" style="float:left;margin-right:15px">
+							<b>End Time:</b>
+						</font>
+						<font id="endTime" class="detailBoxFont" style="float:left;color:lightgreen">
+							<?=$project_info["p_end_time"]; ?>
+						</font>
+						<br>
+						<font id="days" class="detailBoxFont" style="float:right;font-size:16px;color:gray;padding-right:22px"></font>
+						<br>
+						<font class="detailBoxFont" style="float:left">
+							<b style="float:left;margin-right:40px">Owner:</b><?=$project_info["owner"]; ?>
+						</font>
+						<br>
+						<font class="detailBoxFont" style="float:left">
+							<b style="float:left;margin-right:12px">Company:</b><?=$project_info["p_company"]; ?>
+						</font>
+						<br>
+						<font class="detailBoxFont" style="float:left">
+							<b style="float:left;margin-right:12px" id="members">Members:</b>
+							<?php
+								$str = "";
+								foreach($members as $member)
+								{
+									$str = $str . $member['name'] . ', ';
+								}
+								if(strlen($str) <= 78)
+								{
+									$str[strlen($str) - 2] = ' ';
+								}
+								else
+								{
+									$str[strlen($str) - 2] = '.';
+									$str[strlen($str) - 1] = '.';
+									$str[strlen($str)] = '.';
+								}
+								echo($str);
+							?>
+						</font>
+						<br>
+						<font class="detailBoxFont" style="float:left">
+							<b style="float:left;margin-right:44px">Status:</b>
+							<?php
+								if($project_info['status']==0) echo "Close";
+								if($project_info['status']==1) echo "Open";
+								if($project_info['status']==2) echo "Terminated";
+							?>
+						</font>
+						<br>
+					</div>
+				</div>
+				<div style="float:right;margin-left:350px" id="listTable">
+					<table class="listTable">
+						<tr id="header">
+							<td><b>Name</b></td>
+							<td><b>Status</b></td>
+							<td><b>Priority</b></td>
+							<td><b>Owner</b></td>
+							<td><b>Task Amount</b></td>
+							<td></td>
+						</tr>
+						<?php
+							foreach($reqs as $req)
+							{
+						?>
+						<tr class="items <?php if($req['type'] == 0) echo("nonfunctional"); else echo("functional"); ?>">
+							<td><a href=""><?= $req['name']; ?></a></td>
+							<td>
+								<?php
+									if($req['status']==0) echo "Terminated";
+									if($req['status']==1) echo "Open";
+									if($req['status']==2) echo "Doing";
+									if($req['status']==3) echo "In Review";
+									if($req['status']==4) echo "Approved";
+								?>
+							</td>
+							<td>
+								<?php
+									if($req['priority']==0) echo "Low";
+									if($req['priority']==1) echo "Medium";
+									if($req['priority']==2) echo "High";
+								?>
+							</td>
+							<td><?= $req['owner']; ?></td>
+							<td>0</td>
+							<td><a href="">Edit</a></td>
+						</tr>
+						<?php
+							}
+						?>
+						<tr id="link">
+							<td><a href=""><b>Add New Requirement</b></a></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				var startTime = moment('<?= $project_info["p_start_time"]; ?>', "YYYY-MM-DD HH:mm:ss");
+				var endTime = moment('<?= $project_info["p_end_time"]; ?>', "YYYY-MM-DD HH:mm:ss");
+				var diffDays = endTime.diff(startTime, 'days') + 1;
+				$("#days").html("Expect: "+  diffDays.toString() + " Day(s)");
+			});
+		</script>
 	</body>
 </html>
