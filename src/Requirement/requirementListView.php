@@ -2,10 +2,13 @@
 <html>
 	<head>
 		<title>Edit Project</title>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
 		<link rel="stylesheet" href="../css/w3.css">
+		<link rel="stylesheet" type="text/css" href="../css/html5tooltips.css" />
+		<link rel="stylesheet" type="text/css" href="../css/html5tooltips.animation.css" />
 		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+		<script type="text/javascript" src="../js/html5tooltips.js"></script>
 	</head>
 	<style>
 	#block {
@@ -204,6 +207,12 @@
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
 	}
+	
+	.html5tooltip-box
+	{
+		color: black;
+		font-size: 20px;
+	}
 	</style>
 	<body class="w3-container" style="background-color:rgb(61, 61, 61)">
 		<?php
@@ -306,25 +315,25 @@
 							<b style="float:left;margin-right:12px">Company:</b><?=$project_info["p_company"]; ?>
 						</font>
 						<br>
-						<font class="detailBoxFont" style="float:left">
+						<?php
+							$str = "";
+							foreach($members as $member)
+							{
+								$str = $str . $member['name'] . ', ';
+							}
+							$str = trim($str);
+							$str = rtrim($str, ",");
+						?>
+						<font class="detailBoxFont" style="float:left" id="members-box" data-tooltip="<?= $str; ?>" data-tooltip-stickto="right" data-tooltip-color="stone" data-tooltip-animate-function="scalein">
 							<b style="float:left;margin-right:12px" id="members">Members:</b>
 							<?php
-								$str = "";
-								foreach($members as $member)
+								$shortstr = $str;
+								if(strlen($shortstr) > 78)
 								{
-									$str = $str . $member['name'] . ', ';
+									$shortstr = mb_substr($shortstr, 0, 78 - strlen($shortstr), "UTF-8");
+									$shortstr = $shortstr . '...';
 								}
-								if(strlen($str) <= 78)
-								{
-									$str[strlen($str) - 2] = ' ';
-								}
-								else
-								{
-									$str[strlen($str) - 2] = '.';
-									$str[strlen($str) - 1] = '.';
-									$str[strlen($str)] = '.';
-								}
-								echo($str);
+								echo($shortstr);
 							?>
 						</font>
 						<br>
