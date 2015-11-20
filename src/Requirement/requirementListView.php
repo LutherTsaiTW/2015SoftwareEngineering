@@ -232,7 +232,6 @@
 			
 			session_start();
 			$session = $_SESSION['sessionid'];
-			$_SESSION['sessionid'] = '6058d61d181af47018ffe999d5ea0347';
 			session_write_close();
 			
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
@@ -290,62 +289,109 @@
 			</div>
 			<div class="w3-row " style="Height:40%">
 				<div style="position:absolute;float:left;width:330px">
-					<div id="detail" class="detail" style="height: 255px;">
-						<font class="detailBoxFont" style="float:left;width:108px;margin-right:5px">
-							<b>Start Time:</b>
-						</font>
-						<font id="startTime"  class="detailBoxFont" style="float:left;color:lightgreen">
-							<?=$project_info["p_start_time"]; ?>
-						</font>
-						<br>
-						<font class="detailBoxFont" style="float:left;margin-right:15px">
-							<b>End Time:</b>
-						</font>
-						<font id="endTime" class="detailBoxFont" style="float:left;color:lightgreen">
-							<?=$project_info["p_end_time"]; ?>
-						</font>
-						<br>
-						<font id="days" class="detailBoxFont" style="float:right;font-size:16px;color:gray;padding-right:22px"></font>
-						<br>
-						<font class="detailBoxFont" style="float:left">
-							<b style="float:left;margin-right:40px">Owner:</b><?=$project_info["owner"]; ?>
-						</font>
-						<br>
-						<font class="detailBoxFont" style="float:left">
-							<b style="float:left;margin-right:12px">Company:</b><?=$project_info["p_company"]; ?>
-						</font>
-						<br>
-						<?php
-							$str = "";
-							foreach($members as $member)
-							{
-								$str = $str . $member['name'] . ', ';
-							}
-							$str = trim($str);
-							$str = rtrim($str, ",");
-						?>
-						<font class="detailBoxFont" style="float:left" id="members-box" data-tooltip="<?= $str; ?>" data-tooltip-stickto="right" data-tooltip-color="stone" data-tooltip-animate-function="scalein">
-							<b style="float:left;margin-right:12px" id="members">Members:</b>
-							<?php
-								$shortstr = $str;
-								if(strlen($shortstr) > 78)
-								{
-									$shortstr = mb_substr($shortstr, 0, 78 - strlen($shortstr), "UTF-8");
-									$shortstr = $shortstr . '...';
-								}
-								echo($shortstr);
-							?>
-						</font>
-						<br>
-						<font class="detailBoxFont" style="float:left">
-							<b style="float:left;margin-right:44px">Status:</b>
-							<?php
-								if($project_info['status']==0) echo "Close";
-								if($project_info['status']==1) echo "Open";
-								if($project_info['status']==2) echo "Terminated";
-							?>
-						</font>
-						<br>
+					<div id="detail" class="detail">
+						<table>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<font class="detailBoxFont" style="float:left;width:108px;margin-right:5px">
+										<b>Start Time:</b>
+									</font>
+								</td>
+								<td>
+									<font id="startTime"  class="detailBoxFont" style="float:left;color:lightgreen">
+										<?=$project_info["p_start_time"]; ?>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<font class="detailBoxFont" style="float:left;margin-right:15px">
+										<b>End Time:</b>
+									</font>
+								</td>
+								<td>
+									<font id="endTime" class="detailBoxFont" style="float:left;color:lightgreen">
+										<?=$project_info["p_end_time"]; ?>
+									</font></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><font id="days" class="detailBoxFont" style="font-size:16px;color:gray;float:right;padding-right:22px"></font></td>
+							</tr>
+							<tr>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<b style="float:left;margin-right:40px">Owner:</b>
+									</font>
+								</td>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<?=$project_info["owner"]; ?>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<b style="float:left;margin-right:12px">Company:</b>
+									</font>
+								</td>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<?=$project_info["p_company"]; ?>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<?php
+									$str = "";
+									foreach($members as $member)
+									{
+										$str = $str . $member['name'] . ', ';
+									}
+									$str = trim($str);
+									$str = rtrim($str, ",");
+								?>
+								<td style="vertical-align: baseline">
+									<font class="detailBoxFont" style="float:left">
+										<b style="float:left;margin-right:12px" id="members">Members:</b>
+									</font>
+								</td>
+								<td>
+									<font class="detailBoxFont" style="float:left" id="members-box" data-tooltip="<?= $str; ?>" data-tooltip-stickto="right" data-tooltip-color="stone" data-tooltip-animate-function="scalein">
+										<?php
+											$shortstr = $str;
+											if(mb_strlen($shortstr) > 22)
+											{
+												$shortstr = mb_substr($shortstr, 0, 22, "UTF-8");
+												$shortstr = $shortstr . '...';
+											}
+											echo($shortstr);
+										?>
+									</font>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<b style="float:left;margin-right:44px">Status:</b>
+									</font>
+								</td>
+								<td>
+									<font class="detailBoxFont" style="float:left">
+										<?php
+											if($project_info['status']==0) echo "Close";
+											if($project_info['status']==1) echo "Open";
+											if($project_info['status']==2) echo "Terminated";
+										?>
+									</font>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 				<div style="float:right;margin-left:350px" id="listTable">
