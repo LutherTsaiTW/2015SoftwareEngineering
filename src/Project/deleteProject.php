@@ -16,14 +16,15 @@
 	// [BC] 取得連線
 	$sqli = getDBConnection();
 	if(is_null($sqli)){
-		echo "<br>data base connection is fail<br>";
+		echo "<br>data base connection is fail in deleteReoject.php<br>";
+		exit();
 	}
 
 	// [BC] 設定專案的狀態改成3，也就是delete的狀態
 	$delete = "UPDATE project SET status=3 WHERE p_id=" . $pid;
 	$result = $sqli->query($delete);
 	if(!$result){
-		$user = array('success' => 0, 'message' => 'there is an error when UPDATE project status');
+		$user = array('success' => 0, 'message' => 'there is an error when UPDATE project status to 3 in deleteProject.php');
 		echo(json_encode($user));
 		exit();
 	}

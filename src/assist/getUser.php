@@ -4,14 +4,14 @@
 	// 取得使用者資料
 	function getUser($uid)
 	{
-		include_once 'getDataBaseConnection.php';
+		include_once '../assist/getDataBaseConnection.php';
 		$sqli = getDBConnection();
 
 		$selectUser = "SELECT * FROM user_info WHERE uid=" . $uid;
 		$result = $sqli->query($selectUser);
 		if(!$result)
 		{
-			$error = array('SUCCESS'=>0, 'message'=>'there is an error when SELECT user_info by uid');
+			$error = array('SUCCESS'=>0, 'message'=>'there is an error when SELECT user_info by uid in getUser.php');
 			echo json_encode($error);
 			exit();
 		}

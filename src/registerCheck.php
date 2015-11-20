@@ -6,10 +6,7 @@ $aAccount = $_POST["AccountID"];
 $aEmail = $_POST["Email"];
 
 /* Database Setting */
-$dburl = "";
-$dbuser = "";
-$dbpass = "";
-$db = "";
+require_once 'assist/DBConfig.php';
 	
 // Create connection
 $conn = mysqli_connect($dburl, $dbuser, $dbpass, $db);

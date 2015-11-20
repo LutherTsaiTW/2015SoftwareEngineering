@@ -4,17 +4,14 @@
 
 	function getDBConnection(){
 		// [BC] 抓DataBase的設定進來
-		$dburl = "";
-		$dbuser = "";
-		$dbpass = "";
-		$db = "";
+		require_once 'DBConfig.php';
 
 		// [BC] Get Connection
 		$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 		$errno = mysqli_connect_errno();
 		if($errno)
 		{
-			$user = array('success' => 0, 'message' => 'db_error');
+			$user = array('success' => 0, 'message' => 'there is an error when connection with DB in getDataBaseConnection.php');
 			echo(json_encode($user));
 			return null;
 		}

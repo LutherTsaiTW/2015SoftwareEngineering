@@ -9,12 +9,11 @@
 	$session = $_SESSION['sessionid'];
 
 	// [BC] 取得連線
-	include_once 'getDataBaseConnection.php';
+	include_once '../assist/getDataBaseConnection.php';
 	$sqli = getDBConnection();
 	if(is_null($sqli)){
-		exit("connection_error");
+		exit("connection_error in getUserInfo.php");
 	}
-	
 
 	//Insert Course Criticize to SQL
 	$query = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
@@ -23,6 +22,6 @@
 	if ($user = $result->fetch_array(MYSQLI_ASSOC)) {
 		$user['success'] = '1';
 	}else {
-		$user = array('success' => 0, 'message' => 'db_error');
+		$user = array('success' => 0, 'message' => 'there is an error when fetch data into array in getUserInfo.php');
 	}
 ?>

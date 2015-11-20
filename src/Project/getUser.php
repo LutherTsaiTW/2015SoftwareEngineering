@@ -4,7 +4,7 @@
 	// 取得使用者資料
 	function getUser($uid)
 	{
-		include_once 'getDataBaseConnection.php';
+		include_once '../assist/getDataBaseConnection.php';
 		$sqli = getDBConnection();
 
 		$selectUser = "SELECT * FROM user_info WHERE uid=" . $uid;
