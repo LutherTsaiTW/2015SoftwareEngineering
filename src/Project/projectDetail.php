@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <script type="text/javascript" src="../js/projectDetailWindowController.js"></script>
         <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/w3.css">
 </head>
 <style>
@@ -32,7 +33,7 @@ a:link {
 }
 
 a:visited {
-    color: lightgrey;
+    color: white;
     background-color: transparent;
     text-decoration: none;
 }
@@ -69,6 +70,7 @@ a:active {
 }
 
 .detailBox {
+
     height: 900px;
     width: 900px;
     margin: 0px auto;
@@ -90,6 +92,8 @@ a:active {
 }
 
 .detail {
+
+
     background-color: rgb(40, 40, 40);
     height: 400px;
     border-radius: 15px;
@@ -105,8 +109,8 @@ a:active {
     top: 30%;
     left: 40%;
     margin: 0px auto;
-    height: 400px;
-    width: 300px;
+    height: 300px;
+    width: 400px;
     background-color: rgb(80, 80, 80);
     z-index: 999;
     visibility: hidden;
@@ -115,28 +119,31 @@ a:active {
 
 .backButton {
     float: right;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
     height: 30px;
     width: 20px;
     cursor: pointer;
+    color: white;
+
 }
 
 .addButton {
+    text-align: center;
     float: right;
-    margin-right: 5px;
-    margin-top: 300px;
+    margin-right: 10px;
+    margin-top: 5px;
     height: 30px;
     width: 60px;
     background-color:green;
 }
 
-.memberMutiSelect {
+.addZone {
     float: left;
     margin-top: 10px;
     margin-left: 10px;
-    height: 380px;
-    width: 200px;
+    height: 250px;
+    width: 150px;
 }
 
 .successWindow {
@@ -153,15 +160,23 @@ a:active {
     border-radius: 15px;
 
 }
+
+.textBox
+{
+    display: inline;
+
+}
+
 .detailBoxFont
 {
-    font-size: 16;
+    font-size: 20;
 
 }
 </style>
 <?php
     session_start();
     $session=$_SESSION['sessionid'];
+    // [BC]
     // [BC]
     // 此函式是藉由使用者ID取得使用者名稱的
     // 參數如下
@@ -201,7 +216,7 @@ a:active {
     $result = $sqli->query($selectProject);
     if(!$result)
     {
-        $error = array('success' => 0, 'message' => 'there is an error when SELECT project by pid in projectdetail.php');
+        $error = array('success' => 0, 'message' => 'there is an error when SELECT project by pid');
         echo(json_encode($error));
         exit();
     }
@@ -212,14 +227,14 @@ a:active {
     $result = $sqli->query($selectMember);
     if(!$result)
     {
-        $error = array('success' => 0, 'message' => 'there is an error when SELECT project_team in projectdetail.php');
+        $error = array('success' => 0, 'message' => 'there is an error when SELECT project_team');
         echo(json_encode($error));
         exit();
     }
 
     $member = array();
     $memberCount = 0;
-    while ($data = $result->fetch_assoc())
+    while ($data = $result->fetch_assoc()) 
     {
         $memberCount++;
         array_push($member, getUser($data['user_id'], $sqli));
@@ -229,8 +244,9 @@ a:active {
     $projectdetail = array_merge($project, $member);
 
     // [BC] 把Owner從ID轉成STRING
+
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
-    //echo "project detail => " . json_encode($projectdetail) . "<br>";
+ //   echo "project detail => " . json_encode($projectdetail) . "<br>";
     
     // [BC] Get User Info
     $selectUser = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
@@ -252,8 +268,13 @@ a:active {
     // $countMemberInProject -> 有在當前專案的人員數量
     // $memberInProject -> 有在當前專案的人員資料，[$i][0]是名稱，[$i][1]是公司名稱，[$i][2]是ID
     require_once 'getMember.php';
+    // echo json_encode($members) . "<br>";
+
     // [BC] 分別給memberToAdd和memberToRemove
+
 ?>
+
+
 
 <!--addmember畫面-->
 <?php
@@ -267,18 +288,27 @@ a:active {
     <!--AddMemberWindow-->
     <div>
         <div id="addMemberWindow" class="addMemberWindow">
-            <p onclick="back()" class="backButton"> x </p>
             <form action="addMember.php" method="POST"  target="_iframe">
-            <select  multiple name="addusers" id="memberMutiSelect" class="memberMutiSelect">
-            <?php
-                require_once('getMember.php');
-                for($j =0;$j<$countMember;$j++)
-                {
-                    echo" <option value=\"" ,$members[$j][2], "\">",$members[$j][0] ,'-',$members[$j][1],"</option>";
-                }
-            ?>
+            <select  multiple name="addusers" id="addZone" class="addZone">
+              <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
             </select>
-                <input type="submit" onclick="showSuccessWindow()" name="submit" value="Add" class="addButton" > 
+            <select hidden="hidden"  multiple  id="iniAddZone" >
+              <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
+             </select>
+                <div style="float:left;width:40px;height:300px;margin-left:10px;">
+                    <button onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 100px;">Add</button>
+                    <button onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 10px ;">Remove</button>
+                </div> 
+
+            <select  multiple name="addusers" id="removeZone" class="addZone">
+                <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
+            </select>
+             <select hidden="hidden"  multiple  id="iniRemoveZone" >
+                <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
+            </select>
+
+                <input type="submit" onclick="showSuccessWindow()" name="submit" value="Ok" class="addButton" > 
+                <button onclick="back();" class="addButton">Cancel</button>
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -306,14 +336,15 @@ a:active {
         </div>
         <div class="w3-row " style="Height:70px;color:white;text-align:center">
             <h1 id="projectName" style="background-color:grey;border-radius:5px">
-
-                   ProjectName 
-                <?php   
-                    if($projectdetail['p_owner']==$user['name'])
-                    {
-                        echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
-                    }
+               <?php 
+                echo $projectdetail['p_name'] ;   
                 ?> 
+                <?php   
+                if($projectdetail['p_owner']==$user['name'])
+                {
+                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                }
+             ?> 
             </h1>
 
         </div>
@@ -328,37 +359,55 @@ a:active {
                     <div id="detail" class="detail">
                         <?php
                           
-                            echo "<font class=\"detailBoxFont\"> <b>End Time:<b/></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen\">",$projectdetail['p_end_time'],"</font><br/>";
-                            echo "<font class=\"detailBoxFont\"> <b>Start Time:<b/></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen\">",$projectdetail['p_start_time'],"</font><br/>";
-                            echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right\"></font><br/>";  
-                            echo "<font class=\"detailBoxFont\"> <b>Company:<b/>",$projectdetail['p_company'],"</font><br/>"; 
-                            echo "<font class=\"detailBoxFont\"> <b>Owner:<b/>",$projectdetail['p_owner'],"<br/>"; 
+                            echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen\">",$projectdetail['p_end_time'],"</font><br/>";
+                            echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen\">",$projectdetail['p_start_time'],"</font><br/>";
+                            echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right;color:grey;font-size:16\"></font><br/>";  
+                            echo "<font class=\"detailBoxFont\"> <b>Company: </b>",$projectdetail['p_company'],"</font><br/>"; 
+                            echo "<font class=\"detailBoxFont\"> <b>Owner: </b>",$projectdetail['p_owner'],"<br/>"; 
                             
-                            echo "<font class=\"detailBoxFont\"> <b>Members:<b/>";
+                            echo "<font class=\"detailBoxFont\"> <b>Members: </b><div class=\"textBox\" >  ";
+                            $fontWidth=0;$countBr=0;//整行寬度與換行次數的計算變數
+
                             for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
                             {
-                                if($i==$projectdetail['memberCount']-1)
-                                    echo $projectdetail[$i],"</font><br/>";
+                                //計算加入資料後的寬度並比對是否超過280，如是則換行，換行第二次則顯示...
+                                $fontWidth+=(10*strlen($projectdetail[$i]));
+                                if($fontWidth>=280)
+                                {              
+                                    $countBr++;
+                                    if($countBr==2)
+                                        echo "...";
+                                    echo "<br/>";
+                                    $fontWidth=(10*strlen($projectdetail[$i]));
+                                }
+
+                                if($countBr<=1)
+                                {
+                                 if($i==$projectdetail['memberCount']-1)
+                                    echo $projectdetail[$i],"</div><br/>";
                                 else
-                                 echo $projectdetail[$i],",";   
+                                 echo $projectdetail[$i], ",";                                     
+                                }
+                                
+                                  
                             }            
-                            echo "<font class=\"detailBoxFont\"> <b>Status:<b/>";     
+                            echo "<font class=\"detailBoxFont\"> <b>Status: </b>";     
                             if($projectdetail['status']==0) echo "Close </font><br/>";
                             if($projectdetail['status']==1) echo "Open </font><br/>";
                             if($projectdetail['status']==2) echo "Terminated </font><br/>";
                         ?>
                     </div>
                     <div class="listButton">
-                        <a>Requirement</a>
+                        <a href="../Requirement/requirementListView.php" >Requirement</a>
                     </div>
                     <div class="listButton">
-                        <a>Test Case</a>
+                        <a "../Test/testListView.php">Test Case</a>
                     </div>
                     <div class="listButton">
-                        <a>Review</a>
+                        <a "../Review/reviewListView.php">Review</a>
                     </div>
                     <div class="listButton">
-                        <a>Report</a>
+                        <a "../RePoret/reportListView.php">Report</a>
                     </div>
                     <div class="listButton">
                         <a onclick="showAddMemberWindow()">Edit Members</a>
@@ -372,15 +421,19 @@ a:active {
     </div>
 </body>
 
-//計算預期天數
+<!--//計算預期天數-->
 <script type="text/javascript">
 
         var startTime = moment("<?php echo $projectdetail['p_start_time']; ?>", "YYYY-MM-DD HH:mm:ss");
         var endTime = moment("<?php echo $projectdetail['p_end_time']; ?>", "YYYY-MM-DD HH:mm:ss");
         var diffDays = endTime.diff(startTime, 'days') + 1;
-        document.getElementById("days").innerHTML ="Expect"+  diffDays.toString() + " Days";
+        document.getElementById("days").innerHTML ="Expect: "+  diffDays.toString() + " Days";
 
         
+</script>
+
+<script type="text/javascript">
+    getMemberData();
 </script>
 
 
