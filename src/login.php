@@ -7,7 +7,6 @@
 
 	/* [CLY] Database Setting */
 	require_once('assist/DBConfig.php');
-	echo $dburl, $dbuser, $dbpass, $db;
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	$errno = mysqli_connect_errno();
 	if($errno)
