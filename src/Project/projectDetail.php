@@ -164,7 +164,7 @@ a:active {
 .textBox
 {
     display: inline;
-
+    overflow:hidden;
 }
 
 .detailBoxFont
@@ -288,27 +288,30 @@ a:active {
     <!--AddMemberWindow-->
     <div>
         <div id="addMemberWindow" class="addMemberWindow">
-            <form action="addMember.php" method="POST"  target="_iframe">
-            <select  multiple name="addusers" id="addZone" class="addZone">
-              <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
-            </select>
-            <select hidden="hidden"  multiple  id="iniAddZone" >
-              <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
-             </select>
-                <div style="float:left;width:40px;height:300px;margin-left:10px;">
-                    <button onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 100px;">Add</button>
-                    <button onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 10px ;">Remove</button>
-                </div> 
+            <form id="addMemberForm"   action="addMember.php" method="POST" target="_iframe">
+                <input hidden="hidden" name="pid" value="<?php echo $pid ?>">
+                <select  multiple="yes"name="removeusers[]" id="removeZone"  class="addZone" >
+                  <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
+                </select>
+                <select hidden="hidden"  name="iniremoveusers[]" id="iniRemoveZone" multiple="yes"  >
+                  <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
+                 </select>
+                    <div style="float:left;width:40px;height:300px;margin-left:15px;">
+                        <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px">Add</font>
+                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color:rgb(100,100,100)"><b>></b></button>
+                         <font style="margin-left:-10px;font-size:16px">Remove</font>
+                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color:rgb(100,100,100)"><b><</b></button>
+                    </div> 
 
-            <select  multiple name="addusers" id="removeZone" class="addZone">
-                <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
-            </select>
-             <select hidden="hidden"  multiple  id="iniRemoveZone" >
-                <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
-            </select>
+                <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px">
+                    <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
+                </select>
+                 <select hidden="hidden" name="iniaddusers[]" id="iniAddZone"  multiple="yes"   >
+                    <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
+                </select>
 
-                <input type="submit" onclick="showSuccessWindow()" name="submit" value="Ok" class="addButton" > 
-                <button onclick="back();" class="addButton">Cancel</button>
+                    <input  type="reset" onclick ="showSuccessWindow()"  value="Ok" class="addButton" > 
+                    <button type="reset" onclick="back();" class="addButton">Cancel</button>
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -316,7 +319,7 @@ a:active {
 
     <div id="successWindow" class="successWindow">
         <p style="color:white;  font-weight: 600;font-size: 25">Add Member Success!</p>
-         <button onclick="back()" style=";background-color:green" >OK</button>
+         <button onclick="window.location.assign(window.location.href);;back()" style=";background-color:green" >OK</button>
     </div>
     <br/>
     <div style="z-index:1;">
@@ -365,37 +368,30 @@ a:active {
                             echo "<font class=\"detailBoxFont\"> <b>Company: </b>",$projectdetail['p_company'],"</font><br/>"; 
                             echo "<font class=\"detailBoxFont\"> <b>Owner: </b>",$projectdetail['p_owner'],"<br/>"; 
                             
-                            echo "<font class=\"detailBoxFont\"> <b>Members: </b><div class=\"textBox\" >  ";
-                            $fontWidth=0;$countBr=0;//整行寬度與換行次數的計算變數
+                            echo "<font class=\"detailBoxFont\"> <b>Members: </b><br/><font class=\"textBox\" >  ";
+                            $countBr=0;//整行寬度與換行次數的計算變數
 
                             for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
                             {
-                                //計算加入資料後的寬度並比對是否超過280，如是則換行，換行第二次則顯示...
-                                $fontWidth+=(10*strlen($projectdetail[$i]));
-                                if($fontWidth>=280)
-                                {              
-                                    $countBr++;
-                                    if($countBr==2)
-                                        echo "...";
-                                    echo "<br/>";
-                                    $fontWidth=(10*strlen($projectdetail[$i]));
-                                }
-
-                                if($countBr<=1)
-                                {
-                                 if($i==$projectdetail['memberCount']-1)
-                                    echo $projectdetail[$i],"</div><br/>";
-                                else
-                                 echo $projectdetail[$i], ",";                                     
-                                }
                                 
-                                  
+                                 if($i==$projectdetail['memberCount']-1||$countBr>=3)
+                                 {
+                                    echo $projectdetail[$i]," ...</font><br/>";
+                                    break; 
+                                 }
+                                else
+                                 echo $projectdetail[$i], " ,";   
+
+                                 $countBr++;
+                                                                      
                             }            
                             echo "<font class=\"detailBoxFont\"> <b>Status: </b>";     
                             if($projectdetail['status']==0) echo "Close </font><br/>";
                             if($projectdetail['status']==1) echo "Open </font><br/>";
                             if($projectdetail['status']==2) echo "Terminated </font><br/>";
                         ?>
+                        <script type="text/javascript">
+                        </script>
                     </div>
                     <div class="listButton">
                         <a href="../Requirement/requirementListView.php" >Requirement</a>
