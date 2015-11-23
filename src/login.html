@@ -4,6 +4,8 @@
     <title>Login</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="stylesheet" href="css/w3.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/loginCheck.js"></script>
 </head>
 <style>
 a:link {
@@ -60,8 +62,8 @@ a:active {
     </div>
     <div class="w3-row " style="Height:30%;color:white;text-align:center">
         <h1 style="background-color:grey;border-radius:5px">
-				Login
-			</h1>
+                Login
+            </h1>
     </div>
     <div class="w3-row " style="Height:40%">
         <div class="w3-col m4">
@@ -71,15 +73,15 @@ a:active {
             <div class="w3-col m2">
                 <p></p>
             </div>
-            <form action="login.php" method="POST" class="w3-col m4 ">
+            <form action="javascript:checkOnLogin();" class="w3-col m4">
                 <br/>
                 <font color="white">Account:</font>
                 <br />
-                <input type="text" name="account_id" autofocus required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
+                <input id="account" type="text" name="account_id" autofocus required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
                 <br />
                 <font color="white">Password:</font>
                 <br />
-                <input type="password" name="password" required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
+                <input id="password" type="password" name="password" required pattern="[A-Za-z0-9]{1,12}" style="border-radius: 3px">
                 <br />
                 <br />
                 <input type="submit" name="submit" value="Login" class="w3-teal">
