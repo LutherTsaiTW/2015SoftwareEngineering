@@ -51,12 +51,43 @@
 			}
 			return true;
 		}
+
+		// [BC] submit的function
+		function submit(){
+			alert('in submit');
+			var form = $j(document.requirementForm);
+			alert(form);
+			var posting = new XMLHttpRequest();
+			posting.onreadystatechange() = function(){
+				alert("onreadystatechange");
+				if(posting.readyState == 2)
+				{
+					alert("in readyState 2");
+					document.getElementById("addButton").attr("disabled", true);
+				}
+				else if(posting.readyState == 4 && posting.status == 200)
+				{
+					document.getElementById("addButton").attr("disabled", false);
+					var data = parseJSON(posting.responseText);
+					if(data.SUCCESS == 0)
+					{
+						alert('add requirement failed');	
+					}
+					document.location.href = "./Requirement/requirementListView.php?pid=" + $pid;
+				}
+			}
+			posting.open("POST", "addRequirement.php", true);
+			posting.send(form.serialize());
+
+		}
 	</script>
 	<body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 		<div><br></div>
 		<div class="w3-row">
 			<div style="float:left">
-				<a href="../Project/projectList.html"><img src="../imgs/ptsIcon.png" alt="here is an icon" title="back to Requirement List Page" width="100", height="30"></a>
+				<a href="<?='../Requirement/requirementListView.php?pid=' . $pid;?>">
+					<img src="../imgs/ptsIcon.png" alt="here is an icon" title="back to Requirement List Page" width="100", height="30">
+				</a>
 			</div>
 			<div class="w3-container greyBox logoutLink">
                 <a href="../logout.php">Logout</a>
@@ -72,7 +103,7 @@
 			<div class="w3-col blackBox" style="width: 450;height: 500">
 				<br>
 				<div class="w3-third formBox" algin="left">
-					<form action="addRequirement.php" onsubmit="return validation()" method="POST">
+					<form id="requirementForm" action="addRequirement.php" onsubmit="return validation()" method="POST">
 						<input type="hidden" id="pid" name="pid" value="<?=$pid;?>" />
 						<input type="hidden" id="uid" name="uid" value="<?=$user['uid'];?>" />
 						<div class="formElement">
@@ -91,7 +122,7 @@
 							<SELECT name="priority" id="priority" class="selectBoxStyle">
 								<option value="0">Low</option>
 								<option value="1">Medium</option>
-								<option value="1">High</option>
+								<option value="2">High</option>
 							</SELECT>
 						</div>
 						<div class="formElement">
@@ -99,9 +130,9 @@
 							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="9"></textarea>
 						</div>
 						<div class="formElement"> <!-- Keep Space For Exit Button -->
-							<button class="w3-teal formButton" style="float: left" type="submit">Add</button>
+							<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
 							<a href=<?="requirementListView.php?pid=$pid"?>>
-								<button type="button" class="w3-teal formButton" style="float: left" onclick="Back()">exit</button>
+								<button type="button" class="w3-teal formButton" style="float: left">exit</button>
 							</a>
 						</div>
 					</form>
