@@ -7,7 +7,11 @@ function checkOnLogin() {
     });
 
     posting.done(function(data) {
-        var response = $.parseJSON(data);
+        try {
+            var response = $.parseJSON(data);
+        } catch (err) {
+            alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + data);
+        }
         if (response.success == 0) {
             alert("登入失敗！\n帳號或密碼錯誤？(" + response.message + ")");
         } else {
