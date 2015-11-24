@@ -3,7 +3,6 @@
 	
 	// [BC]Get the Data
 	$pID = $_POST["pid"];
-	echo $pID . "<br>";
 	$pName = $_POST["name"];
 	$pCompany = $_POST["company"];
 	$pStartTime = $_POST["startTime"];
@@ -16,7 +15,6 @@
 	
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	$errno = mysqli_connect_errno();
-	echo "ertyui<br>";
 	if($errno)
 	{
 		$user = array('success' => 0, 'message' => 'db_error');
@@ -28,7 +26,6 @@
 	// [BC]Update的內容
 	// project (p_id, p_name, p_des, p_company, p_owner, p_start_time, p_end_time)
 	$update = "UPDATE project SET p_name=\"" . $pName . "\", p_des=\"" . $pDes . "\", p_company=\"" . $pCompany . "\", p_start_time=\"" . $pStartTime . "\", p_end_time=\"" . $pEndTime . "\", status=". $pStatus. " WHERE p_id=" . $pID;
-	echo $update;
 
 	// [BC]對資料庫update
 	$result = $sqli->query($update) or die("query error");

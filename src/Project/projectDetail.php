@@ -246,7 +246,6 @@ a:active {
     // [BC] 把Owner從ID轉成STRING
 
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
- //   echo "project detail => " . json_encode($projectdetail) . "<br>";
     
     // [BC] Get User Info
     $selectUser = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
@@ -258,7 +257,6 @@ a:active {
         exit();
     }
     $user = $result->fetch_array(MYSQLI_ASSOC);
-    // echo json_encode($user) . "<br>";
 
     // [BC]
     // 此API取得在PROJECT中的人員以及不在PROJECT中的人員
@@ -268,7 +266,6 @@ a:active {
     // $countMemberInProject -> 有在當前專案的人員數量
     // $memberInProject -> 有在當前專案的人員資料，[$i][0]是名稱，[$i][1]是公司名稱，[$i][2]是ID
     require_once 'getMember.php';
-    // echo json_encode($members) . "<br>";
 
     // [BC] 分別給memberToAdd和memberToRemove
 

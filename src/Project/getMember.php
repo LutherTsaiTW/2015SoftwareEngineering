@@ -15,12 +15,10 @@
 		if($NotInProject)
 		{
 			$selectUser = "SELECT u.uid, u.name, u.company FROM user_info as u WHERE u.company=\"" . $company . "\" AND u.uid NOT IN (SELECT uid FROM project_team as t WHERE t.project_id=" . $pid . " AND t.user_id=u.uid)";
-			//echo "SELECT = " . $selectUser . "<br>";
 		}
 		else   // [BC] 要不然要取的人就是已經在專案中了
 		{
 			$selectUser = "SELECT u.uid, u.name, u.company FROM user_info as u WHERE u.company=\"" . $company . "\" AND u.uid IN (SELECT uid FROM project_team as t WHERE t.project_id=" . $pid . " AND t.user_id=u.uid)";
-			//echo "SELECT = " . $selectUser . "<br>";
 		}
 		// [BC] 在MySQL中做測試的指令
 		// [BC] SELECT DISTINCT u.uid, u.name, u.company FROM user_info as u WHERE u.company="PTS" AND u.uid NOT IN (SELECT uid FROM project_team as t WHERE t.project_id=64 AND t.user_id=u.uid)
@@ -34,7 +32,6 @@
 		// [BC] 把取得的資料加到ARRAY中，並另外設定一個變數儲存總共有多少MEMBER被抓到
 		while ($data = $result->fetch_array()) 
 		{
-			//echo "name = " . $data['name'] . " company = " . $data['company'] . " uid = " . $data['uid'] . "<br>";
 			array_push($array, array($data['name'], $data['company'], $data['uid']));
 			$count++;
 		}
@@ -100,7 +97,4 @@
 	
 	// [BC] 取得和專案相同公司的使用者，且目前在專案中的人
 	getUserWithTheSameCompany($sqli, $pCompany, $pid, FALSE, $membersInProject, $countMemberInProject);
-
-	// echo "Not In Project COUNT = " . $countMemberNotInProject . " ". json_encode($membersNotInProject) . "<br>";
-	// echo "In Project COUNT = " . $countMemberInProject . " ". json_encode($membersInProject) . "<br>";
 ?>

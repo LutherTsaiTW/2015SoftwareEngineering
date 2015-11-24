@@ -16,7 +16,7 @@
 	// [BC] 取得連線
 	$sqli = getDBConnection();
 	if(is_null($sqli)){
-		echo "<br>data base connection is fail in deleteReoject.php<br>";
+		echo "<br>data base connection is fail in deleteProject.php<br>";
 		exit();
 	}
 

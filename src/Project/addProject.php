@@ -8,7 +8,6 @@
 	// $Connect -> 目前連接的資料庫
 	function getProject($Name, $Description, $Company, $Connect){
 		$select = "SELECT p_id FROM project WHERE project.p_name = \"" . $Name . "\" AND project.p_des = \"" . $Description . "\" AND project.p_company = \"" . $Company . "\"";
-		echo "select -> " . $select . "<br>";
 		$result = $Connect->query($select);
 		if(!$result)
 		{

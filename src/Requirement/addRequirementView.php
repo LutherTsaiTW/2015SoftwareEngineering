@@ -38,7 +38,6 @@
 		$user['uid'] = $data['uid'];
 		$user['name'] = $data['name'];
 		$user['previlege'] = $data['previlege'];
-		//echo json_encode($user) . "<br>";
 	?>
 	<script type="text/javascript">
 		// [BC] 檢查requirement的名稱是不是空字串

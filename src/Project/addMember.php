@@ -4,10 +4,6 @@
 	@$iniaddusers = $_POST['iniaddusers'];
 	@$iniremoveusers = $_POST['iniremoveusers'];
 	@$pid = $_POST['pid'];
-	foreach($iniaddusers as $iniadduser)
-		{
-			echo $iniadduser."<br>";
-		}
 
 	/* [CLY] Database Setting */
 	require_once '../assist/DBConfig.php';
@@ -34,7 +30,6 @@
 		if($exist==0)
 		{
 			$sqli->query("INSERT INTO project_team  VALUES (" . $pid . ", " . $adduser . ");") or die('Insert Query error');
-			echo "Insert".$adduser."<br>";
 		}
 		
 	}
