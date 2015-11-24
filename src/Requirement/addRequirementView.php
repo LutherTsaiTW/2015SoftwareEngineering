@@ -4,6 +4,8 @@
     	<link rel="stylesheet" href="../css/w3.css">
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
     	<title>Add Requirement</title>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script type="text/javascript" src="../js/addRequirement.js"></script>
 	</head>
 	<style type="text/css">
 	</style>
@@ -39,48 +41,6 @@
 		$user['name'] = $data['name'];
 		$user['previlege'] = $data['previlege'];
 	?>
-	<script type="text/javascript">
-		// [BC] 檢查requirement的名稱是不是空字串
-		function validation(){
-			var str = document.getElementById("requirementName").value;
-			str = str.trim();
-			document.getElementById("requirementName").value = str;
-			if(str == null || str == ""){
-				alert('需求名稱不可為空');
-				return false;
-			}
-			return true;
-		}
-
-		// [BC] submit的function
-		function submit(){
-			alert('in submit');
-			var form = $j(document.requirementForm);
-			alert(form);
-			var posting = new XMLHttpRequest();
-			posting.onreadystatechange() = function(){
-				alert("onreadystatechange");
-				if(posting.readyState == 2)
-				{
-					alert("in readyState 2");
-					document.getElementById("addButton").attr("disabled", true);
-				}
-				else if(posting.readyState == 4 && posting.status == 200)
-				{
-					document.getElementById("addButton").attr("disabled", false);
-					var data = parseJSON(posting.responseText);
-					if(data.SUCCESS == 0)
-					{
-						alert('add requirement failed');	
-					}
-					document.location.href = "./Requirement/requirementListView.php?pid=" + $pid;
-				}
-			}
-			posting.open("POST", "addRequirement.php", true);
-			posting.send(form.serialize());
-
-		}
-	</script>
 	<body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 		<div><br></div>
 		<div class="w3-row">
@@ -103,12 +63,12 @@
 			<div class="w3-col blackBox" style="width: 450;height: 500">
 				<br>
 				<div class="w3-third formBox" algin="left">
-					<form id="requirementForm" action="addRequirement.php" onsubmit="return validation()" method="POST">
+					<form id="requirementForm" action="javascript:finalCheck()" >
 						<input type="hidden" id="pid" name="pid" value="<?=$pid;?>" />
 						<input type="hidden" id="uid" name="uid" value="<?=$user['uid'];?>" />
 						<div class="formElement">
-							<p >Name:</p>
-							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" />
+							<div id="name">Name:</div>
+							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" />
 						</div>
 						<div class="formElement">
 							<p>Type:</p>
