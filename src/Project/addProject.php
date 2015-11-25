@@ -97,5 +97,7 @@
 	}
 
 	// [BC] 重新導到專案列表頁面，如果沒有錯誤的話
-	header("Location: projectList.html");
+	//header("Location: projectList.html");
+	$response = array('SUCCESS' => 1);
+	exit(json_encode($response));
 ?>

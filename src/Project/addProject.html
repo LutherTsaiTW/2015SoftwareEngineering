@@ -62,6 +62,37 @@ a:active {
     width: 400;
 }
 </style>
+<script>
+function submitAddProject() {
+    $.post("projectCheck.php", {
+            Company: $("#project_company").val(),
+            Project_Name: $("#project_name").val(),
+            ProjectID: 0
+        })
+        .done(function(data) {
+            var check_result = $.parseJSON(data);
+            if (check_result.SUCCESS == "1") {
+                $.post("addProject.php", {
+                    Company: $("#project_company").val(),
+                    Name: $("#project_name").val(),
+                    StartTime: $("#startTime").val(),
+                    EndTime: $("#endTime").val(),
+                    Status: $("#status").val(),
+                    Description: $("#project_des").val()
+                }).done(function(parseData) {
+                    var response = $.parseJSON(parseData);
+                    if (response.SUCCESS == 1) {
+                        window.location.href = "projectList.html";
+                    } else {
+                        alert("Add Project Failure");
+                    }
+                });;
+            } else {
+                alert("Please check if the project is exist!!!");
+            }
+        });
+}
+</script>
 
 <body class="w3-container" style="background-color:rgb(60, 60, 60)">
     <br/>
@@ -69,8 +100,8 @@ a:active {
         <div style="float:left">
             <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
-        <div class="fastAccountBlock">
-            <p/>
+        <div class="w3-container fastAccount">
+            <a href="../logout.php" style="color:white">Logout</a>
         </div>
         <div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
             Welcome!
@@ -84,7 +115,7 @@ a:active {
     </div>
     <div class="w3-row" align="center">
         <div class="w3-col">
-            <form action="addProject.php" method="POST">
+            <form action="javascript:submitAddProject();">
                 <br>
                 <div class="w3-row formBlock" style>
                     <div class="w3-col m4">
@@ -151,7 +182,7 @@ a:active {
                         <br>
                         <font color="white">Status:</font>
                         <br>
-                        <select name="Status">
+                        <select name="Status" id="status">
                             <option value="0">Close</option>
                             <option value="1">Open</option>
                             <option value="2">Terminated</option>
