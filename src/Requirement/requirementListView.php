@@ -256,6 +256,7 @@
 				$members[]['name'] = $row['name'];
 			}
 			
+			$reqs = array();
 			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 ORDER BY rpriority DESC;") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
@@ -288,7 +289,7 @@
 				<h1 style="background-color:grey;border-radius:5px"><?= $project_info['p_name']; ?> Requirements</h1>
 			</div>
 			<div class="w3-row " style="Height:40%">
-				<div style="position:absolute;float:left;width:330px">
+				<div style="position:absolute;float:left;width:300px">
 					<div id="detail" class="detail">
 						<table>
 							<tr>
@@ -303,7 +304,10 @@
 								</td>
 								<td>
 									<font id="startTime"  class="detailBoxFont" style="float:left;color:white">
-										<?=$project_info["p_start_time"]; ?>
+										<?php
+											$stime = explode(" ", $project_info["p_start_time"])[0]; 
+											echo(str_replace("-", "/", $stime));
+										?>
 									</font>
 								</td>
 							</tr>
@@ -315,12 +319,15 @@
 								</td>
 								<td>
 									<font id="endTime" class="detailBoxFont" style="float:left;color:white">
-										<?=$project_info["p_end_time"]; ?>
+										<?php
+											$etime = explode(" ", $project_info["p_end_time"])[0]; 
+											echo(str_replace("-", "/", $etime));
+										?>
 									</font></td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><font id="days" class="detailBoxFont" style="font-size:16px;color:gray;float:right;padding-right:22px"></font></td>
+								<td><font id="days" class="detailBoxFont" style="font-size:16px;color:gray;float:left"></font></td>
 							</tr>
 							<tr>
 								<td>
@@ -365,9 +372,9 @@
 									<font class="detailBoxFont" style="float:left" id="members-box" data-tooltip="<?= $str; ?>" data-tooltip-stickto="right" data-tooltip-color="stone" data-tooltip-animate-function="scalein">
 										<?php
 											$shortstr = $str;
-											if(mb_strlen($shortstr) > 22)
+											if(mb_strlen($shortstr) > 17)
 											{
-												$shortstr = mb_substr($shortstr, 0, 22, "UTF-8");
+												$shortstr = mb_substr($shortstr, 0, 17, "UTF-8");
 												$shortstr = $shortstr . '...';
 											}
 											echo($shortstr);
@@ -406,8 +413,10 @@
 							<td></td>
 						</tr>
 						<?php
-							foreach($reqs as $req)
+							if(count($reqs))
 							{
+								foreach($reqs as $req)
+								{
 						?>
 						<tr class="items <?php if($req['type'] == 0) echo("nonfunctional"); else echo("functional"); ?>">
 							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name']; ?></a></td>
@@ -430,12 +439,12 @@
 							<td><?= $req['owner']; ?></td>
 							<td>0</td>
 							<?php
-								if($req['status']==1)
+								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
 									echo("<td><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
 									echo("<td><a href='deleteRequirementView.php?rid=" . $req['id'] . "'>Delete</a></td>");
 								}
-								elseif($req['status']==3)
+								elseif($req['status']==3 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
 									echo("<td><a href='changeRequirementView.php?rid=" . $req['id'] . "'>Change</a></td>");
 									echo("<td></td>");
@@ -448,10 +457,11 @@
 							?>
 						</tr>
 						<?php
+								}
 							}
 						?>
 						<tr id="link">
-							<td><a href="addRequirementView.php?pid=<?=$pid; ?>"><b>Add New Requirement</b></a></td>
+							<td><?php if($userinfo['previlege']==111 || $userinfo['previlege']==999) echo('<a href="addRequirementView.php?pid=' . $pid . '"><b>Add New Requirement</b></a>'); ?></td>
 							<td></td>
 							<td></td>
 							<td></td>
