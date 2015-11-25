@@ -250,13 +250,13 @@
 				exit;
 			}
 			
-			$result = $sqli->query("SELECT u.name FROM project_team AS p RIGHT JOIN user_info AS u ON u.uid = p.user_id AND p.project_id=" . $pid . ";") or die($sqli->error);
+			$result = $sqli->query("SELECT u.name FROM project_team AS p RIGHT JOIN user_info AS u ON u.uid = p.user_id WHERE p.project_id=" . $pid . ";") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$members[]['name'] = $row['name'];
 			}
 			
-			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 3 ORDER BY rpriority DESC;") or die($sqli->error);
+			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 ORDER BY rpriority DESC;") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$reqs[$row['rid']]['id'] = $row['rid'];
@@ -302,7 +302,7 @@
 									</font>
 								</td>
 								<td>
-									<font id="startTime"  class="detailBoxFont" style="float:left;color:lightgreen">
+									<font id="startTime"  class="detailBoxFont" style="float:left;color:white">
 										<?=$project_info["p_start_time"]; ?>
 									</font>
 								</td>
@@ -314,7 +314,7 @@
 									</font>
 								</td>
 								<td>
-									<font id="endTime" class="detailBoxFont" style="float:left;color:lightgreen">
+									<font id="endTime" class="detailBoxFont" style="float:left;color:white">
 										<?=$project_info["p_end_time"]; ?>
 									</font></td>
 							</tr>
@@ -403,20 +403,21 @@
 							<td><b>Owner</b></td>
 							<td><b>Task Amount</b></td>
 							<td></td>
+							<td></td>
 						</tr>
 						<?php
 							foreach($reqs as $req)
 							{
 						?>
 						<tr class="items <?php if($req['type'] == 0) echo("nonfunctional"); else echo("functional"); ?>">
-							<td><a href=""><?= $req['name']; ?></a></td>
+							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name']; ?></a></td>
 							<td>
 								<?php
 									if($req['status']==0) echo "Terminated";
 									if($req['status']==1) echo "Open";
-									if($req['status']==2) echo "Doing";
-									if($req['status']==3) echo "In Review";
-									if($req['status']==4) echo "Approved";
+									if($req['status']==2) echo "In Review";
+									if($req['status']==3) echo "Approved";
+									if($req['status']==4) echo "Old";
 								?>
 							</td>
 							<td>
@@ -428,13 +429,30 @@
 							</td>
 							<td><?= $req['owner']; ?></td>
 							<td>0</td>
-							<td><a href="">Edit</a></td>
+							<?php
+								if($req['status']==1)
+								{
+									echo("<td><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
+									echo("<td><a href='deleteRequirementView.php?rid=" . $req['id'] . "'>Delete</a></td>");
+								}
+								elseif($req['status']==3)
+								{
+									echo("<td><a href='changeRequirementView.php?rid=" . $req['id'] . "'>Change</a></td>");
+									echo("<td></td>");
+								}
+								else
+								{
+									echo("<td></td>");
+									echo("<td></td>");
+								}
+							?>
 						</tr>
 						<?php
 							}
 						?>
 						<tr id="link">
-							<td><a href=""><b>Add New Requirement</b></a></td>
+							<td><a href="addRequirementView.php?pid=<?=$pid; ?>"><b>Add New Requirement</b></a></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
