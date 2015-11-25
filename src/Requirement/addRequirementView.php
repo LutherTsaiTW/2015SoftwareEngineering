@@ -6,6 +6,7 @@
     	<title>Add Requirement</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/addRequirement.js"></script>
+    	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	<style type="text/css">
 	</style>
