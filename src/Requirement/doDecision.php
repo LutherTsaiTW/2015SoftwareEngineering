@@ -20,6 +20,8 @@
 	}
 	$sqli->query("SET NAMES 'UTF8'");
 
-	
 
+	// [BC] update 新的資訊到 review table 中
+	$update = "UPDATE req_review SET reviewComment=$comment, decision=$decision WHERE reqreviewID=$reqReviewID";
+	
 ?>

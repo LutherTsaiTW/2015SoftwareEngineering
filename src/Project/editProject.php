@@ -23,11 +23,10 @@
 	}
 	$sqli->query("SET NAMES 'UTF8'");
 	
-	// [BC]Update的內容
-	// project (p_id, p_name, p_des, p_company, p_owner, p_start_time, p_end_time)
+	// [BC] Update的內容
 	$update = "UPDATE project SET p_name=\"" . $pName . "\", p_des=\"" . $pDes . "\", p_company=\"" . $pCompany . "\", p_start_time=\"" . $pStartTime . "\", p_end_time=\"" . $pEndTime . "\", status=". $pStatus. " WHERE p_id=" . $pID;
 
-	// [BC]對資料庫update
+	// [BC] 對資料庫update
 	$result = $sqli->query($update) or die("query error");
 	if ($result)
 	{
