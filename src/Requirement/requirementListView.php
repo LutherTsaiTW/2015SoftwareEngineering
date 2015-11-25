@@ -461,7 +461,7 @@
 							}
 						?>
 						<tr id="link">
-							<td><?php if($userinfo['previlege']==111 || $userinfo['previlege']==999) echo('<a href="addRequirementView.php?pid=' . $pid . '"><b>Add New Requirement</b></a>'); ?></td>
+							<td><?php if($userinfo['previlege']==111 || $userinfo['previlege']==999) echo('<a href="addRequirementView.php?pid=' . $pid . '" style="white-space:nowrap"><b>Add New Requirement</b></a>'); ?></td>
 							<td></td>
 							<td></td>
 							<td></td>
