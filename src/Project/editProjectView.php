@@ -30,6 +30,9 @@
         <div style="float:left">
             <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
+        <div class="w3-container fastAccount">
+            <a href="../logout.php" style="color:white">Logout</a>
+        </div>
         <div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
 			Welcome!
 		</div>
@@ -160,7 +163,7 @@
                         <br>
                         <font color="red"><span id="error"></span></font>
                         <br>
-                        <input id="submitBtn" type="button" value="Add" class="w3-teal">
+                        <input id="submitBtn" type="button" value="Edit" class="w3-teal">
                         <script>
 							$('#submitBtn').click(function() {
 								$.post("projectCheck.php",{Company:$("#company").val(), Project_Name:$("#name").val(), ProjectID: $("#pid").val()})
