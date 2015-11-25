@@ -255,7 +255,7 @@
 		?>
 		<br>
 		<div style="z-index:1;">
-			<div class="w3-row ">
+			<div class="w3-row">
 				<div style="float:left">
 					<img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
 				</div>
@@ -276,12 +276,35 @@
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
 
-			<div class="w3-row " style="Height:40%">
-				<div style="float:left;width:600px" align="center">
+			<div style="float:left;width:60%">
+				<div style="float:left;width:100%;margin-right:5px">
 					<div id="detail" class="detail">
+						<table>
+							<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
+								<b>Description:</b>
+							</font>
+							<br><br>
+							<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
+								<b><?= $req_info['rdes']; ?></b>
+							</font>
+						</table>
 					</div>
 				</div>
-				<div style="float:right;width:330px" align="center">
+				<br>
+				<br>
+				<div style="float:left;width:100%;margin-top:10px;margin-right:5px">
+					<div id="detail" class="detail">
+						<table>
+							<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
+								<b>MEMO</b>
+							</font>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div style="float:left;width:40%">
+				<div style="float:right;width:330px;">
 					<div id="detail" class="detail">
 						<table>
 							<tr>
