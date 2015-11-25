@@ -276,17 +276,17 @@
 					<img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
 				</div>
 				<div class="w3-container fastAccount">
-					<a href="../logout.php">Logout</a>
+					<a href="../logout.php" style="font-size:20px">Logout</a>
 				</div>
 				<div class="fastAccountBlock">
 					<p></p>
 				</div>
-				<div class="w3-container" id="userName" style="float:right;color:white;font-size:18px">
+				<div class="w3-container" id="userName" style="float:right;color:white;font-size:20px">
 				   Welcome! <?= $userinfo['name']; ?></div>
 				</div>
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
 				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetail.php?pid=<?=$pid; ?>">Back</a>
-				<h1 style="background-color:grey;border-radius:5px"><?= $project_info['p_name']; ?> Requirements</h1>
+				<h1 style="background-color:grey;border-radius:5px;font-weight:bold"><?= $project_info['p_name']; ?> Requirements</h1>
 			</div>
 			<div class="w3-row " style="Height:40%">
 				<div style="position:absolute;float:left;width:300px">
@@ -410,7 +410,6 @@
 							<td><b>Owner</b></td>
 							<td><b>Task Amount</b></td>
 							<td></td>
-							<td></td>
 						</tr>
 						<?php
 							if(count($reqs))
@@ -441,17 +440,14 @@
 							<?php
 								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
-									echo("<td><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
-									echo("<td><a href='deleteRequirementView.php?rid=" . $req['id'] . "'>Delete</a></td>");
+									echo("<td><a href='deleteRequirementView.php?rid=" . $req['id'] . "'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
 								}
 								elseif($req['status']==3 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
 									echo("<td><a href='changeRequirementView.php?rid=" . $req['id'] . "'>Change</a></td>");
-									echo("<td></td>");
 								}
 								else
 								{
-									echo("<td></td>");
 									echo("<td></td>");
 								}
 							?>
@@ -461,8 +457,7 @@
 							}
 						?>
 						<tr id="link">
-							<td><?php if($userinfo['previlege']==111 || $userinfo['previlege']==999) echo('<a href="addRequirementView.php?pid=' . $pid . '" style="white-space:nowrap"><b>Add New Requirement</b></a>'); ?></td>
-							<td></td>
+							<td><?php if($userinfo['previlege']==111 || $userinfo['previlege']==999) echo('<a href="addRequirementView.php?pid=' . $pid . '" style="white-space:nowrap;font-size:22px"><b>Add New Requirement</b></a>'); ?></td>
 							<td></td>
 							<td></td>
 							<td></td>
