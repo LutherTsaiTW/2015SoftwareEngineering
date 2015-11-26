@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../js/moment-with-locales.js"></script>
     <script type="text/javascript" src="../js/jquery.daterangepicker.js"></script>
+    <script type="text/javascript" src="../js/sessionCheck.js"></script>
 </head>
 <style>
 .fastAccount {

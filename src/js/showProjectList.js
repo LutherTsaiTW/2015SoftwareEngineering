@@ -40,7 +40,7 @@ function insertHTML(response) {
         var i;
         for (i = 0; i < project.length; i++) {
             if (project[i].status != 3) {
-                out += "<tr><td><a href=\"projectDetail.php?pid=" + project[i].pid + "\">" +
+                out += "<tr><td><a href=\"projectDetailView.php?pid=" + project[i].pid + "\">" +
                     project[i].name +
                     "</a></td><td>" +
                     project[i].owner +
