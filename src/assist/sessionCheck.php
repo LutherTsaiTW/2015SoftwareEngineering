@@ -3,7 +3,7 @@
 
     session_start();
     if(isset($_SESSION['sessionid']) && !empty($_SESSION['sessionid'])) {
-        $result = "EXSIT";
+        $result = "EXIST";
     } else {
         $result = "NULL";
     }

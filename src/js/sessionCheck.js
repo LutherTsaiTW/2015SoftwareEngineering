@@ -1,13 +1,18 @@
 var xmlhttp = new XMLHttpRequest();
-var url = "../assist/sessionCheck.php";
+var login_page = "../login.html";
+var session_check = "../assist/sessionCheck.php";
 
-xmlhttp.open("GET", url, false);
+xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        check(xmlhttp.responseText);
+    }
+}
+
+xmlhttp.open("POST", session_check, false);
 xmlhttp.send();
 
-if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-    if (xmlhttp.responseText == "NULL") {
-        document.location.href = "../login.html";
+function check(response) {
+    if (response == "NULL") {
+        document.location.href = login_page;
     }
-} else {
-    alert("XmlHttp get " + url + " fail.");
 }
