@@ -285,7 +285,7 @@
 				   Welcome! <?= $userinfo['name']; ?></div>
 				</div>
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
-				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetail.php?pid=<?=$pid; ?>">Back</a>
+				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetailView.php?pid=<?=$pid; ?>">Back</a>
 				<h1 style="background-color:grey;border-radius:5px;font-weight:bold"><?= $project_info['p_name']; ?> Requirements</h1>
 			</div>
 			<div class="w3-row " style="Height:40%">
