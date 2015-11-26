@@ -256,8 +256,8 @@ a:active {
 
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
     
-    // [BC] Get User Info
-    $selectUser = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
+    // [BC] Get User Info 中的uid和name
+    $selectUser = "SELECT name, uid, company FROM user_info WHERE user_session='" . $session . "'";
     $result = $sqli->query($selectUser);
     if(!$result)
     {
@@ -275,9 +275,6 @@ a:active {
     // $countMemberInProject -> 有在當前專案的人員數量
     // $memberInProject -> 有在當前專案的人員資料，[$i][0]是名稱，[$i][1]是公司名稱，[$i][2]是ID
     require_once 'getMember.php';
-
-    // [BC] 分別給memberToAdd和memberToRemove
-
 ?>
 
 
