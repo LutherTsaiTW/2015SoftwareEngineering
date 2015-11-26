@@ -8,7 +8,7 @@ xmlhttp.onreadystatechange = function() {
     }
 }
 
-xmlhttp.open("GET", session_check, false);
+xmlhttp.open("POST", session_check, false);
 xmlhttp.send();
 
 function check(response) {

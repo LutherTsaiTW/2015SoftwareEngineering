@@ -208,9 +208,17 @@ a:active {
     // [BC] 取得GET的參數，也就是pid
     $pid = $_GET['pid'];
     $p_id=$pid;
-    // [BC] include一個可以呼叫函式，取得資料庫連線的的php
-    include_once '../assist/getDataBaseConnection.php';
-    $sqli = getDBConnection();
+    // [BC] 取得資料庫連線的的php
+    require_once '../assist/DBConfig.php';
+    $sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
+    $errno = mysqli_connect_errno();
+    if($errno)
+    {
+        $user = array('success' => 0, 'message' => 'there is an error when getting DB connection in projectDetailView.php');
+        echo(json_encode($user));
+        exit();
+    }
+    $sqli->query("SET NAMES 'UTF8'");
 
     // [BC] 取得專案資料
     $selectProject = "SELECT * FROM project WHERE p_id=" . $pid;
