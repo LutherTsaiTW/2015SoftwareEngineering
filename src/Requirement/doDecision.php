@@ -5,12 +5,12 @@
 	// update 玩了之後，檢查其review 情形，決定 req 的狀態
 	// 此API並不做 review 和 reviewer 的對應檢查
 	// 輸入如下
-	$reqReviewID	= 3;//$_POST['reqReviewID'];
-	$comment		= "review Bob 2";//$_POST['comment'];
+	$reqReviewID	= 4;//$_POST['reqReviewID'];
+	$comment		= "review ???";//$_POST['comment'];
 	$decision		= 1;//$_POST['decision'];
 	$requirement	= 15;//$_POST['requirement'];
 
-	// [BC] 去除前後空白
+	// [BC] 去除 comment 的前後空白
 	$comment = trim($comment);
 
 	// [BC] 取得DB連線
@@ -28,7 +28,6 @@
 
 	// [BC] update 新的資訊到 review table 中
 	$updateReview = "UPDATE req_review SET reviewComment='$comment', decision=$decision WHERE reqreviewID=$reqReviewID";
-	echo $updateReview . "<br>";
 	$result = $sqli->query($updateReview);
 	if(!$result)
 	{
@@ -58,16 +57,18 @@
 	$all = $resultAll->fetch_array(MYSQL_ASSOC);
 	$app = $resultApp->fetch_array(MYSQL_ASSOC);
 	$dis = $resultDis->fetch_array(MYSQL_ASSOC);
-	echo "all = " . $all['c'] . " app = " . $app['c'] . " dis = " . $dis['c'] . " sum = " . ($app['c'] + $dis['c']) . "<br>";
+	//echo "all = " . $all['c'] . " app = " . $app['c'] . " dis = " . $dis['c'] . " sum = " . ($app['c'] + $dis['c']) . "<br>";
 
 	// [BC]
 	// 判斷是不是大家都已經完成reivew
 	// 如果是，表示大家都已經完成 review，這樣就修改 requirement 的 status
 	// 反之，不做任何事
 	if($all['c'] == ($app['c'] + $dis['c'])){
-		echo "review done<br>";
-		// [BC] 取得 requirement 的 approved 條件
-		/*$selectTerm = "SELECT term FROM req WHERE rid=$requirement",
+		// [BC] 取得 requirement 的 approved 條件，目前先以100%代替
+		$term['term'] = 100;
+		
+		/*
+		$selectTerm = "SELECT term FROM req WHERE rid=$requirement",
 		$result->query($selectTerm);
 		if(!$result){
 			$response = array('SUCCESS'=>0, 'MESSAGE'=>'there is an error when SELECT req term in doDecision.php');
@@ -75,23 +76,29 @@
 			exit();
 		}
 		$term = $result->fetch_array(MYSQL_ASSOC);
+		*/
 
-		// [BC] 檢查條件是否通過，通過的話，改req status為approved，反之，改為disapproved
-		if($app['c'] >= $term['term']){
+		// [BC] 檢查條件是否通過，通過的話，改 req status 為 approved，反之，改為 disapproved
+		if((100*$app['c']/$all['c']) >= $term['term']){
+			// [BC] approved status
 			$newStatus = 3;
 		}else {
+			// [BC] disapproved status
 			$newStatus = -1;
 		}
-		*/
+		
 		// [BC] update req status
-		$updateReq = "UPDATE req SET rstatus=3 WHERE rid=$requirement";
+		$updateReq = "UPDATE req SET rstatus=$newStatus WHERE rid=$requirement";
 		$result = $sqli->query($updateReq);
 		if(!$result){
 			$response = array('SUCCESS'=>0, 'MESSAGE'=>'there is an error when UPDATE req status in doDecision.php');
 			echo json_encode($response);
 			exit();
 		}
-		$response['MESSAGE'] = $response['MESSAGE'] . 'successfully update the requirement\'s status';
+		$response['MESSAGE'] = $response['MESSAGE'] . 'successfully update the requirement\'s status ' . $newStatus;
+		echo json_encode($response);
+	}else {
+		$response['MESSAGE'] = $response['MESSAGE'] . 'it is not necessary to change the req status';
 		echo json_encode($response);
 	}
 ?>
