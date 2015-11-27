@@ -4,8 +4,8 @@
     <title>ProjectDetail</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <script type="text/javascript" src="../js/projectDetailWindowController.js"></script>
-        <script type="text/javascript" src="../js/moment-with-locales.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/w3.css">
     <script type="text/javascript" src="../js/sessionCheck.js"></script>
 </head>
@@ -348,7 +348,7 @@ a:active {
                 <?php   
                 if($projectdetail['p_owner']==$user['name'])
                 {
-                   echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                    echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
                 }
              ?> 
             </h1>

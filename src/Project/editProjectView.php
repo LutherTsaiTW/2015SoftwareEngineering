@@ -185,7 +185,7 @@
 									});
 							});
                         </script>
-                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="location.href='projectList.html';">
+                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="location.href = document.referrer;">
                         <br>
                         <br>
                 </div>
