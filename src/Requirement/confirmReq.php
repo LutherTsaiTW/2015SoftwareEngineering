@@ -14,7 +14,7 @@
 	}
 	
 	$sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-	$sqli->query("UPDATE project SET rstatus = 2 WHERE rid = ".$rid.");") or die('Insert Query error');
+	$sqli->query("UPDATE req SET rstatus = 2 WHERE rid = ".$rid.");") or die('Insert Query error');
 	
 	$feedback['success'] = 1;
 	echo json_encode($feedback);
