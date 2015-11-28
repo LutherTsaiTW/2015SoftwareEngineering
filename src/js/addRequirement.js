@@ -44,7 +44,7 @@ function checkRequirementName(){
 	}
 }
 
-// [BC] 這個function用來做addRequriement，重新導致addRequirement.php，並且避免重複輸入表單
+// [BC] 這個function用來做addRequriement，重新導至addRequirement.php，並且避免重複輸入表單
 function addRequirement(){
 	// [BC] 取得form的資料
 	var form = {
@@ -76,6 +76,7 @@ function addRequirement(){
 	);
 }
 
+// [BC] submit前的最終檢查
 function finalCheck(){
 	// [BC] 取得form的資料
 	var partOfForm = {

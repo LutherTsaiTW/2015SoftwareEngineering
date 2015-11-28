@@ -89,7 +89,7 @@
 						</div>
 						<div class="formElement">
 							<p>Description:</p>
-							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="9"></textarea>
+							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="9" required></textarea>
 						</div>
 						<div class="formElement"> <!-- Keep Space For Exit Button -->
 							<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
