@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Edit Project</title>
+		<title>Requirement Detail</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="../css/w3.css">
 		<link rel="stylesheet" type="text/css" href="../css/html5tooltips.css" />
@@ -271,98 +271,147 @@
 			</div>
 
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
-				<a id="back" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/requirementListView.php?pid=<?= $req_info['rproject']; ?>">Back</a>
-				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Project/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
+				<a id="back" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Requirement/requirementListView.php?pid=<?= $req_info['rproject']; ?>">Back</a>
+				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Requirement/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
-
-			<div style="float:left;width:60%">
-				<div style="float:left;width:100%;margin-right:5px">
-					<div id="detail" class="detail">
-						<table>
-							<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
-								<b>Description:</b>
-							</font>
-							<br><br>
-							<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
-								<b><?= $req_info['rdes']; ?></b>
-							</font>
-						</table>
+			<div style="float:center">
+				<div style="float:left;width:600px">
+					<div style="float:left;width:100%;margin-right:5px">
+						<div id="des_area" class="detail">
+							<table>
+								<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
+									<b>Description:</b>
+								</font>
+								<br><br>
+								<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
+									<b><?= $req_info['rdes']; ?></b>
+								</font>
+							</table>
+						</div>
+					</div>
+					<br>
+					<br>
+					<div style="float:left;width:100%;margin-top:10px;margin-right:5px">
+						<div id="memo_area" class="detail">
+							<table>
+								<tr>
+									<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
+										<b>MEMO</b>
+									</font>
+								</tr>
+								<tr>
+									<div style="width:560px;height:205px;">
+									<form onsubmit="">
+										<br>
+											<textarea style="width:520px;height:140px;resize:none;color:black;" id="req_memo" name="req_memo" required>MEMO Test Value</textarea>
+										<br>
+											<input align="right "id="submitBtn" type="submit" name="submit" value="Add" class="w3-teal">
+										<br>
+									</form>
+									</div>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
-				<br>
-				<br>
-				<div style="float:left;width:100%;margin-top:10px;margin-right:5px">
-					<div id="detail" class="detail">
-						<table>
-							<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
-								<b>MEMO</b>
-							</font>
-						</table>
-					</div>
-				</div>
-			</div>
 
-			<div style="float:left;width:40%">
-				<div style="float:right;width:330px;">
-					<div id="detail" class="detail">
-						<table>
-							<tr>
-								<td>
-									<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
-										<b>Type:</b>
-									</font>
-								</td>
-								<td>
-									<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
-										<b>
-										<?php
-											if($req_info['rtype']==0) echo "non-functional";
-											if($req_info['rtype']==1) echo "functional";
-										?>
-										</b>
-									</font>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
-										<b>Status:</b>
-									</font>
-								</td>
-								<td>
-									<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
-										<b>
-										<?php
-											if($req_info['rstatus']==0) echo "Terminated";
-											if($req_info['rstatus']==1) echo "Open";
-											if($req_info['rstatus']==2) echo "In Review";
-											if($req_info['rstatus']==3) echo "Approved";
-											if($req_info['rstatus']==4) echo "Old";
-										?>
-										</b>
-									</font>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
-										<b>Status:</b>
-									</font>
-								</td>
-								<td>
-									<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
-										<b>
-										<?php
-											if($req_info['rpriority']==0) echo "Low";
-											if($req_info['rpriority']==1) echo "Medium";
-											if($req_info['rpriority']==2) echo "High";
-										?>
-										</b>
-									</font>
-								</td>
-							</tr>
-						</table>
+				<div style="float:left;width:330px;margin-left:5px">
+					<div style="float:right;width:100%;">
+						<div id="req_detail" class="detail">
+							<table>
+								<tr>
+									<td>
+										<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
+											<b>Type:</b>
+										</font>
+									</td>
+									<td>
+										<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
+											<b>
+											<?php
+												if($req_info['rtype']==0) echo "non-functional";
+												if($req_info['rtype']==1) echo "functional";
+											?>
+											</b>
+										</font>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
+											<b>Status:</b>
+										</font>
+									</td>
+									<td>
+										<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
+											<b>
+											<?php
+												if($req_info['rstatus']==0) echo "Terminated";
+												if($req_info['rstatus']==1) echo "Open";
+												if($req_info['rstatus']==2) echo "In Review";
+												if($req_info['rstatus']==3) echo "Approved";
+												if($req_info['rstatus']==4) echo "Old";
+											?>
+											</b>
+										</font>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
+											<b>Status:</b>
+										</font>
+									</td>
+									<td>
+										<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
+											<b>
+											<?php
+												if($req_info['rpriority']==0) echo "Low";
+												if($req_info['rpriority']==1) echo "Medium";
+												if($req_info['rpriority']==2) echo "High";
+											?>
+											</b>
+										</font>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<script type="text/javascript">
+							function ConfirmRequirement() {
+								var req_id = "<?php echo $rid ?>";
+								console.log(req_id);
+								var posting = $.post("confirmReq.php", {
+            						rid: req_id
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+						</script>
+						<div id="confirmBtn" class="listButton">
+							<?php
+								if($req_info['rstatus']==1)
+								{
+									echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
+								}
+								else if($req_info['rstatus']==2)
+								{
+									echo "<a href=\"\" style=\"font-size:36px;\" >Confirmed</a>";
+								}
+								else if($req_info['rstatus']==3)
+								{
+									
+								}
+							?>
+						</div>
 					</div>
 				</div>
 			</div>
