@@ -4,6 +4,8 @@
 	@$uid = $_POST['uid'];
 	@$content = $_POST['content'];
 	@$datetime = $_POST['datetime'];
+	@$status = $_POST['status'];
+
 
 	/* [CLY] Database Setting */
 	require_once '../assist/DBConfig.php';
