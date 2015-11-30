@@ -70,7 +70,7 @@ function addRequirement(){
 	        if(r.SUCCESS == 1){
 	        	document.location.href = "requirementListView.php?pid=" + form.pid;
 	        } else {
-	        	alert('adding requirement failed\nthe error message = ' + r.MESSAGOE);
+	        	alert('adding requirement failed\nthe error message = ' + r.MESSAGE);
 	        }
 		}
 	);

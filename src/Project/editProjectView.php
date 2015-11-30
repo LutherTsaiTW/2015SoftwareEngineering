@@ -24,6 +24,39 @@
 }
 </style>
 
+<script type="text/javascript">
+	// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
+	function doEdit(){
+		var form = {
+			'pid'			: $('input[id=pid]').val(),
+			'name'			: $('input[id=name]').val(),
+			'company'		: $('input[id=company]').val(),
+			'startTime'		: $('input[id=startTime]').val(),
+			'endTime'		: $('input[id=endTime]').val(),
+			'des'			: $('textarea[id=des]').val(),
+			'status'		: $('select[id=status]').val()
+		}
+		// [BC] 做POST
+		var posting = $.post("editProject.php", form);
+		// [BC] 完成POST之後，檢查response的內容
+		posting.done(
+			function(response){
+				try {
+		            var r = $.parseJSON(response);
+		        } catch (err) {
+		            alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + response);
+		            return;
+		        }
+		        if(r.success == 1){
+		        	document.location.href = document.referrer;
+		        } else {
+		        	alert('edit project failed\nthe error message = ' + r.message);
+		        }
+			}
+		);
+	}
+</script>
+
 <body class="w3-container" style="background-color:rgb(61, 61, 61)">
     <?php $pid = $_GET['pid']; ?>
     <br>
@@ -52,7 +85,7 @@
             <div class="w3-col m4">
                 <p></p>
             </div>
-            <form action="editProject.php" method="POST" id="editProject">
+            <form action="javascript:doEdit()" method="POST" id="editProject">
                 <br>
                 <div class="w3-row formBlock" style>
                     <div class="w3-col m2">
