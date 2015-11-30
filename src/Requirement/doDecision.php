@@ -5,10 +5,10 @@
 	// update 玩了之後，檢查其review 情形，決定 req 的狀態
 	// 此API並不做 review 和 reviewer 的對應檢查
 	// 輸入如下
-	$reqReviewID	= 4;//$_POST['reqReviewID'];
-	$comment		= "review ???";//$_POST['comment'];
-	$decision		= 1;//$_POST['decision'];
-	$requirement	= 15;//$_POST['requirement'];
+	$reqReviewID	= $_POST['reqReviewID'];
+	$comment		= $_POST['comment'];
+	$decision		= $_POST['decision'];
+	$requirement	= $_POST['requirement'];
 
 	// [BC] 去除 comment 的前後空白
 	$comment = trim($comment);
