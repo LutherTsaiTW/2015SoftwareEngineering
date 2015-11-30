@@ -293,6 +293,37 @@
 					<br>
 					<br>
 					<div style="float:left;width:100%;margin-top:10px;margin-right:5px">
+						<script type="text/javascript">
+							function DoAddMemo() {
+								var req_id = "<?php echo $rid ?>";
+								var uid = "<?php echo $userinfo['uid']; ?>";
+								var currentdate = new Date(); 
+								var datetime = currentdate.getFullYear() + "-"
+                								+ currentdate.getMonth()  + "-" 
+                								+ currentdate.getDate() + " "  
+               								 	+ currentdate.getHours() + ":"  
+                								+ currentdate.getMinutes() + ":" 
+                								+ currentdate.getSeconds();
+								console.log(uid);
+								console.log(datetime);
+								var posting = $.post("addMemo.php", {
+            						rid: req_id,
+            						uid: uid,
+            						content:$("#req_memo").val(),
+            						datetime: datetime
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+						</script>
 						<div id="memo_area" class="detail">
 							<table>
 								<tr>
@@ -300,13 +331,43 @@
 										<b>MEMO</b>
 									</font>
 								</tr>
+								<br><br>
+								<?php
+									$memoArray = array();
+									$memo = array();
+									$result = $sqli->query( "SELECT * FROM `req_memo` WHERE rid = $rid AND status != 0") or die($sqli->error);
+									while($row = $result->fetch_array(MYSQLI_ASSOC))
+									{
+										//Get User Info
+										$userResult = $sqli->query("SELECT name FROM user_info WHERE uid='" . $row['uid'] . "'") or die($sqli->error);
+										if (!($memoUser = $userResult->fetch_array(MYSQLI_ASSOC)))
+										{
+											$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
+											echo(json_encode($feedback));
+											exit;
+										}
+
+										$memo['id'] = $row['rm_id'];
+										$memo['name'] = $memoUser['name'];
+										$memo['content'] = $row['content'];
+										$memo['datetime'] = $row['datetime'];
+										array_push($memoArray, $memo);
+
+										echo "<tr>";
+										echo "<div style=\"width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
+										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";	
+										echo "</div>";
+										echo "</tr>";
+										echo "<br><br>";
+									}
+								?>
 								<tr>
-									<div style="width:560px;height:205px;">
-									<form onsubmit="">
+									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
+									<form action="javascript:DoAddMemo();">
 										<br>
 											<textarea style="width:520px;height:140px;resize:none;color:black;" id="req_memo" name="req_memo" required>MEMO Test Value</textarea>
 										<br>
-											<input align="right "id="submitBtn" type="submit" name="submit" value="Add" class="w3-teal">
+											<input align="right "id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
 									</form>
 									</div>
