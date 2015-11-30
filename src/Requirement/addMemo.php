@@ -18,7 +18,8 @@
 	}
 	
 	$sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-	$sqli->query("INSERT INTO req_memo  VALUES (" . $rm_id . ", " . $rid .  ", " . $uid . ", " . trim($content) . ", " . $datetime. ", " . $status. ");") or die('Insert Query error');
+
+	$sqli->query("INSERT INTO `req_memo`(`rm_id`, `rid`, `uid`, `content`, `datetime`, `status`)  VALUES (" . $rm_id . ", " . $rid .  ", " . $uid . ", " . trim($content) . ", " . $datetime. ", " . $status. ");") or die('Insert Query error');
 	
 	$feedback['success'] = 1;
 	echo json_encode($feedback);
