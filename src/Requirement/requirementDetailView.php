@@ -547,7 +547,7 @@
 								while($row = $result->fetch_array(MYSQLI_ASSOC))
 								{
 									//Get User Info
-									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $row['user_id'] . " AND previlege=777") or die($sqli->error);
+									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $row['user_id']) or die($sqli->error);
 									if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
 									{
 										$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
