@@ -493,15 +493,6 @@
 				var endTime = moment('<?= $project_info["p_end_time"]; ?>', "YYYY-MM-DD HH:mm:ss");
 				var diffDays = endTime.diff(startTime, 'days') + 1;
 				$("#days").html("Expect: "+  diffDays.toString() + " Day(s)");
-				$('#deletelink').click(function(){
-					$.post("deleteRequirement.php", {rid : <?= $req['id']; ?>}, function(data){
-						if(data.success == '1')
-						{
-							location.reload();
-						}
-					},
-					'json');
-				});
 			});
 		</script>
 	</body>
