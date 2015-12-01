@@ -14,7 +14,7 @@
 	}
 	
 	$sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-	if($sqli->query("INSERT INTO req_review(reviewerID, req_ID, decision) VALUES(" . $uid . ", " . $rid . ", 0);"))
+	if($sqli->query("INSERT INTO req_review(reviewerID, req_ID, reviewComment, decision) VALUES(" . $uid . ", " . $rid . ", '', 0);"))
 	{
 		$feedback = array('success' => 1);
 		echo(json_encode($feedback));
