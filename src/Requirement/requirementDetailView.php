@@ -294,7 +294,7 @@
 								</font>
 								<br><br>
 								<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
-									<b><?= $req_info['rdes']; ?></b>
+									<pre><?= $req_info['rdes']; ?></pre>
 								</font>
 							</table>
 						</div>
@@ -467,31 +467,6 @@
             						}
         						});
 							}
-
-							function AddReviewers() {
-
-							}
-
-							function DoDecision(decisionResult, reviewID) {
-								var req_id = "<?php echo $rid ?>";
-								console.log(req_id);
-								var posting = $.post("doDecision.php", {
-									reqReviewID: reviewID,
-									comment: $("#review_comment").val(),
-									decision: decisionResult,
-            						requirement: req_id
-        						});
-
-        						posting.done(function(data) {
-        							console.log(data);
-            						var check_result = $.parseJSON(data);
-            						if (check_result.success == "1") {
-                						location.reload();
-            						} else {
-                						alert("Error Occur");
-            						}
-        						});
-							}
 						</script>
 						<?php
 							$existingReviewers = array();
@@ -529,25 +504,45 @@
 
 									if ($reviewRow['reviewerID'] == $userinfo['uid']) 
 									{
-										echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-										echo "<a href=\"javascript:DoDecision(2," . $reviewRow['reqreviewID'] . ");\">X</a>";
-										echo "</div>";
-										echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-										echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
-										echo "</div>";
-										echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:20px;\" name=\"review_comment\" required></textarea>";
+										if ($reviewRow['decision'] == 1 || $reviewRow['decision'] == 2) {
+											if ($reviewRow['decision'] == 1)
+											{
+												echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(38,127,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<b>V</b>";
+												echo "</div>";
+											}
+											elseif ($reviewRow['decision'] == 2) {
+												echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<b>X</b>";
+												echo "</div>";
+											}
+											echo "<div style=\"font-size:20px;\">";
+											echo "<font style=\"width:100%;\"><pre style=\"width:100%;\">";
+											echo $reviewRow['reviewComment'];
+											echo "</pre></font>";
+											echo "</div>";
+										}
+										else {
+											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a href=\"javascript:DoDecision(2," . $reviewRow['reqreviewID'] . ");\">X</a>";
+											echo "</div>";
+											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
+											echo "</div>";
+											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:20px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
+										}
 									}
 									else
 									{
 										if ($reviewRow['decision'] == 1)
 										{
 											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(38,127,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-											echo "<a>V</a>";
+											echo "<b>V</b>";
 											echo "</div>";
 										}
 										elseif ($reviewRow['decision'] == 2) {
 											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-											echo "<a align=\"center\">X</a>";
+											echo "<b>X</b>";
 											echo "</div>";
 										}
 										elseif ($reviewRow['decision'] == 0) {
@@ -570,7 +565,7 @@
 								echo "<b>Add Reviewer</b>";
 								echo "</font><br>";
 								echo "<form action=\"javascript:AddReviewers();\">";
-								echo "<select name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px\">";
+								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px required\">";
 								$result = $sqli->query("SELECT user_id FROM project_team WHERE project_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
 								while($row = $result->fetch_array(MYSQLI_ASSOC))
 								{
@@ -655,6 +650,54 @@
 								echo "</div>";
 							}
 						?>
+						<script type="text/javascript">
+							function AddReviewers() {
+								var req_id = "<?php echo $rid ?>";
+								var req_id = "<?php echo $rid ?>";
+								console.log(req_id);
+								console.log($("#reviewer").val());
+								var posting = $.post("addReviewer.php", {
+									uid: $("#reviewer").val(),
+									rid: req_id
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+
+							function DoDecision(decisionResult, reviewID) {
+								var req_id = "<?php echo $rid ?>";
+								console.log(reviewID);
+								console.log($("#review_comment").val());
+								console.log(decisionResult);
+								console.log(req_id);
+
+
+								var posting = $.post("doDecision.php", {
+									reqReviewID: reviewID,
+									comment: $("#review_comment").val(),
+									decision: decisionResult,
+            						requirement: req_id
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.SUCCESS == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+						</script>
 					</div>
 				</div>
 			</div>
