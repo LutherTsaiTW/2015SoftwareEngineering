@@ -244,9 +244,18 @@
 				exit;
 			}
 			
-			
+			//Get REQ Info
 			$result = $sqli->query("SELECT * FROM req WHERE rid = '" . $rid . "'") or die($sqli->error);
 			if(!($req_info = $result->fetch_array(MYSQLI_ASSOC)))
+			{
+				$feedback = array('success' => 0, 'message' => 'project_fetch_error');
+				echo(json_encode($feedback));
+				exit;
+			}
+
+			//Get Project Info
+			$result = $sqli->query("SELECT p_owner FROM project WHERE p_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
+			if(!($project_info = $result->fetch_array(MYSQLI_ASSOC)))
 			{
 				$feedback = array('success' => 0, 'message' => 'project_fetch_error');
 				echo(json_encode($feedback));
@@ -275,7 +284,7 @@
 				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Requirement/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
-			<div style="float:center">
+			<div style="width: 80%;margin: 0 auto;">
 				<div style="float:left;width:600px">
 					<div style="float:left;width:100%;margin-right:5px">
 						<div id="des_area" class="detail">
@@ -285,7 +294,7 @@
 								</font>
 								<br><br>
 								<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
-									<b><?= $req_info['rdes']; ?></b>
+									<pre><?= $req_info['rdes']; ?></pre>
 								</font>
 							</table>
 						</div>
@@ -354,8 +363,10 @@
 										array_push($memoArray, $memo);
 
 										echo "<tr>";
-										echo "<div style=\"width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
-										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";	
+										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
+										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";
+										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $memo['datetime'] . "</b></font>";	
+										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:5px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
 										echo "</div>";
 										echo "</tr>";
 										echo "<br><br>";
@@ -365,9 +376,9 @@
 									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
 									<form action="javascript:DoAddMemo();">
 										<br>
-											<textarea style="width:520px;height:140px;resize:none;color:black;" id="req_memo" name="req_memo" required>MEMO Test Value</textarea>
+											<textarea style="width:520px;height:140px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" required></textarea>
 										<br>
-											<input align="right "id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
+											<input style="float:right;margin-right:10px;height:30px;width:70px" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
 									</form>
 									</div>
@@ -379,7 +390,7 @@
 
 				<div style="float:left;width:330px;margin-left:5px">
 					<div style="float:right;width:100%;">
-						<div id="req_detail" class="detail">
+						<div id="req_detail" class="detail" style="float:left;width:100%;">
 							<table>
 								<tr>
 									<td>
@@ -457,22 +468,236 @@
         						});
 							}
 						</script>
-						<div id="confirmBtn" class="listButton">
-							<?php
-								if($req_info['rstatus']==1)
+						<?php
+							$existingReviewers = array();
+
+							if($req_info['rstatus']==1)
+							{
+								echo "<div id=\"confirmBtn\" class=\"listButton\">";
+								echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
+								echo "</div>";
+							}
+							else if($req_info['rstatus']==2)
+							{
+								echo "<div class=\"detail\" style=\"float:left;width:100%;margin-top:10px;\">";
+								echo "<font style=\"float:left;width:200px;font-size:22px\">";
+								echo "<b>Review</b>";
+								echo "</font>";
+								$reviewRowResult = $sqli->query("SELECT * FROM req_review WHERE req_ID = " . $rid . "") or die($sqli->error);
+								while($reviewRow = $reviewRowResult->fetch_array(MYSQLI_ASSOC))
 								{
-									echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
+									array_push($existingReviewers, $reviewRow['reviewerID']);
+									echo "<div style=\"width:300px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
+									echo "<font style=\"float:left;width:100px;font-size:20px;\">";
+									//Get User Info
+									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $reviewRow['reviewerID']) or die($sqli->error);
+									if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
+									{
+										$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
+										//echo(json_encode($feedback));
+									}
+									else
+									{
+										echo "<b>" . $reviewers['name'] . "</b>";
+									}
+									echo "</font>";
+
+									if ($reviewRow['reviewerID'] == $userinfo['uid']) 
+									{
+										if ($reviewRow['decision'] == 1 || $reviewRow['decision'] == 2) {
+											if ($reviewRow['decision'] == 1)
+											{
+												echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(38,127,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<b>V</b>";
+												echo "</div>";
+											}
+											elseif ($reviewRow['decision'] == 2) {
+												echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<b>X</b>";
+												echo "</div>";
+											}
+											echo "<div style=\"font-size:20px;\">";
+											echo "<font style=\"width:100%;\"><pre style=\"width:100%;\">";
+											echo $reviewRow['reviewComment'];
+											echo "</pre></font>";
+											echo "</div>";
+										}
+										else {
+											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a href=\"javascript:DoDecision(2," . $reviewRow['reqreviewID'] . ");\">X</a>";
+											echo "</div>";
+											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
+											echo "</div>";
+											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:20px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
+										}
+									}
+									else
+									{
+										if ($reviewRow['decision'] == 1)
+										{
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(38,127,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<b>V</b>";
+											echo "</div>";
+										}
+										elseif ($reviewRow['decision'] == 2) {
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<b>X</b>";
+											echo "</div>";
+										}
+										elseif ($reviewRow['decision'] == 0) {
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a align=\"center\">?</a>";
+											echo "</div>";
+										}
+										echo "<div style=\"font-size:20px;\">";
+										echo "<font style=\"width:100%;\"><pre style=\"width:100%;\">";
+										echo $reviewRow['reviewComment'];
+										echo "</pre></font>";
+										echo "</div>";
+									}
+									echo "</div>";
 								}
-								else if($req_info['rstatus']==2)
+								if ($project_info['p_owner'] == $userinfo['uid'])
 								{
-									echo "<a href=\"\" style=\"font-size:36px;\" >Confirmed</a>";
-								}
-								else if($req_info['rstatus']==3)
+								echo "<div style=\"width:300px;height:70px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
+								echo "<font style=\"float:left;width:200px;font-size:20px;\">";
+								echo "<b>Add Reviewer</b>";
+								echo "</font><br>";
+								echo "<form action=\"javascript:AddReviewers();\">";
+								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px required\">";
+								$result = $sqli->query("SELECT user_id FROM project_team WHERE project_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
+								while($row = $result->fetch_array(MYSQLI_ASSOC))
 								{
-									
+									$isInReview = 1;
+									foreach ($existingReviewers as $value) {
+										if($value == $row['user_id'])
+										{
+											$isInReview = 0;
+											break;
+										}
+									}
+									if ($isInReview)
+									{
+										//Get User Info
+										$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $row['user_id']) or die($sqli->error);
+										if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
+										{
+											$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
+											//echo(json_encode($feedback));
+										}
+										else
+										{
+											echo "<option value=\"" . $row['user_id'] . "\">" . $reviewers['name'] . "</option>";
+										}
+									}
 								}
-							?>
-						</div>
+								echo "</select>";
+								echo "<input style=\"float:right;height:30px;width:60px\" type=\"submit\" name=\"submit\" value=\"Add\" class=\"w3-teal\">";
+								echo "</form>";
+								echo "</div>";
+								}
+								echo "</div>";
+							}
+							else if($req_info['rstatus']==3)
+							{
+								echo "<div class=\"detail\" style=\"float:left;width:100%;margin-top:10px;\">";
+								echo "<font style=\"float:left;width:200px;font-size:22px\">";
+								echo "<b>Review</b>";
+								echo "</font>";
+								$reviewRowResult = $sqli->query("SELECT * FROM req_review WHERE req_ID = " . $rid . "") or die($sqli->error);
+								while($reviewRow = $reviewRowResult->fetch_array(MYSQLI_ASSOC))
+								{
+									array_push($existingReviewers, $reviewRow['reviewerID']);
+									echo "<div style=\"width:300px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
+									echo "<font style=\"float:left;width:100px;font-size:20px;\">";
+									//Get User Info
+									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $reviewRow['reviewerID']) or die($sqli->error);
+									if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
+									{
+										$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
+										//echo(json_encode($feedback));
+									}
+									else
+									{
+										echo "<b>" . $reviewers['name'] . "</b>";
+									}
+									echo "</font>";
+
+									if ($reviewRow['decision'] == 1)
+										{
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(38,127,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a>V</a>";
+											echo "</div>";
+										}
+										elseif ($reviewRow['decision'] == 2) {
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a align=\"center\">X</a>";
+											echo "</div>";
+										}
+										elseif ($reviewRow['decision'] == 0) {
+											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											echo "<a align=\"center\">?</a>";
+											echo "</div>";
+										}
+										echo "<div style=\"font-size:20px;\">";
+										echo "<font style=\"width:100%;\"><pre style=\"width:100%;\">";
+										echo $reviewRow['reviewComment'];
+										echo "</pre></font>";
+										echo "</div>";
+									echo "</div>";
+								}
+								echo "</div>";
+							}
+						?>
+						<script type="text/javascript">
+							function AddReviewers() {
+								var req_id = "<?php echo $rid ?>";
+								var req_id = "<?php echo $rid ?>";
+								console.log(req_id);
+								console.log($("#reviewer").val());
+								var posting = $.post("addReviewer.php", {
+									uid: $("#reviewer").val(),
+									rid: req_id
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+
+							function DoDecision(decisionResult, reviewID) {
+								var req_id = "<?php echo $rid ?>";
+								console.log(reviewID);
+								console.log($("#review_comment").val());
+								console.log(decisionResult);
+								console.log(req_id);
+
+
+								var posting = $.post("doDecision.php", {
+									reqReviewID: reviewID,
+									comment: $("#review_comment").val(),
+									decision: decisionResult,
+            						requirement: req_id
+        						});
+
+        						posting.done(function(data) {
+        							console.log(data);
+            						var check_result = $.parseJSON(data);
+            						if (check_result.SUCCESS == "1") {
+                						location.reload();
+            						} else {
+                						alert("Error Occur");
+            						}
+        						});
+							}
+						</script>
 					</div>
 				</div>
 			</div>
