@@ -491,7 +491,7 @@
 									echo "<div style=\"width:300px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
 									echo "<font style=\"float:left;width:100px;font-size:20px;\">";
 									//Get User Info
-									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $reviewRow['reviewerID'] . " AND previlege=777") or die($sqli->error);
+									$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $reviewRow['reviewerID']) or die($sqli->error);
 									if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
 									{
 										$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
