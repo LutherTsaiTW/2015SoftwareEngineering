@@ -426,7 +426,8 @@
 									if($req['status']==1) echo "Open";
 									if($req['status']==2) echo "In Review";
 									if($req['status']==3) echo "Approved";
-									if($req['status']==4) echo "Old";
+									if($req['status']==4) echo "Disapproved";
+									if($req['status']==5) echo "Old";
 								?>
 							</td>
 							<td>
@@ -441,7 +442,24 @@
 							<?php
 								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
-									echo("<td><a href='deleteRequirementView.php?rid=" . $req['id'] . "'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
+									echo("<td><a id='deletelink' href='#' onclick='deleteReq" . $req['id'] . "()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
+							?>
+								
+									<script>function deleteReq<?= $req['id']; ?>()
+											{
+												$.post('deleteRequirement.php',
+													{rid : <?= $req['id']; ?>},
+													function(data)
+													{
+														if(data.success == '1')
+														{
+															location.reload();
+														}
+													},
+													'json');
+											}
+									</script>
+							<?php
 								}
 								elseif($req['status']==3 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
