@@ -284,7 +284,7 @@
 				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Requirement/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
-			<div style="float:center">
+			<div style="width: 80%;margin: 0 auto;">
 				<div style="float:left;width:600px">
 					<div style="float:left;width:100%;margin-right:5px">
 						<div id="des_area" class="detail">
