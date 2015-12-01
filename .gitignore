@@ -1,3 +1,5 @@
 ﻿# 忽略 assist/DBConfig.php
 DBConfig.php
+# 忽略測試用Html[MKZ]
+*Test.html
 Thumbs.db
