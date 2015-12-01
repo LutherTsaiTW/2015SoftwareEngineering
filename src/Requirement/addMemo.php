@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 	@$rid  = $_POST['rid'];
 	@$uid = $_POST['uid'];
@@ -19,39 +19,9 @@
 	}
 	
 	$sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-
-	$sqli->query("INSERT INTO `req_memo`(`rm_id`, `rid`, `uid`, `content`, `datetime`, `status`)  VALUES (null," . $rid .  ", " . $uid . ", " . trim($content) . ", " . $datetime. ", 1);") or die('Insert Query error');
+	$sqli->query("INSERT INTO `req_memo`(`rm_id`, `rid`, `uid`, `content`, `datetime`, `status`)  VALUES (null," . $rid .  ", " . $uid . ", '" .trim($content). "', '" .$datetime. "',1);") or die('Insert Query error');
 	
 	$feedback['success'] = 1;
 	echo json_encode($feedback);
 ?>
-=======
-<?php
-	@$rm_id  = $_POST['rm_id'];
-	@$rid  = $_POST['rid'];
-	@$uid = $_POST['uid'];
-	@$content = $_POST['content'];
-	@$datetime = $_POST['datetime'];
-	@$status = $_POST['status'];
 
-
-	/* [CLY] Database Setting */
-	require_once '../assist/DBConfig.php';
-
-	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
-	$errno = mysqli_connect_errno();
-	if($errno)
-	{
-		$feedback = array('success' => 0, 'message' => 'db_error');
-		echo(json_encode($feedback));
-		exit();
-	}
-	
-	$sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-
-	$sqli->query("INSERT INTO `req_memo`(`rm_id`, `rid`, `uid`, `content`, `datetime`, `status`)  VALUES (" . $rm_id . ", " . $rid .  ", " . $uid . ", " . trim($content) . ", " . $datetime. ", " . $status. ");") or die('Insert Query error');
-	
-	$feedback['success'] = 1;
-	echo json_encode($feedback);
-?>
->>>>>>> f12d9958fe04c55e568d7ecc9f6439a5a444c2d4
