@@ -442,10 +442,10 @@
 							<?php
 								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
-									echo("<td><a id='deletelink' href='#' onclick='deleteReq()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
+									echo("<td><a id='deletelink' href='#' onclick='deleteReq" . $req['id'] . "()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
 							?>
 								
-									<script>function deleteReq()
+									<script>function deleteReq<?= $req['id']; ?>()
 											{
 												$.post('deleteRequirement.php',
 													{rid : <?= $req['id']; ?>},
