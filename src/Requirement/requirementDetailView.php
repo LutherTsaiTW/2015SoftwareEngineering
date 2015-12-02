@@ -293,7 +293,7 @@
 				?>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
-			<div style="width: 80%;margin: 0 auto;">
+			<div style="width:935px ;margin: 0 auto;">
 				<div style="float:left;width:600px">
 					<div style="float:left;width:100%;margin-right:5px">
 						<div id="des_area" class="detail">
