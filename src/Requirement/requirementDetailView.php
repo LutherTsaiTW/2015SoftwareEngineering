@@ -375,7 +375,7 @@
 										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
 										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";
 										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $memo['datetime'] . "</b></font>";	
-										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:5px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
+										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
 										echo "</div>";
 										echo "</tr>";
 										echo "<br><br>";
@@ -385,7 +385,7 @@
 									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
 									<form action="javascript:DoAddMemo();">
 										<br>
-											<textarea style="width:520px;height:140px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" required></textarea>
+											<textarea style="width:520px;height:140px;border-radius:10px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
 										<br>
 											<input style="float:right;margin-right:10px;height:30px;width:70px" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
@@ -411,8 +411,8 @@
 										<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
 											<b>
 											<?php
-												if($req_info['rtype']==0) echo "non-functional";
-												if($req_info['rtype']==1) echo "functional";
+												if($req_info['rtype']==0) echo "non-Functional";
+												if($req_info['rtype']==1) echo "Functional";
 											?>
 											</b>
 										</font>
@@ -490,7 +490,7 @@
 
 							if($req_info['rstatus']==1)
 							{
-								echo "<div id=\"confirmBtn\" class=\"listButton\">";
+								echo "<div style=\"float:left;width:100%;height:70px;text-align:center;\" class=\"listButton\">";
 								echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
 								echo "</div>";
 							}
@@ -556,7 +556,7 @@
 											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
 											echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
 											echo "</div>";
-											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:20px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
+											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:14px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
 										}
 									}
 									else
