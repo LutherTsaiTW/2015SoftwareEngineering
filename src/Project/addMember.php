@@ -44,7 +44,7 @@
 				$exist=1;
 		}
 		if($exist==0)
-		$sqli->query("DELETE FROM project_team  WHERE user_id=".$removeuser) or die('Query error');
+		$sqli->query("DELETE FROM project_team  WHERE (user_id=".$removeuser." and project_id=".$pid.");") or die('Query error');
 	}
 	
 	$feedback['success'] = 1;

@@ -71,22 +71,20 @@ a:active {
 }
 
 .detailBox {
-
-    height: 900px;
-    width: 900px;
+    width:950px;
     margin: 0px auto;
     border-radius: 15px;
 }
 
 .listButton {
     background-color: grey;
-    height: 75px;
+    height: 65px;
     border-radius: 15px;
     float: top;
     margin-top: 5px;
     padding-left: 6px;
     text-align: center;
-    font-size: 35;
+    font-size: 28px;
     color: white;
     font-weight: 600;
     line-height: 75px;
@@ -101,7 +99,13 @@ a:active {
     float: top;
     padding-left: 15px;
     padding-top: 10px;
-    font-size: 25;
+    font-size: 20px;
+    color: white;
+}
+
+.detail td {
+
+    font-size: 20px;
     color: white;
 }
 
@@ -171,7 +175,6 @@ a:active {
 .detailBoxFont
 {
     font-size: 20;
-
 }
 </style>
 <?php
@@ -325,10 +328,10 @@ a:active {
          <button onclick="window.location.assign(window.location.href);;back()" style=";background-color:green" >OK</button>
     </div>
     <br/>
-    <div style="z-index:1;">
+    <div style="z-index:1">
         <div class="w3-row ">
             <div style="float:left">
-               <a href="projectList.html"><img  src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" /></a>
+               <img  src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
             </div>
             <div class="w3-container fastAccount">
                 <a href="../logout.php">Logout</a>
@@ -340,87 +343,110 @@ a:active {
                <?php echo "Welcome! ",$user['name']; ?>
             </div>
         </div>
-        <div class="w3-row " style="Height:70px;color:white;text-align:center">
-            <h1 id="projectName" style="background-color:grey;border-radius:5px">
-               <?php 
-                echo $projectdetail['p_name'] ;   
-                ?> 
-                <?php   
-                if($projectdetail['p_owner']==$user['name'])
-                {
-                    echo "<a id=\"edit\" style=\"float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
-                }
-             ?> 
-            </h1>
 
+        <br/>
+        <div class="w3-row " style="vertical-align:center;Height:50px;color:white;text-align:center;background-color:grey;border-radius:5px">
+            <table >
+                <tr>
+                    <td>
+                        <a href="projectList.html" style="font-size:20px;float:left;margin-left:5px">back</a>
+                    </td>
+                    <td style="text-align:center;color:white;">
+                    <font id="projectName" style="font-size:36px">
+                    
+                       <?php 
+                        echo $projectdetail['p_name'] ;   
+                        ?> 
+                        <?php   
+                        
+                     ?> 
+                    </font>
+                    </td>
+                    <td>
+                    <?php
+                        if($projectdetail['p_owner']==$user['name'])
+                        {
+                            echo "<a id=\"edit\" style=\"font-size:20px;float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                        }
+                    ?>
+                    </td>
+                </tr>
+                </table>
         </div>
-        <div class="w3-row " style="Height:rest">
-            <div class="detailBox ">
-                <div id="description" class="detail" style="height:800px;Width:450px;float: left; margin-right: 10px;">
+
+        <!--右側detail-->
+        <br/>
+        <div class="detailBox ">
+            <div >
+                <div id="description" class="detail" style="height:550px;Width:600px;float: left; margin-right: 10px;">
                 <?php
                     echo "<font style=\"font-size:24\"><b>Description:</b></font><br>",$projectdetail['p_des'];   
                 ?>
                 </div>
-                <div style="float: left;Width:330px;">
-                    <div id="detail" class="detail">
-                        <?php
-                          
-                            echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen\">",$projectdetail['p_end_time'],"</font><br/>";
-                            echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen\">",$projectdetail['p_start_time'],"</font><br/>";
-                            echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right;color:grey;font-size:16\"></font><br/>";  
-                            echo "<font class=\"detailBoxFont\"> <b>Company: </b>",$projectdetail['p_company'],"</font><br/>"; 
-                            echo "<font class=\"detailBoxFont\"> <b>Owner: </b>",$projectdetail['p_owner'],"<br/>"; 
-                            
-                            echo "<font class=\"detailBoxFont\"> <b>Members: </b><br/><font class=\"textBox\" >  ";
-                            $countBr=0;//整行寬度與換行次數的計算變數
+                <div style="float:left;Width:330px;">
+                    <div id="detail" class="detail" style="height:270px">
+                        <table>
+                            <tr >
+                                <td>
+                                <?php              
+                                    echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_end_time'],0,10),"</font><br/>";
+                                    echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_start_time'],0,10),"</font><br/>";
+                                    echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right;color:grey;font-size:16;margin-right:5px\"></font><br/>";  
+                                    echo "<font class=\"detailBoxFont\"> <b>Owner: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">",$projectdetail['p_owner'],"</font><br/>";                             
+                                    echo "<font class=\"detailBoxFont\"> <b>Company: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">",$projectdetail['p_company'],"</font><br/>"; 
+                                ?>
+                                </td>
+                            </tr>
+                            <tr style="height:40px">
+                                <td>
+                                <?php
+                                    echo "<div style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><font>";
+                                    $countBr=0;//整行寬度與換行次數的計算變數
+                                    $mem="<b>Members: </b>";
+                                    for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
+                                    {
+                                        if($i==0) $mem=$mem.$projectdetail[$i];
+                                        else $mem=$mem." ,".$projectdetail[$i];     
 
-                            for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
-                            {
-                                
-                                 if($i==$projectdetail['memberCount']-1||$countBr>=3)
-                                 {
-                                    if($projectdetail['memberCount']>4)
-                                    echo $projectdetail[$i]," ...</font><br/>";
-                                    else
-                                    echo $projectdetail[$i]," </font><br/>";
-                                    break; 
-                                 }
-                                else
-                                 echo $projectdetail[$i], " ,";   
+                                    }  
+                                    $mem = mb_strimwidth  ( $mem  ,0 ,50, "...", "UTF-8" );
+                                    echo $mem."</font></div>";
+                                ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?php
+                                    echo "<font class=\"detailBoxFont\"> <b>Status: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">";     
+                                    if($projectdetail['status']==0) echo "Close </font><br/>";
+                                    if($projectdetail['status']==1) echo "Open </font><br/>";
+                                    if($projectdetail['status']==2) echo "Terminated </font><br/>";
+                                ?>
+                                    </td>
+                                </tr>
+                            </table>
+                                </div>
+                                <div class="listButton">
+                                    <a href="../Requirement/requirementListView.php?pid=<?php echo $pid;?>" >Requirement</a>
+                                </div>
+                                <div class="listButton">
+                                    <a "../Test/testListView.php">Test Case</a>
+                                </div>
 
-                                 $countBr++;
-                                                                      
-                            }            
-                            echo "<font class=\"detailBoxFont\"> <b>Status: </b>";     
-                            if($projectdetail['status']==0) echo "Close </font><br/>";
-                            if($projectdetail['status']==1) echo "Open </font><br/>";
-                            if($projectdetail['status']==2) echo "Terminated </font><br/>";
-                        ?>
-                        <script type="text/javascript">
-                        </script>
-                    </div>
-                    <div class="listButton">
-                        <a href="../Requirement/requirementListView.php?pid=<?php echo $pid;?>" >Requirement</a>
-                    </div>
-                    <div class="listButton">
-                        <a "../Test/testListView.php">Test Case</a>
-                    </div>
+                                <div class="listButton">
+                                    <a "../RePoret/reportListView.php">Report</a>
+                                </div>
+                                 <?php   
+                                    if($projectdetail['p_owner']==$user['name'])
+                                    {
+                                        echo "<div class=\"listButton\"> <a onclick=\"showAddMemberWindow()\">Edit Members</a> </div>";
+                                    }
+                                ?>
 
-                    <div class="listButton">
-                        <a "../RePoret/reportListView.php">Report</a>
-                    </div>
-                     <?php   
-                        if($projectdetail['p_owner']==$user['name'])
-                        {
-                            echo "<div class=\"listButton\"> <a onclick=\"showAddMemberWindow()\">Edit Members</a> </div>";
-                        }
-                    ?>
                 </div>
             </div>
         </div>
-        <div class="w3-row " style="Height:10%">
-            <p></p>
-        </div>
+
     </div>
 </body>
 
