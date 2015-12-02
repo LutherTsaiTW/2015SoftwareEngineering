@@ -1,5 +1,4 @@
 <html style="height: 100%">
-	<html style="height: 100%">
 	<head>
     	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     	<link rel="stylesheet" href="../css/w3.css">
