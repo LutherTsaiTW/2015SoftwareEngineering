@@ -281,7 +281,16 @@
 
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
 				<a id="back" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Requirement/requirementListView.php?pid=<?= $req_info['rproject']; ?>">Back</a>
-				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Requirement/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
+				<?php
+					if($req_info['rstatus']==1)
+					{
+						echo "<a id=\"edit\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"../Requirement/editRequirementView.php?rid=" . $rid ."\">Edit</a>";
+					}
+					else if($req_info['rstatus']==3)
+					{
+						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"\">Change</a>";
+					}
+				?>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
 			<div style="width: 80%;margin: 0 auto;">
@@ -467,6 +476,14 @@
             						}
         						});
 							}
+
+							function changeMouseOverText(theTag) {
+								theTag.innerHTML = "DEL";
+							}
+
+							function changeMouseLeaveText(theTag) {
+								theTag.innerHTML = "?";
+							}
 						</script>
 						<?php
 							$existingReviewers = array();
@@ -523,7 +540,17 @@
 											echo "</div>";
 										}
 										else {
-											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											if ($project_info['p_owner'] == $userinfo['uid'])
+											{
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<a href=\"javascript:deleteReviewer(" . $reviewRow['reqreviewID'] . ");\">D</a>";
+												echo "</div>";
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											}
+											else
+											{
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											}
 											echo "<a href=\"javascript:DoDecision(2," . $reviewRow['reqreviewID'] . ");\">X</a>";
 											echo "</div>";
 											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
@@ -547,7 +574,10 @@
 										}
 										elseif ($reviewRow['decision'] == 0) {
 											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-											echo "<a align=\"center\">?</a>";
+											if ($project_info['p_owner'] == $userinfo['uid'])
+												echo "<a href=\"javascript:deleteReviewer(" . $reviewRow['reqreviewID'] . ");\"><span onmouseover=\"changeMouseOverText(this)\" onmouseleave=\"changeMouseLeaveText(this)\">?</span></a>";
+											else
+												echo "<b>?</b>";
 											echo "</div>";
 										}
 										echo "<div style=\"font-size:20px;\">";
@@ -565,7 +595,7 @@
 								echo "<b>Add Reviewer</b>";
 								echo "</font><br>";
 								echo "<form action=\"javascript:AddReviewers();\">";
-								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px required\">";
+								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px\" required>";
 								$result = $sqli->query("SELECT user_id FROM project_team WHERE project_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
 								while($row = $result->fetch_array(MYSQLI_ASSOC))
 								{
@@ -667,35 +697,45 @@
             						if (check_result.success == "1") {
                 						location.reload();
             						} else {
-                						alert("Error Occur");
+                						alert("Add Reviewer Error Occur");
             						}
         						});
 							}
 
 							function DoDecision(decisionResult, reviewID) {
 								var req_id = "<?php echo $rid ?>";
-								console.log(reviewID);
-								console.log($("#review_comment").val());
-								console.log(decisionResult);
-								console.log(req_id);
+								if( !$("#review_comment").val() ) {
+									alert("Please input your review opinion!!!");
+								} else {
+									var posting = $.post("doDecision.php", {
+										reqReviewID: reviewID,
+										comment: $("#review_comment").val(),
+										decision: decisionResult,
+            							requirement: req_id
+        							});
 
+        							posting.done(function(data) {
+        								console.log(data);
+            							var check_result = $.parseJSON(data);
+            							if (check_result.SUCCESS == "1") {
+                							location.reload();
+            							} else {
+                							alert("Decision Error Occur");
+            							}
+        							});
+								}
+							}
 
-								var posting = $.post("doDecision.php", {
-									reqReviewID: reviewID,
-									comment: $("#review_comment").val(),
-									decision: decisionResult,
-            						requirement: req_id
-        						});
-
-        						posting.done(function(data) {
-        							console.log(data);
-            						var check_result = $.parseJSON(data);
-            						if (check_result.SUCCESS == "1") {
+							function deleteReviewer(reviewID) {
+								var getting = $.get( "deleteReviewer.php", { rvid: reviewID } );
+								getting.done(function(data) {
+									var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
                 						location.reload();
             						} else {
-                						alert("Error Occur");
+                						alert("Delete Error Occur");
             						}
-        						});
+  								})
 							}
 						</script>
 					</div>
