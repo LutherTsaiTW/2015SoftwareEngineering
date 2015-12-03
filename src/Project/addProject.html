@@ -65,6 +65,13 @@ a:active {
 </style>
 <script>
 function submitAddProject() {
+	// [BC] 檢查是不是ntut，大小寫不管，只要是這四個字母，就會回傳錯誤
+	var company = $('input[id=project_company]').val();
+	if(company.toLowerCase().indexOf("ntut") > -1){
+		alert("your company can't be NTUT or ntut");
+		return;
+	}
+
     $.post("projectCheck.php", {
             Company: $("#project_company").val(),
             Project_Name: $("#project_name").val(),
@@ -130,7 +137,7 @@ function submitAddProject() {
                         <br>
                         <font color="white">Company:</font>
                         <br>
-                        <input id="project_company" type="text" name="Company" autofocus required style="border-radius: 3px" placeholder="Enter the company" />
+                        <input id="project_company" type="text" name="Company" autofocus required pattern="^(?:(?!\NTUT).)*$\r?\n?" style="border-radius: 3px" placeholder="Enter the company" />
                         <br>
                         <font color="white">Start Time:</font>
                         <br>

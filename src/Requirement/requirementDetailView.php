@@ -281,10 +281,19 @@
 
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
 				<a id="back" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Requirement/requirementListView.php?pid=<?= $req_info['rproject']; ?>">Back</a>
-				<a id="edit" style="float:right;padding-right:10px;padding-top:10px;font-size:20px" href="../Requirement/editRequirementView.php?rid=<?=$rid; ?>">Edit</a>
+				<?php
+					if($req_info['rstatus']==1)
+					{
+						echo "<a id=\"edit\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"../Requirement/editRequirementView.php?rid=" . $rid ."\">Edit</a>";
+					}
+					else if($req_info['rstatus']==3)
+					{
+						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"\">Change</a>";
+					}
+				?>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
 			</div>
-			<div style="width: 80%;margin: 0 auto;">
+			<div style="width:935px ;margin: 0 auto;">
 				<div style="float:left;width:600px">
 					<div style="float:left;width:100%;margin-right:5px">
 						<div id="des_area" class="detail">
@@ -366,7 +375,7 @@
 										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
 										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";
 										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $memo['datetime'] . "</b></font>";	
-										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:5px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
+										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
 										echo "</div>";
 										echo "</tr>";
 										echo "<br><br>";
@@ -376,7 +385,7 @@
 									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
 									<form action="javascript:DoAddMemo();">
 										<br>
-											<textarea style="width:520px;height:140px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" required></textarea>
+											<textarea style="width:520px;height:140px;border-radius:10px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
 										<br>
 											<input style="float:right;margin-right:10px;height:30px;width:70px" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
@@ -402,8 +411,8 @@
 										<font class="detailBoxFont" style="float:right;width:200px;margin-right:5px">
 											<b>
 											<?php
-												if($req_info['rtype']==0) echo "non-functional";
-												if($req_info['rtype']==1) echo "functional";
+												if($req_info['rtype']==0) echo "non-Functional";
+												if($req_info['rtype']==1) echo "Functional";
 											?>
 											</b>
 										</font>
@@ -467,13 +476,21 @@
             						}
         						});
 							}
+
+							function changeMouseOverText(theTag) {
+								theTag.innerHTML = "DEL";
+							}
+
+							function changeMouseLeaveText(theTag) {
+								theTag.innerHTML = "?";
+							}
 						</script>
 						<?php
 							$existingReviewers = array();
 
 							if($req_info['rstatus']==1)
 							{
-								echo "<div id=\"confirmBtn\" class=\"listButton\">";
+								echo "<div style=\"float:left;width:100%;height:70px;text-align:center;\" class=\"listButton\">";
 								echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
 								echo "</div>";
 							}
@@ -523,13 +540,23 @@
 											echo "</div>";
 										}
 										else {
-											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											if ($project_info['p_owner'] == $userinfo['uid'])
+											{
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+												echo "<a href=\"javascript:deleteReviewer(" . $reviewRow['reqreviewID'] . ");\">D</a>";
+												echo "</div>";
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											}
+											else
+											{
+												echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(127,0,0);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
+											}
 											echo "<a href=\"javascript:DoDecision(2," . $reviewRow['reqreviewID'] . ");\">X</a>";
 											echo "</div>";
 											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
 											echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
 											echo "</div>";
-											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:20px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
+											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:14px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
 										}
 									}
 									else
@@ -547,7 +574,10 @@
 										}
 										elseif ($reviewRow['decision'] == 0) {
 											echo "<div style=\"float:right;width:80px;height:30px;background-color:rgb(64,64,64);margin-top:5px;text-align:center;\" class=\"w3-container fastAccount\">";
-											echo "<a align=\"center\">?</a>";
+											if ($project_info['p_owner'] == $userinfo['uid'])
+												echo "<a href=\"javascript:deleteReviewer(" . $reviewRow['reqreviewID'] . ");\"><span onmouseover=\"changeMouseOverText(this)\" onmouseleave=\"changeMouseLeaveText(this)\">?</span></a>";
+											else
+												echo "<b>?</b>";
 											echo "</div>";
 										}
 										echo "<div style=\"font-size:20px;\">";
@@ -565,7 +595,7 @@
 								echo "<b>Add Reviewer</b>";
 								echo "</font><br>";
 								echo "<form action=\"javascript:AddReviewers();\">";
-								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px required\">";
+								echo "<select id=\"reviewer\" name=\"reviewer\" style=\"float:left;color:black;width:200px;height:30px\" required>";
 								$result = $sqli->query("SELECT user_id FROM project_team WHERE project_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
 								while($row = $result->fetch_array(MYSQLI_ASSOC))
 								{
@@ -667,35 +697,45 @@
             						if (check_result.success == "1") {
                 						location.reload();
             						} else {
-                						alert("Error Occur");
+                						alert("Add Reviewer Error Occur");
             						}
         						});
 							}
 
 							function DoDecision(decisionResult, reviewID) {
 								var req_id = "<?php echo $rid ?>";
-								console.log(reviewID);
-								console.log($("#review_comment").val());
-								console.log(decisionResult);
-								console.log(req_id);
+								if( !$("#review_comment").val() ) {
+									alert("Please input your review opinion!!!");
+								} else {
+									var posting = $.post("doDecision.php", {
+										reqReviewID: reviewID,
+										comment: $("#review_comment").val(),
+										decision: decisionResult,
+            							requirement: req_id
+        							});
 
+        							posting.done(function(data) {
+        								console.log(data);
+            							var check_result = $.parseJSON(data);
+            							if (check_result.SUCCESS == "1") {
+                							location.reload();
+            							} else {
+                							alert("Decision Error Occur");
+            							}
+        							});
+								}
+							}
 
-								var posting = $.post("doDecision.php", {
-									reqReviewID: reviewID,
-									comment: $("#review_comment").val(),
-									decision: decisionResult,
-            						requirement: req_id
-        						});
-
-        						posting.done(function(data) {
-        							console.log(data);
-            						var check_result = $.parseJSON(data);
-            						if (check_result.SUCCESS == "1") {
+							function deleteReviewer(reviewID) {
+								var getting = $.get( "deleteReviewer.php", { rvid: reviewID } );
+								getting.done(function(data) {
+									var check_result = $.parseJSON(data);
+            						if (check_result.success == "1") {
                 						location.reload();
             						} else {
-                						alert("Error Occur");
+                						alert("Delete Error Occur");
             						}
-        						});
+  								})
 							}
 						</script>
 					</div>
