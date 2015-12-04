@@ -1,8 +1,5 @@
 ﻿# 忽略 assist/DBConfig.php
 DBConfig.php
-<<<<<<< HEAD
-=======
 # 忽略測試用Html[MKZ]
 *Test.html
->>>>>>> 31ffc018c20441a90d4fd3040de17addb31e50d8
 Thumbs.db
