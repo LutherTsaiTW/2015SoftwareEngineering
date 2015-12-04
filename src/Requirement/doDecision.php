@@ -84,7 +84,7 @@
 			$newStatus = 3;
 		}else {
 			// [BC] disapproved status
-			$newStatus = -1;
+			$newStatus = 4;
 		}
 		
 		// [BC] update req status
