@@ -3,6 +3,9 @@ require 'rspec'
 
 Given /^I am in Login page$/ do
 	@b.goto "http://luthertsai.com/2015softwareengineering/login.html"
+	@b.text_field(:name => 'account_id').exists?.should == true
+	@b.text_field(:name => 'password').exists?.should == true
+	@b.button(:name => 'submit').exists?.should == true
 end
 
 When /^I entered (.+) in Username$/ do |username|
