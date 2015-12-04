@@ -24,17 +24,18 @@
 }
 
 a {
+    color: lightgrey;
     cursor: pointer;
 }
 
 a:link {
-  color: white;
+
     background-color: transparent;
     text-decoration: none;
 }
 
 a:visited {
-    color: white;
+    color: lightgrey;
     background-color: transparent;
     text-decoration: none;
 }
@@ -346,32 +347,21 @@ a:active {
 
         <br/>
         <div class="w3-row " style="vertical-align:center;Height:50px;color:white;text-align:center;background-color:grey;border-radius:5px">
-            <table >
-                <tr>
-                    <td>
-                        <a href="projectList.html" style="font-size:20px;float:left;margin-left:5px">back</a>
-                    </td>
-                    <td style="text-align:center;color:white;">
-                    <font id="projectName" style="font-size:36px">
-                    
-                       <?php 
+                     <font id="projectName" style="font-size:36px">                   
+                    <?php 
                         echo $projectdetail['p_name'] ;   
                         ?> 
                         <?php   
                         
-                     ?> 
+                    ?> 
                     </font>
-                    </td>
-                    <td>
+                    <a href="projectList.html" style="font-size:20px;float:left;margin-left:5px;margin-top:10px">back</a>
                     <?php
                         if($projectdetail['p_owner']==$user['name'])
                         {
-                            echo "<a id=\"edit\" style=\"font-size:20px;float:right;padding-right:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                            echo "<a id=\"edit\" style=\"font-size:20px;float:right;padding-right:10px;margin-top:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
                         }
                     ?>
-                    </td>
-                </tr>
-                </table>
         </div>
 
         <!--右側detail-->
@@ -392,7 +382,9 @@ a:active {
                                     echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_end_time'],0,10),"</font><br/>";
                                     echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_start_time'],0,10),"</font><br/>";
                                     echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right;color:grey;font-size:16;margin-right:5px\"></font><br/>";  
-                                    echo "<font class=\"detailBoxFont\"> <b>Owner: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">",$projectdetail['p_owner'],"</font><br/>";                             
+
+                                    $Ow=mb_strimwidth  ( $projectdetail['p_owner']  ,0 ,15, "...", "UTF-8" );
+                                    echo "<font class=\"detailBoxFont\"> <b>Owner: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">",$Ow,"</font><br/>";                             
                                     echo "<font class=\"detailBoxFont\"> <b>Company: </b></font><font  class=\"detailBoxFont\" style=\"float:right;margin-right:5px\">",$projectdetail['p_company'],"</font><br/>"; 
                                 ?>
                                 </td>
@@ -401,15 +393,14 @@ a:active {
                                 <td>
                                 <?php
                                     echo "<div style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><font>";
-                                    $countBr=0;//整行寬度與換行次數的計算變數
                                     $mem="<b>Members: </b>";
                                     for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
                                     {
                                         if($i==0) $mem=$mem.$projectdetail[$i];
-                                        else $mem=$mem." ,".$projectdetail[$i];     
+                                        else $mem=$mem.", ".$projectdetail[$i];     
 
                                     }  
-                                    $mem = mb_strimwidth  ( $mem  ,0 ,50, "...", "UTF-8" );
+                                    $mem = mb_strimwidth  ( $mem  ,0 ,45, "...", "UTF-8" );
                                     echo $mem."</font></div>";
                                 ?>
                                 </td>
@@ -430,16 +421,16 @@ a:active {
                                     <a href="../Requirement/requirementListView.php?pid=<?php echo $pid;?>" >Requirement</a>
                                 </div>
                                 <div class="listButton">
-                                    <a "../Test/testListView.php">Test Case</a>
+                                    <a href="../Test/testListView.php">Test Case</a>
                                 </div>
 
                                 <div class="listButton">
-                                    <a "../RePoret/reportListView.php">Report</a>
+                                    <a href="../RePoret/reportListView.php">Report</a>
                                 </div>
                                  <?php   
                                     if($projectdetail['p_owner']==$user['name'])
                                     {
-                                        echo "<div class=\"listButton\"> <a onclick=\"showAddMemberWindow()\">Edit Members</a> </div>";
+                                        echo "<div class=\"listButton\"> <a  onclick=\"showAddMemberWindow()\">Edit Members</a> </div>";
                                     }
                                 ?>
 
