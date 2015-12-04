@@ -16,7 +16,7 @@ And /^I entered (.+) in Password$/ do |password|
 	@b.text_field(:name => 'password').set password
 end
 
-And /^I submit$/ do
+And /^I submit the login form$/ do
 	@b.button(:name => 'submit').click
 end
 
