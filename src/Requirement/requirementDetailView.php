@@ -432,6 +432,7 @@
 												if($req_info['rstatus']==1) echo "Open";
 												if($req_info['rstatus']==2) echo "In Review";
 												if($req_info['rstatus']==3) echo "Approved";
+												if($req_info['rstatus']==3) echo "Disapproved";
 												if($req_info['rstatus']==4) echo "Old";
 											?>
 											</b>
