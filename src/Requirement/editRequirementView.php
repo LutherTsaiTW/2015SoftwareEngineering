@@ -27,18 +27,16 @@
 
 	<script type="text/javascript">
 		// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
-		function doEdit(){
+		function doEditReq(){
 			var form = {
-				'pid'			: $('input[id=pid]').val(),
+				'id'			: $('input[id=id]').val(),
 				'name'			: $('input[id=name]').val(),
-				'company'		: $('input[id=company]').val(),
-				'startTime'		: $('input[id=startTime]').val(),
-				'endTime'		: $('input[id=endTime]').val(),
-				'des'			: $('textarea[id=des]').val(),
-				'status'		: $('select[id=status]').val()
+				'description'	: $('textarea[id=description]').val(),
+				'type'			: $('select[id=type]').val(),
+				'priority'		: $('select[id=priority]').val()
 			}
 			// [BC] 做POST
-			var posting = $.post("editProject.php", form);
+			var posting = $.post("editRequirement.php", form);
 			// [BC] 完成POST之後，檢查response的內容
 			posting.done(
 				function(response){
@@ -51,16 +49,10 @@
 			        if(r.success == 1){
 			        	document.location.href = document.referrer;
 			        } else {
-			        	alert('edit project failed\nthe error message = ' + r.message);
+			        	alert('edit requirement failed\nthe error message = ' + r.message);
 			        }
 				}
 			);
-		}
-
-		// [BC] 顯示錯誤訊息，並回到上一頁
-		function showError(var message){
-			alert(message);
-			document.location.href = document.referrer;
 		}
 	</script>
 	<?php session_start();
@@ -120,14 +112,17 @@
 			<div class="w3-col blackBox" style="width: 450;height: 500">
 		        <br>
 		        <div class="w3-third formBox" algin="left">
-		            <form action="javascript:doEdit()" method="POST" id="editProject">
+		            <form action="javascript:doEditReq()" method="POST" id="editProject">
+		            	<div>
+		            		<input id="id" type="hidden" name="id" value="<?=$requirement['rid']?>">
+		            	</div>
 		                <div class="formElement">
 							<div id="name">Name:</div>
-							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" value="<?=$requirement['rname']?>"/>
+							<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" value="<?=$requirement['rname']?>"/>
 						</div>
 						<div class="formElement">
 							<p>Type:</p>
-							<SELECT name="typeName" id="typeName" class="selectBoxStyle">
+							<SELECT name="type" id="type" class="selectBoxStyle">
 								<option value="0" <?php if($requirement['rtype'] == 0)echo"selected";?>>non-Functional</option>
 								<option value="1" <?php if($requirement['rtype'] == 1)echo"selected";?>>Functional</option>
 							</SELECT>
@@ -142,11 +137,10 @@
 						</div>
 						<div class="formElement">
 							<p>Description:</p>
-							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="9" required><?=$requirement['rdes'] ?>
-							</textarea>
+							<textarea type="text" id="description" name="description" class="textBoxStyle" rows="9" required><?=$requirement['rdes'] ?></textarea>
 						</div>
 						<div class="formElement"> <!-- Keep Space For Exit Button -->
-							<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
+							<button class="w3-teal formButton" style="float: left" type="submit" id="editButton">Edit</button>
 							<button type="button" class="w3-teal formButton" style="float: left" onclick="location.href = document.referrer;">exit</button>
 						</div>
 		            </form>
@@ -154,8 +148,4 @@
 			</div>
 	    </div>
 	</body>
-	<footer style="Height:rest;text-align:center">
-	    <span style="text-decoration:underline;color:white">About Us</span>
-	</footer>
-
 </html>
