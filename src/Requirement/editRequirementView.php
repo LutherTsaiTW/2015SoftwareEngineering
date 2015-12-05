@@ -141,7 +141,7 @@
 						</div>
 						<div class="formElement"> <!-- Keep Space For Exit Button -->
 							<button class="w3-teal formButton" style="float: left" type="submit" id="editButton">Edit</button>
-							<button type="button" class="w3-teal formButton" style="float: left" onclick="location.href = document.referrer;">exit</button>
+							<button type="button" class="w3-teal formButton" style="float: left" onclick="location.href = document.referrer;">Exit</button>
 						</div>
 		            </form>
 		        </div>
