@@ -16,11 +16,28 @@
 	if($sqli->query("UPDATE req SET rstatus=0 WHERE rid=" . $rid . ";"))
 	{
 		$feedback = array('success' => 1);
-		echo(json_encode($feedback));
 	}
 	else
 	{
 		$feedback = array('success' => 0 ,'message' => $sqli->error);
-		echo(json_encode($feedback));
 	}
+	
+	if($sqli->query("DELETE FROM req_relation WHERE rid_a=" . $rid . " OR rid_b = " . $rid . ";"))
+	{
+		$feedback = array('success' => 1);
+	}
+	else
+	{
+		$feedback = array('success' => 0 ,'message' => $sqli->error);
+	}
+	
+	if($sqli->query("DELETE FROM test_relation WHERE rid=" . $rid . ";"))
+	{
+		$feedback = array('success' => 1);
+	}
+	else
+	{
+		$feedback = array('success' => 0 ,'message' => $sqli->error);
+	}
+	echo(json_encode($feedback));
 ?>
