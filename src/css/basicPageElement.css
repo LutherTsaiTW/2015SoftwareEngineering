@@ -41,6 +41,7 @@
 	color: black;
 	float: left;
 	border-radius: 7px;
+    resize: none;
 }
 
 .selectBoxStyle {
