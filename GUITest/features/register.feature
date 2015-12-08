@@ -1,4 +1,4 @@
-Feature: Login sysytem
+Feature: Account sysytem
 	Scenario: Register an account
 		Given I am in register page
 		When I entered all the data
