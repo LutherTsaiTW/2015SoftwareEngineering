@@ -286,7 +286,7 @@
 					{
 						echo "<a id=\"edit\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"../Requirement/editRequirementView.php?rid=" . $rid ."\">Edit</a>";
 					}
-					else if($req_info['rstatus']==3)
+					else if($req_info['rstatus'] == 3 || $req_info['rstatus'] == 4 )
 					{
 						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"\">Change</a>";
 					}
@@ -432,8 +432,8 @@
 												if($req_info['rstatus']==1) echo "Open";
 												if($req_info['rstatus']==2) echo "In Review";
 												if($req_info['rstatus']==3) echo "Approved";
-												if($req_info['rstatus']==3) echo "Disapproved";
-												if($req_info['rstatus']==4) echo "Old";
+												if($req_info['rstatus']==4) echo "Disapproved";
+												if($req_info['rstatus']==5) echo "Old";
 											?>
 											</b>
 										</font>
@@ -442,7 +442,7 @@
 								<tr>
 									<td>
 										<font class="detailBoxFont" style="float:left;width:50px;margin-right:5px">
-											<b>Status:</b>
+											<b>Priority:</b>
 										</font>
 									</td>
 									<td>
@@ -630,7 +630,7 @@
 								}
 								echo "</div>";
 							}
-							else if($req_info['rstatus']==3)
+							else if($req_info['rstatus']==3 || $req_info['rstatus']==4)
 							{
 								echo "<div class=\"detail\" style=\"float:left;width:100%;margin-top:10px;\">";
 								echo "<font style=\"float:left;width:200px;font-size:22px\">";
