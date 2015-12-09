@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 		<script type="text/javascript" src="../js/html5tooltips.js"></script>
+		<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	<style>
 	#block {
@@ -218,8 +219,10 @@
 	<body class="w3-container" style="background-color:rgb(61, 61, 61)">
 		<?php
 			$rid = $_GET['rid'];
-			
+
+			//Require DBConfig.php
 			require_once '../assist/DBConfig.php';
+			//Connect to Database
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
 			{
@@ -227,10 +230,10 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
 			//Show Chinese Chracters Correctly
 			$sqli->query("SET NAMES 'UTF8'");
 			
+			//Start session
 			session_start();
 			$session = $_SESSION['sessionid'];
 			session_write_close();
@@ -253,6 +256,18 @@
 				exit;
 			}
 
+			if($req_info['oldVersion'] != NULL)
+			{
+				//Get REQ Info
+				$result = $sqli->query("SELECT * FROM req WHERE rid = '" . $req_info['oldVersion'] . "'") or die($sqli->error);
+				if(!($req_old_info = $result->fetch_array(MYSQLI_ASSOC)))
+				{
+					$feedback = array('success' => 0, 'message' => 'project_fetch_error');
+					echo(json_encode($feedback));
+					exit;
+				}
+			}
+
 			//Get Project Info
 			$result = $sqli->query("SELECT p_owner FROM project WHERE p_id = '" . $req_info['rproject'] . "'") or die($sqli->error);
 			if(!($project_info = $result->fetch_array(MYSQLI_ASSOC)))
@@ -260,6 +275,28 @@
 				$feedback = array('success' => 0, 'message' => 'project_fetch_error');
 				echo(json_encode($feedback));
 				exit;
+			}
+
+			//Get Memo Array
+			$memoArray = array();
+			$memo = array();
+			$result = $sqli->query( "SELECT * FROM `req_memo` WHERE rid = $rid AND status != 0") or die($sqli->error);
+			while($row = $result->fetch_array(MYSQLI_ASSOC))
+			{
+				//Get User Info
+				$userResult = $sqli->query("SELECT name FROM user_info WHERE uid='" . $row['uid'] . "'") or die($sqli->error);
+				if (!($memoUser = $userResult->fetch_array(MYSQLI_ASSOC)))
+				{
+					$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error in memo');
+					echo(json_encode($feedback));
+					exit;
+				}
+
+				$memo['id'] = $row['rm_id'];
+				$memo['name'] = $memoUser['name'];
+				$memo['content'] = $row['content'];
+				$memo['datetime'] = $row['datetime'];
+				array_push($memoArray, $memo);
 			}
 		?>
 		<br>
@@ -291,7 +328,7 @@
 						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"\">Change</a>";
 					}
 				?>
-				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname']; ?></h1>
+				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname'] . " v" . $req_info['version']; ?></h1>
 			</div>
 			<div style="width:935px ;margin: 0 auto;">
 				<div style="float:left;width:600px">
@@ -301,9 +338,19 @@
 								<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
 									<b>Description:</b>
 								</font>
-								<br><br>
-								<font class="detailBoxFont" style="float:left;width:200px;margin-right:5px">
-									<pre><?= $req_info['rdes']; ?></pre>
+								<br>
+								<font id="des_text" style="float:left;width:540px;margin-right:5px;font-size:20px;">
+								<?php
+									if($req_info['oldVersion'] != NULL)
+									{
+										echo "<pre>v" . $req_info['version'] . ":<br>" . $req_info['rdes'] . "</pre>";
+										echo "<pre style=\"color:rgb(0,255,0);\">v" . $req_old_info['version'] . ":<br>" . $req_old_info['rdes'] . "</pre>";
+									}
+									else
+									{
+										echo "<pre>" . $req_info['rdes'] . "</pre>";
+									}
+								?>
 								</font>
 							</table>
 						</div>
@@ -351,31 +398,12 @@
 								</tr>
 								<br><br>
 								<?php
-									$memoArray = array();
-									$memo = array();
-									$result = $sqli->query( "SELECT * FROM `req_memo` WHERE rid = $rid AND status != 0") or die($sqli->error);
-									while($row = $result->fetch_array(MYSQLI_ASSOC))
-									{
-										//Get User Info
-										$userResult = $sqli->query("SELECT name FROM user_info WHERE uid='" . $row['uid'] . "'") or die($sqli->error);
-										if (!($memoUser = $userResult->fetch_array(MYSQLI_ASSOC)))
-										{
-											$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
-											echo(json_encode($feedback));
-											exit;
-										}
-
-										$memo['id'] = $row['rm_id'];
-										$memo['name'] = $memoUser['name'];
-										$memo['content'] = $row['content'];
-										$memo['datetime'] = $row['datetime'];
-										array_push($memoArray, $memo);
-
+									foreach ($memoArray as $value) {
 										echo "<tr>";
 										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
-										echo "<font style=\"float:left;font-size:20px;\"><b>" . $memo['name'] . "</b></font>";
-										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $memo['datetime'] . "</b></font>";	
-										echo "<textarea style=\"width:520px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $memo['content'] . "</textarea>";
+										echo "<font style=\"float:left;font-size:20px;\"><b>" . $value['name'] . "</b></font>";
+										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $value['datetime'] . "</b></font>";	
+										echo "<textarea style=\"width:520px;border:0px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $value['content'] . "</textarea>";
 										echo "</div>";
 										echo "</tr>";
 										echo "<br><br>";
@@ -385,7 +413,7 @@
 									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
 									<form action="javascript:DoAddMemo();">
 										<br>
-											<textarea style="width:520px;height:140px;border-radius:10px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
+											<textarea style="width:520px;height:140px;border:0px;border-radius:10px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
 										<br>
 											<input style="float:right;margin-right:10px;height:30px;width:70px" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
