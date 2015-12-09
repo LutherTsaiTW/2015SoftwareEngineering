@@ -1,29 +1,13 @@
 <html style="height: 100%">
-	<?php
-		if(array_key_exists('tid', $_GET)){
-			$input_tid = $_GET['tid'];
-		} else{
-			$input_tid = -1;
-		}
-		$pid = $_GET['pid'];
-		if($input_tid == -1){
-			$title = "Add Test Case";
-			$button = "Add";
-		}else {
-			$title = "Edit Test Case";
-			$button = "Edit";
-		}
-	?>
 	<head>
     	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     	<link rel="stylesheet" href="../css/w3.css">
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
-    	<title><?=$title;?></title>
+    	<title>Edit Test Case</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	</style>
-	
 	<?php
 		// [BC] 取得當前使用者資料
 		session_start();
@@ -49,60 +33,19 @@
 			echo json_encode($response);
 			exit();
 		}
-
-		// [BC] 取得Test Case資料
-		if($input_tid > -1){
-			$selectTestCase = "SELECT *, COUNT(tid) AS c FROM testcase WHERE tid=$input_tid";
-			$result = $sqli->query($selectTestCase);
-			$testcase = $result->fetch_array();
-			if($testcase['c'] != 1){
-				$response = array('success'=>0, 'message'=>'there is an error after SELECT TestCase by count isn\'t one in editTestCaseView.php');
-				echo json_encode($response);
-				exit();
-			}
-		}else {
-			$testcase = array('c'=>'', 'name'=>'', 't_des'=>'', 'data'=>'', 'result'=>'');
-		}
 	?>
 	<script type="text/javascript">
-		// [BC] 這個function是做處理，把頁面轉回到正確的頁面
+		// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
 		function doEdit(){
 			var form = {
-				<?php if($input_tid != -1){?>
-					'tid'			: $('input[id=tid]').val(),
-				<?php } else{?>
-					'pid'			: $('input[id=pid]').val(),
-				<?php }?>
-				'name'			: $('input[id=name]').val().trim(),
-				'des'			: $('textarea[id=des]').val().trim(),
-				'data'			: $('textarea[id=data]').val().trim(),
-				'result'		: $('textarea[id=result]').val().trim()
-			};
-			
-			// [BC] 檢查每個資料是不是空的，皆不可為空
-			if(form.name == ""){
-				alert("test case's name can not be empty!");
-				return ;
+				'tid'			: $('input[id=tid]').val(),
+				'name'			: $('input[id=name]').val(),
+				'des'			: $('textarea[id=des]').val(),
+				'data'			: $('textarea[id=data]').val(),
+				'result'		: $('textarea[id=result]').val()
 			}
-			if(form.des == ""){
-				alert("test case's des can not be empty!");
-				return ;
-			}
-			if(form.data == ""){
-				alert("test case's data can not be empty!");
-				return ;
-			}
-			if(form.result == ""){
-				alert("test case's result can not be empty!");
-				return ;
-			}
-
-			// [BC] POST
-			if(<?=$input_tid?> != -1){
-				var posting = $.post("editTestCase.php", form);
-			}else {
-				var posting = $.post("addTestCase.php", form);
-			}
+			// [BC] 做POST
+			var posting = $.post("editTestCase.php", form);
 			// [BC] 完成POST之後，檢查response的內容
 			posting.done(
 				function(response){
@@ -137,13 +80,12 @@
 			</div>
 		</div>
 		<div class="w3-row" style="text-align: center">
-			<h1 class="greyBox"><?=$title?></h1>
+			<h1 class="greyBox">Edit Test Case</h1>
 		</div>
 		<div class="w3-row" align="center">
 			<div class="w3-col blackBox" style="width: 900;height: 500">
 				<div class="w3-third formBox" algin="left">
 					<input type="hidden" id="tid" name="tid" value="<?=$testcase['tid'];?>" />
-					<input type="hidden" id="pid" name="pid" value="<?=$pid;?>" />
 					<div class="formElement">
 						<div>Name:</div>
 						<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" value="<?=$testcase['name']?>" />
@@ -153,7 +95,7 @@
 						<textarea type="text" id="des" name="des" class="textBoxStyle" style="height:300px" required ><?=$testcase['t_des']?></textarea>
 					</div>
 					<div class="formElement" style="font-size:16px;margin-top: 5px;"> <!-- Keep Space For Exit Button -->
-						<button class="w3-teal formButton" style="float: left" type="submit" id="addButton" onclick="javascript:doEdit()"><?=$button?></button>
+						<button class="w3-teal formButton" style="float: left" type="submit" id="addButton" onclick="javascript:doEdit()">Edit</button>
 						<button type="button" class="w3-teal formButton" style="float: left" onclick="location.href = document.referrer;">Exit</button>
 					</div>
 				</div>
