@@ -1,13 +1,14 @@
 <?php session_start();
 	// [BC]
 	// 這個API用於新增test case
-	// 輸入包含name, des, data, result
+	// 輸入包含name, des, data, result, 和pid
 	// user_id則是另外取得的
 	
 	$name = $_POST['name'];
 	$des = trim($_POST['des']);
 	$data = $_POST['data'];
 	$expectResult = $_POST['result'];
+	$pid = $_POST['pid'];
 
 	// [BC] Create connection
 	require_once '../assist/DBConfig.php';
@@ -33,7 +34,7 @@
 	$uid = $user['uid'];
 
 	// [BC] 新增Test Case
-	$query = "INSERT INTO testcase (tid, name, t_des, data, owner_id, result) VALUES (NULL, '$name', '$des', '$data', $uid, '$expectResult')";
+	$query = "INSERT INTO testcase (tid, name, t_des, data, owner_id, result, pid) VALUES (NULL, '$name', '$des', '$data', $uid, '$expectResult', $pid)";
 	$result = $sqli->query($query);
 	if(!$result){
 		$resopnse = array('success' => 0, 'message' => 'there is an error when INSERT testcase in addTestCase.php');
