@@ -5,7 +5,6 @@
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
     	<title>Edit Test Case</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    	<script type="text/javascript" src="../js/addRequirement.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	<style type="text/css">
@@ -73,11 +72,11 @@
 					<input type="hidden" id="tid" name="tid" value="<?=$pid;?>" />
 					<div class="formElement">
 						<div>Name:</div>
-						<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" />
+						<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" value="<?=$testcase['name']?>" />
 					</div>
 					<div class="formElement">
 						<div>Description:</div>
-						<textarea type="text" id="des" name="des" class="textBoxStyle" style="height:300px" required></textarea>
+						<textarea type="text" id="des" name="des" class="textBoxStyle" style="height:300px" required ><?=$testcase['t_des']?></textarea>
 					</div>
 					<div class="formElement"> <!-- Keep Space For Exit Button -->
 						<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
@@ -90,11 +89,11 @@
 					<input type="hidden" id="tid" name="tid" value="<?=$pid;?>" />
 					<div class="formElement">
 						<div>Input Data:</div>
-						<input id="name" type="text" name="name" class="textBoxStyle" onkeyup="javascript:checkRequirementName()" />
+						<textarea id="name" type="text" name="name" class="textBoxStyle" style="height:180px" /><?=$testcase['data']?></textarea>
 					</div>
 					<div class="formElement">
 						<div>Except Result:</div>
-						<textarea type="text" id="des" name="des" class="textBoxStyle" style="height:300px" required></textarea>
+						<textarea type="text" id="des" name="des" class="textBoxStyle" style="height:180px" required><?=$testcase['result']?></textarea>
 					</div>
 				</div>
 			</div>
