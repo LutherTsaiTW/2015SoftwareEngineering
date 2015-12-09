@@ -10,6 +10,7 @@
 	$expectResult = $_POST['result'];
 
 	// [BC] Create connection
+	require_once '../assist/DBConfig.php';
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	$errno = mysqli_connect_errno();
 	if($errno)
@@ -21,7 +22,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] 取得user_info
-	$findUser = "SETECT uid FROM user_info WHERE user_session = " + $_SESSION['sessionid'];
+	$findUser = "SELECT * FROM user_info WHERE user_session='" . $_SESSION['sessionid'] . "'";
 	$result = $sqli->query($findUser);
 	if (!$result) {
 		$resopnse = array('success' => 0, 'message' => 'there is an error when SELECT user_info in addTestCase.php');
@@ -32,15 +33,14 @@
 	$uid = $user['uid'];
 
 	// [BC] 新增Test Case
-	$query = "INSERT INTO testcase (tid, name, t_des, data, owner_id, result) VALUES (NULL, $name, $des, $data, $uid,$expectResult)";
-	echo $query + "<br>";
+	$query = "INSERT INTO testcase (tid, name, t_des, data, owner_id, result) VALUES (NULL, '$name', '$des', '$data', $uid, '$expectResult')";
 	$result = $sqli->query($query);
 	if(!$result){
 		$resopnse = array('success' => 0, 'message' => 'there is an error when INSERT testcase in addTestCase.php');
 		echo json_encode($resopnse);
 		exit();
 	}
-	$resopnse = array('success' => 0, 'message' => 'SUCCESS');
+	$resopnse = array('success' => 1, 'message' => 'SUCCESS');
 	echo json_encode($resopnse);
 	exit();
 ?>
