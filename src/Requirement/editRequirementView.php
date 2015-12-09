@@ -12,7 +12,7 @@
 	    <script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	<script type="text/javascript">
-		// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
+		// [BC] 這個function是做處理，做edit，然後把頁面轉回到正確的頁面
 		function doEditReq(){
 			var form = {
 				'id'			: $('input[id=id]').val(),
