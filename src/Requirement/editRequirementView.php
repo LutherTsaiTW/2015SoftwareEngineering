@@ -11,20 +11,6 @@
 	    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 	    <script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
-
-	<style>
-	/*.fastAccount {
-	    background-color: grey;
-	    border-radius: 5px;
-	    float: right;
-	}
-
-	.fastAccountBlock {
-	    width: 10;
-	    float: right;
-	}*/
-	</style>
-
 	<script type="text/javascript">
 		// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
 		function doEditReq(){
@@ -110,7 +96,6 @@
 		</div>
 	    <div class="w3-row" align="center">
 			<div class="w3-col blackBox" style="width: 450;height: 500">
-		        <br>
 		        <div class="w3-third formBox" algin="left">
 		            <form action="javascript:doEditReq()" method="POST" id="editProject">
 		            	<div>
@@ -118,17 +103,17 @@
 		            	</div>
 		                <div class="formElement">
 							<div id="name">Name:</div>
-							<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" value="<?=$requirement['rname']?>"/>
+							<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" value="<?=$requirement['rname']?>"/>
 						</div>
 						<div class="formElement">
-							<p>Type:</p>
+							<div>Type:</div>
 							<SELECT name="type" id="type" class="selectBoxStyle">
 								<option value="0" <?php if($requirement['rtype'] == 0)echo"selected";?>>non-Functional</option>
 								<option value="1" <?php if($requirement['rtype'] == 1)echo"selected";?>>Functional</option>
 							</SELECT>
 						</div>
 						<div class="formElement">
-							<p>Priority:</p>
+							<div>Priority:</div>
 							<SELECT name="priority" id="priority" class="selectBoxStyle">
 								<option value="0" <?php if($requirement['rpriority'] == 0)echo"selected";?>>Low</option>
 								<option value="1" <?php if($requirement['rpriority'] == 1)echo"selected";?>>Medium</option>
@@ -136,10 +121,10 @@
 							</SELECT>
 						</div>
 						<div class="formElement">
-							<p>Description:</p>
-							<textarea type="text" id="description" name="description" class="textBoxStyle" rows="9" required><?=$requirement['rdes'] ?></textarea>
+							<div>Description:</div>
+							<textarea type="text" id="description" name="description" class="textBoxStyle" rows="5" required><?=$requirement['rdes'] ?></textarea>
 						</div>
-						<div class="formElement"> <!-- Keep Space For Exit Button -->
+						<div class="formElement" style="font-size:16px"> <!-- Keep Space For Exit Button -->
 							<button class="w3-teal formButton" style="float: left" type="submit" id="editButton">Edit</button>
 							<button type="button" class="w3-teal formButton" style="float: left" onclick="location.href = document.referrer;">Exit</button>
 						</div>

@@ -5,8 +5,9 @@
     border-radius: 5px;
 }
 
-.logoutLink {
+.logoutLink, .WelcomeMessage {
     float: right;
+    font-size: 20px;
 }
 
 .blackBox {
@@ -20,17 +21,15 @@
     float: left;
     width: 450;
     height: 500;
-    padding: 0px 36px 0 36px;
+    padding: 0px 25px 0 25px;
 }
 
 .formElement{
 	width: 100%;
 	float: left;
 	text-align: left;
-}
-
-.formElement > p {
-	margin-top: 15px;
+    font-size: 20px;
+    margin-top: 15px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;

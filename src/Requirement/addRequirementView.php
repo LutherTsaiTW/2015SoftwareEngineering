@@ -5,11 +5,8 @@
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
     	<title>Add Requirement</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    	<script type="text/javascript" src="../js/addRequirement.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
-	<style type="text/css">
-	</style>
 	<?php
 		$pid=$_GET['pid'];
 	?>
@@ -32,16 +29,43 @@
 		// [BC] 對使用者資訊進行query
 		$selectUser = "SELECT COUNT(uid) as count, name, previlege, uid FROM user_info WHERE user_session='" . $_SESSION['sessionid'] . "';";
 		$result = $sqli->query($selectUser) or die('there is an error when SELECT USER in addRequirementView.php');
-		$data = $result->fetch_array();
-		if($data['count'] != 1){
+		$user = $result->fetch_array();
+		if($user['count'] != 1){
 			exit('there is an error after SELECT USER by count is not one in addRequirementView.php');
 		}
-
-		// [BC] 設定$user資料
-		$user['uid'] = $data['uid'];
-		$user['name'] = $data['name'];
-		$user['previlege'] = $data['previlege'];
 	?>
+	<script type="text/javascript">
+	function addRequirement(){
+		// [BC] 取得form的資料
+		var form = {
+			'pid'				: $('input[id=pid]').val(),
+			'uid'				: $('input[id=uid]').val(),
+			'requirementName'	: $('input[id=requirementName]').val(),
+			'typeName'			: $('SELECT[id=typeName]').val(),
+			'priority'			: $('SELECT[id=priority]').val(),
+			'requirementDes'	: $('textarea[id=requirementDes]').val()
+		};
+
+		// [BC] 做POST
+		var posting = $.post("addRequirement.php", form);
+		// [BC] 完成POST之後，檢查response的內容
+		posting.done(
+			function(response){
+				try {
+		            var r = $.parseJSON(response);
+		        } catch (err) {
+		            alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + response);
+		            return;
+		        }
+		        if(r.SUCCESS == 1){
+		        	document.location.href = "requirementListView.php?pid=" + form.pid;
+		        } else {
+		        	alert('adding requirement failed\nthe error message = ' + r.MESSAGE);
+		        }
+			}
+		);
+	}
+	</script>
 	<body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 		<div><br></div>
 		<div class="w3-row">
@@ -62,24 +86,23 @@
 		</div>
 		<div class="w3-row" align="center">
 			<div class="w3-col blackBox" style="width: 450;height: 500">
-				<br>
 				<div class="w3-third formBox" algin="left">
-					<form id="requirementForm" action="javascript:finalCheck()" >
+					<form id="requirementForm" action="javascript:addRequirement()" >
 						<input type="hidden" id="pid" name="pid" value="<?=$pid;?>" />
 						<input type="hidden" id="uid" name="uid" value="<?=$user['uid'];?>" />
 						<div class="formElement">
 							<div id="name">Name:</div>
-							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" onkeyup="javascript:checkRequirementName()" />
+							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" />
 						</div>
 						<div class="formElement">
-							<p>Type:</p>
+							<div>Type:</div>
 							<SELECT name="typeName" id="typeName" class="selectBoxStyle">
 								<option value="0">non-Functional</option>
 								<option value="1">Functional</option>
 							</SELECT>
 						</div>
 						<div class="formElement">
-							<p>Priority:</p>
+							<div>Priority:</div>
 							<SELECT name="priority" id="priority" class="selectBoxStyle">
 								<option value="0">Low</option>
 								<option value="1">Medium</option>
@@ -87,13 +110,13 @@
 							</SELECT>
 						</div>
 						<div class="formElement">
-							<p>Description:</p>
-							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="9" required></textarea>
+							<div>Description:</div>
+							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="5" required></textarea>
 						</div>
-						<div class="formElement"> <!-- Keep Space For Exit Button -->
+						<div class="formElement" style="font-size:16px"> <!-- Keep Space For Exit Button -->
 							<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
 							<a href=<?="requirementListView.php?pid=$pid"?>>
-								<button type="button" class="w3-teal formButton" style="float: left">exit</button>
+								<button type="button" class="w3-teal formButton" style="float: left">Exit</button>
 							</a>
 						</div>
 					</form>
