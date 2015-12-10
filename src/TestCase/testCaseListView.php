@@ -21,10 +21,7 @@
 			session_write_close();
 			
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
-			if ($userinfo = $result->fetch_array(MYSQLI_ASSOC))
-			{
-				
-			}
+			$userinfo = $result->fetch_array(MYSQLI_ASSOC);
 			
 			$result = $sqli->query("SELECT p_name FROM project WHERE p_id=" . $pid . ";") or die($sqli->error);
 			if ($project = $result->fetch_array(MYSQLI_ASSOC))
@@ -295,7 +292,7 @@
 								{
 							?>
 							<tr class="items">
-								<td style="font-size:22px"><?= $testcase['name']; ?></td>
+								<td style="font-size:22px"><a href="testCaseDetailView?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
