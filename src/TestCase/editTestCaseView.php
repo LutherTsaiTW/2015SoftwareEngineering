@@ -5,7 +5,12 @@
 		} else{
 			$input_tid = -1;
 		}
-		$pid = $_GET['pid'];
+		
+		if(array_key_exists('pid', $_GET)){
+			$pid = $_GET['pid'];
+		} else{
+			$pid = -1;
+		}
 		if($input_tid == -1){
 			$title = "Add Test Case";
 			$button = "Add";
