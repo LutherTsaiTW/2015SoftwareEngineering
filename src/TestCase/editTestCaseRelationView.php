@@ -170,7 +170,7 @@
         <div id="rightBlock" class="rightBlock">           
             <div style="float:left;height:470px;width:100%;margin-left:30px;margin-top:30px">
 
-                    <input hidden="hidden" name="pid" id="pid" value=<?echo $pid;?>>
+                    <input hidden="hidden" name="pid" id="pid" value="69">
                     <select  multiple="yes" name="notInList" id="notInList"  >
                     
                     </select>

@@ -103,6 +103,8 @@ function showRelationWindow() {
 function confirm() {
     setSelect( document.getElementById("changed_rids"));
     document.getElementById("confirmForm").submit();
+    alert("success");
+    window.location.assign(window.location.href);
     return false;
 }
 
