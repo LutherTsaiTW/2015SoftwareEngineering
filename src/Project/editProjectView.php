@@ -27,6 +27,13 @@
 <script type="text/javascript">
 	// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
 	function doEdit(){
+		// [BC] 檢查是不是ntut，大小寫不管，只要是這四個字母，就會回傳錯誤
+		var company = $('input[id=company]').val();
+		if(company.toLowerCase().indexOf("ntut") > -1){
+			alert("your company can't be NTUT or ntut");
+			return;
+		}
+		
 		var form = {
 			'pid'			: $('input[id=pid]').val(),
 			'name'			: $('input[id=name]').val(),

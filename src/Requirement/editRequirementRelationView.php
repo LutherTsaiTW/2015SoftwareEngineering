@@ -33,6 +33,9 @@
 		if($user['count'] != 1){
 			exit('there is an error after SELECT USER by count is not one in addRequirementView.php');
 		}
+
+		// [BC] 取得該project的所有requirements
+		$selectReq = "SELECT rid, rname, rtype, rdes, rowner, rstatus, version FROM req WHERE rproject=$pid AND (rstatus=1 OR rstatus=2 OR rstatus=3)";
 	?>
 	<script type="text/javascript">
 	function addRequirement(){
