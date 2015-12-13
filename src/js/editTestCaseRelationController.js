@@ -77,9 +77,10 @@ function showRelationWindow() {
 
 //confirm
 function confirm() {
-    initialize();
+
     setSelect( document.getElementById("changed_rids"));
     document.getElementById("confirmForm").submit();
+    initialize();
     return false;
 }
 
