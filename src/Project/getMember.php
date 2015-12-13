@@ -81,16 +81,24 @@
 	$countMemberInProject = 0;
 	$membersInProject = array();
 
-	// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
-	getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
-	
-	// [BC] 取得和專案相同公司的使用者，且目前不是在專案中的人
-	getUserWithTheSameCompany($sqli, $pCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
+	if(strtoupper($pCompany) != strtoupper($oCompany)){		// [BC] 因為公司不一樣，所以要做四次query
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
+		
+		// [BC] 取得和專案相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $pCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
 
 
-	// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
-	getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
-	
-	// [BC] 取得和專案相同公司的使用者，且目前在專案中的人
-	getUserWithTheSameCompany($sqli, $pCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+		
+		// [BC] 取得和專案相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $pCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+	} else {												// [BC] 公司一樣，所以做兩次就好了
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
+		
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+	}
 ?>
