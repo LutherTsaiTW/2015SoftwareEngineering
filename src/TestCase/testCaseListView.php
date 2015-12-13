@@ -118,16 +118,15 @@
 
 	.listButton {
 		background-color: grey;
-		height: 75px;
+		height: 50px;
 		border-radius: 15px;
 		float: top;
-		margin-top: 5px;
-		padding-left: 6px;
 		text-align: center;
-		font-size: 35;
+		font-size: 28px;
 		color: white;
 		font-weight: 600;
-		line-height: 75px;
+		width:300px;
+		line-height:50px
 	}
 
 	.detail {
@@ -278,9 +277,9 @@
 				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetailView.php?pid=<?=$pid; ?>">Back</a>
 				<h1 style="background-color:grey;border-radius:5px;font-weight:bold"><?= $project_name; ?> - Test Cases</h1>
 			</div>
-			<div class="w3-row " style="Height:40%">
-				<div id="listTable">
-					<center>
+			<div class="w3-row " style="height:40%;margin:0 auto;width:1210px">
+				<div id="listTable" style="float:left;">
+					<div style="margin:0 auto;width:900px">
 						<table class="listTable" style="width:900px">
 							<tr id="header">
 								<td><b>Name</b></td>
@@ -328,11 +327,13 @@
 								<td colspan=3 style="text-align:left"><?php if($userinfo['previlege']==777 || $userinfo['previlege']==999) echo('<a href="addTestCaseView.php?pid=' . $pid . '" style="white-space:nowrap;font-size:22px"><b>Add New Test Case</b></a>'); ?></td>
 							</tr>
 						</table>
-					</center>
-                    <div class="listButton">
-						<a href="editTestCaseRelationView.php?pid=<?php echo $pid;?>">Relation</a>
 					</div>
 				</div>
+			<div style="float:left;padding-left:10px">
+				<div class="listButton">
+					<a href="editTestCaseRelationView.php?pid=<?php echo $pid;?>">Relation</a>
+				</div>
+			</div>
 			</div>
 		</div>
 	</body>
