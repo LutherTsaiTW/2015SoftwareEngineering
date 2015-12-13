@@ -3,7 +3,7 @@
     	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     	<link rel="stylesheet" href="../css/w3.css">
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
-    	<title>Add Requirement</title>
+    	<title>Edit Req Relation</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
@@ -82,7 +82,8 @@
 			</div>
 		</div>
 		<div class="w3-row" style="text-align: center">
-			<h1 class="greyBox">Add Requirement</h1>
+			<a href="requirementListView.php?pid=<?=$pid?>" class="backLink">back</a>
+			<h1 class="greyBox">Edit Requirement Relationship</h1>
 		</div>
 		<div class="w3-row" align="center">
 			<div class="w3-col blackBox" style="width: 450;height: 500">
