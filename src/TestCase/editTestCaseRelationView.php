@@ -87,46 +87,34 @@
     </style>
 
     <?php
-        @$pid = $_POST['pid'];  
+        @$pid = $_GET['pid'];  
+
     ?>
     <script type="text/javascript">
-        // [KL] 這個function是做處理，把edit頁面轉回到正確的頁面
-        function doEditReq(){
-            var form = {
-                'tid'            : $('input[id=tid]').val(),
-                'changed_rids'   : $('input[id=changed_rids]').val(),
-            }
-            // [KL] 做POST
-            var posting = $.post("editTestCaseRelation.php", form);
-            // [KL] 完成POST之後，檢查response的內容
-            posting.done(
-                function(response){
-                    try {
-                        var r = $.parseJSON(response);
-                    } catch (err) {
-                        alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + response);
-                        return;
-                    }
-                    if(r.success == 1){
-                        document.location.href = document.referrer;
-                    } else {
-                        alert('edit testcase relation failed\nthe error message = ' + r.message);
-                    }
-                }
-            );
-        }
+    //ajax取得testcase
+    var xmlhttp = new XMLHttpRequest();
+    var url = "getTestCase.php?pid="+<?php echo $pid;?>;       
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
 
-         var Submit=function(){
-            var URLs="getTestCaseRelation.php" ;
-          
-            $.ajax({
-                url: URLs,
-                data: $('#sentToBack').serialize(),
-                type:"POST",
-                dataType:'JSON',
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && !bool) {
 
+            var arr = JSON.parse(xmlhttp.responseText);
+            var testcase = arr.testcases;
+            testcase = Object.keys(testcase).map(function(k) {
+                return testcase[k];
             });
-           
+
+                var i;
+                 for (i = 0; i < testcase.length; i++) {
+                    
+                    var option=new Option(testcase[i].name,testcase[i].tid);
+                    option.style.color='black';
+                    document.getElementById("testcase").options.add(option);
+            }
+            bool=true;
+         }
         }
     </script>
     
@@ -155,7 +143,7 @@
                      <font id="projectName" style="font-size:36px">                   
                        Edit Test Case Relationship
                     </font>
-                    <a href="    testCaseListView.php" style="font-size:20px;float:left;margin-left:5px;margin-top:10px">back</a>                   
+                    <a href="testCaseListView.php?pid=<?php echo $pid; ?>" style="font-size:20px;float:left;margin-left:5px;margin-top:10px">back</a>                   
         </div>
 
         <!--主要畫面-->
@@ -170,7 +158,7 @@
         <div id="rightBlock" class="rightBlock">           
             <div style="float:left;height:470px;width:100%;margin-left:30px;margin-top:30px">
 
-                    <input hidden="hidden" name="pid" id="pid" value="<?php echo $pid ?>">
+                    <input hidden="hidden" name="pid" id="pid" value="<?=$pid; ?>">
                     <select  multiple="yes" name="notInList" id="notInList"  >
                     
                     </select>

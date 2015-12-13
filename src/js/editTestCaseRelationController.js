@@ -1,31 +1,7 @@
 
 var bool = false;
 
-//頁面載入完後ajax取得testcase
-var xmlhttp = new XMLHttpRequest();
-var url = "getTestCase.php";
 
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
-
-xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && !bool) {
-        var arr = JSON.parse(xmlhttp.responseText);
-        var testcase = arr.testcases;
-        testcase = Object.keys(testcase).map(function(k) {
-            return testcase[k];
-        });
-
-            var i;
-             for (i = 0; i < testcase.length; i++) {
-                
-                var option=new Option(testcase[i].name,testcase[i].tid);
-                option.style.color='black';
-                document.getElementById("testcase").options.add(option);
-        }
-        bool=true;
-    }
-}
 
 function getData(tid){
     document.getElementById("tid").value=tid;

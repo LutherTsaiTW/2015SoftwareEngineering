@@ -1,4 +1,6 @@
 <?php session_start();    
+
+        $pid = $_GET['pid']; 
         // [KL] 取得DB連線
         require_once '../assist/DBConfig.php';
         $sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -12,7 +14,7 @@
         $sqli->query("SET NAMES 'UTF8'");
         
         // [KL] 取得testcase資訊
-        $selectReq = "SELECT * FROM testcase ";
+        $selectReq = "SELECT * FROM testcase WHERE pid=".$pid;
         $result = $sqli->query($selectReq);
         if (!$result )
         {
