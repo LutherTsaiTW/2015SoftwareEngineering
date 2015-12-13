@@ -1,6 +1,6 @@
 <?php
 	$tid = $_POST['tid'];
-	$changes = $_POST['changed_tids'];
+	$changes = $_POST['changed_rids'];
 			
 	require_once '../assist/DBConfig.php';
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -14,7 +14,8 @@
 	//Show Chinese Chracters Correctly
 	$sqli->query("SET NAMES 'UTF8'");
 	
-	$sqli->query("SELECT rid FROM test_relation WHERE tid=" . $tid . ";");
+	$result = $sqli->query("SELECT rid FROM test_relation WHERE tid=" . $tid . ";");
+	$rrids = Array();
 	while ($row = $result->fetch_array(MYSQLI_ASSOC))
 	{
 		$rrids[$row['rid']] = $row['rid'];
@@ -22,7 +23,7 @@
 	
 	foreach ($changes as $change)
 	{
-		if(in_array($rrids))
+		if(in_array($change, $rrids))
 		{
 			$sqli->query("DELETE FROM test_relation WHERE tid=" . $tid . " AND rid=" . $change . ";") or die($sqli->error);
 		}
