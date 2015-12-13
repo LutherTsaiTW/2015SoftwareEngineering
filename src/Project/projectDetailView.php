@@ -421,7 +421,9 @@ a:active {
                                     <a href="../Requirement/requirementListView.php?pid=<?php echo $pid;?>" >Requirement</a>
                                 </div>
                                 <div class="listButton">
-                                    <a href="../TestCase/testListView.php">Test Case</a>
+
+                                    <a href="../TestCase/testCaseListView.php?pid=<?php echo $pid;?>">Test Case</a>
+
                                 </div>
 
                                 <div class="listButton">

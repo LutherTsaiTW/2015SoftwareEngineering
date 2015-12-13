@@ -444,20 +444,19 @@
 								{
 									echo("<td><a id='deletelink' href='#' onclick='deleteReq" . $req['id'] . "()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
 							?>
-								
-									<script>function deleteReq<?= $req['id']; ?>()
+							<script>function deleteReq<?= $req['id']; ?>()
+									{
+										$.post('deleteRequirement.php',
+											{rid : <?= $req['id']; ?>},
+											function(data)
 											{
-												$.post('deleteRequirement.php',
-													{rid : <?= $req['id']; ?>},
-													function(data)
-													{
-														if(data.success == '1')
-														{
-															location.reload();
-														}
-													},
-													'json');
-											}
+												if(data.success == '1')
+												{
+													location.reload();
+												}
+											},
+											'json');
+									}
 									</script>
 							<?php
 								}
