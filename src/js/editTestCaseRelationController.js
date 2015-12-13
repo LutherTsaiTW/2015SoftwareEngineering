@@ -77,10 +77,9 @@ function showRelationWindow() {
 
 //confirm
 function confirm() {
+    initialize();
     setSelect( document.getElementById("changed_rids"));
     document.getElementById("confirmForm").submit();
-    alert("success");
-    window.location.assign(window.location.href);
     return false;
 }
 
@@ -89,12 +88,12 @@ function confirm() {
 function doRemove() {
     var inList=document.getElementById("inList");
     var notInList=document.getElementById("notInList");
+
+     var length = inList.options.length - 1;
     if(inList.options.length>0)
-    {
-        for(var i=0;i<inList.options.length;i++)
-        {
-            if(inList.options[i].selected){
-                var newOption =inList.options[i];
+    for (var i = length; i >= 0; i--) {
+        if (inList.options[i].selected) {
+            var newOption =inList.options[i];
                  if(!inChanged(newOption))                 
                 {newOption.style.background="red";}
                 else
@@ -102,7 +101,8 @@ function doRemove() {
                 notInList.options.add(newOption);           
               }
         }
-    }
+    
+   
         setNotSelect(inList);
     setNotSelect(notInList);
 }
@@ -111,20 +111,20 @@ function doRemove() {
 function  doAdd(){
     var inList=document.getElementById("inList");
     var notInList=document.getElementById("notInList");
+
+    var length = notInList.options.length - 1;
     if(notInList.options.length>0)
-    {
-         for(var i=0;i<notInList.options.length;i++)
-        {
-            if(notInList.options[i].selected){
-                var newOption =notInList.options[i];
+    for (var i = length; i >= 0; i--) {
+        if (notInList.options[i].selected) {
+                 var newOption =notInList.options[i];
                 if(!inChanged(newOption))             
                  {newOption.style.background="red";}
                  else
                    { newOption.style.background="white";}
-                inList.options.add(newOption);           
-              }
+                inList.options.add(newOption); 
         }
     }
+   
     setNotSelect(inList);
     setNotSelect(notInList);
 }
@@ -171,3 +171,21 @@ function setNotSelect(zone) {
     }
 }
 
+function initialize(){
+    var inList=document.getElementById("inList");
+    var notInList=document.getElementById("notInList");
+    var changed_rids= document.getElementById("changed_rids");
+    changed_rids.options.length=0;
+    var length = inList.options.length - 1;
+    for(var i = length;i >= 0; i--)
+    {
+        inList.options[i].selected= false;
+        inList.options[i].style.background="white";
+    }
+    var length = notInList.options.length - 1;
+    for(var i = length;i >= 0; i--)
+    {
+        notInList.options[i].selected= false;
+        notInList.options[i].style.background="white";
+    }
+}
