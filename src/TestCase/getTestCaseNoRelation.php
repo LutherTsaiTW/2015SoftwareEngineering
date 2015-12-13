@@ -24,14 +24,16 @@
             exit();
         }
 
+
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
             $rid = $row['rid'];
             $feedback['notInLists'][$rid]['rid']=$rid;
             $feedback['notInLists'][$rid]['name']=urlencode($row['rname']);
+
+        }
             $feedback['success'] = '1';
             $feedback['message'] = 'ok';
-        }
 
         echo(urldecode(json_encode($feedback))); 
         $feedback=json_encode($feedback);

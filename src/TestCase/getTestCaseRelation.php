@@ -28,9 +28,10 @@
             $rid = $row['rid'];
             $feedback['inLists'][$rid]['rid']=$rid;
             $feedback['inLists'][$rid]['name']=urlencode($row['rname']);
-             $feedback['success'] = '1';
-            $feedback['message'] = 'ok';
+
         }
+            $feedback['success'] = '1';
+            $feedback['message'] = 'ok';
 
         echo(urldecode(json_encode($feedback))); 
         $feedback=json_encode($feedback);

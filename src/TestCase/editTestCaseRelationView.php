@@ -170,7 +170,7 @@
         <div id="rightBlock" class="rightBlock">           
             <div style="float:left;height:470px;width:100%;margin-left:30px;margin-top:30px">
 
-                    <input hidden="hidden" name="pid" id="pid" value="69">
+                    <input hidden="hidden" name="pid" id="pid" value=<?echo $pid;?>>
                     <select  multiple="yes" name="notInList" id="notInList"  >
                     
                     </select>
@@ -182,14 +182,14 @@
                                 <font style="font-size:20px" >Add</font>
                             </div>
                              <div style="float:left;height:30px;width:100%;">
-                                 <button type="reset" onclick="addMember()" style="margin-left:30px;float:left;width:50px;height:30px;text-align: center;font-size:20px;background-color:rgb(100,100,100)"><b>></b></button>
+                                 <button type="reset" onclick="doAdd()" style="margin-left:30px;float:left;width:50px;height:30px;text-align: center;font-size:20px;background-color:rgb(100,100,100)"><b>></b></button>
                             </div>
                             <div style="float:left;height:40px;width:100%;">
                                              <font style="font-size:20px">Remove</font>
                             </div>
                      
                             <div style="float:left;height:30px;width:100%;"> 
-                                <button type="reset" onclick="removeMember()" style="margin-left:30px;float:left;width:50px;height:30px;text-align:center;font-size:20px;background-color:rgb(100,100,100)"><b><</b></button>
+                                <button type="reset" onclick="doRemove()" style="margin-left:30px;float:left;width:50px;height:30px;text-align:center;font-size:20px;background-color:rgb(100,100,100)"><b><</b></button>
                             </div>
 
                         </div> 
@@ -201,11 +201,12 @@
           
             </div>
             <div style="float:right;margin-right:30px;margin-top:5px">
-                 <form action="javascript:confirm()" method="POST" id="confirmForm" target="_iframe">
+                 <form action="editTestCaseRelation.php" method="POST" id="confirmForm" target="_iframe">
+                    <input hidden="hidden" name="tid" id="tid" value="">
                     <select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes"   >
                 
                     </select>
-                    <input  type="reset" value="Confirm" style="text-align:center;background-color:rgb(0,149,135)">
+                    <input  type="reset" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
                  </form>
                   <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
             </div>
