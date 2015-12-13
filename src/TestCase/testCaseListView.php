@@ -329,6 +329,9 @@
 							</tr>
 						</table>
 					</center>
+                    <div class="listButton">
+						<a href="editTestCaseRelationView.php?pid=<?php echo $pid;?>">Relation</a>
+					</div>
 				</div>
 			</div>
 		</div>
