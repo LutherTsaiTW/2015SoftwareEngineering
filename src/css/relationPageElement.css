@@ -1,0 +1,32 @@
+.mainBox {
+    margin: 0px auto;
+    width: 970px;
+    height: 550px;
+}
+
+.leftBox {
+	float: left;
+	overflow: hidden;
+    height: 550px;
+    width: 300px;
+}
+
+.rightBox {
+	/*visibility: hidden;*/
+	height: 550px;
+	width: 650px;
+	overflow: hidden;
+	float: left;
+}
+
+.insideBox{
+	margin: 10px 30px 10px 30px;
+}
+
+select {
+	color: black;
+	width: 240px;
+	height: 470px;
+	font-size: 20px;
+	float: left;
+}

@@ -3,9 +3,11 @@
     	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     	<link rel="stylesheet" href="../css/w3.css">
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
+    	<link rel="stylesheet" type="text/css" href="../css/relationPageElement.css">
     	<title>Edit Req Relation</title>
     	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
+    	<script type="text/javascript" src="../js/editRequirementRelationController.js"></script>
 	</head>
 	<?php
 		$pid=$_GET['pid'];
@@ -20,7 +22,7 @@
 		$errno = mysqli_connect_errno();
 		if($errno)
 		{
-			$error = array('SUCCESS'=>0, 'Message'=>'there is an error when connecting to DB in addRequirementView.php');
+			$error = array('SUCCESS'=>0, 'Message'=>'there is an error when connecting to DB in editRequirementRelationView.php');
 			echo json_encode($error);
 			exit();
 		}
@@ -28,14 +30,25 @@
 
 		// [BC] 對使用者資訊進行query
 		$selectUser = "SELECT COUNT(uid) as count, name, previlege, uid FROM user_info WHERE user_session='" . $_SESSION['sessionid'] . "';";
-		$result = $sqli->query($selectUser) or die('there is an error when SELECT USER in addRequirementView.php');
+		$result = $sqli->query($selectUser) or die('there is an error when SELECT USER in editRequirementRelationView.php');
 		$user = $result->fetch_array();
 		if($user['count'] != 1){
-			exit('there is an error after SELECT USER by count is not one in addRequirementView.php');
+			exit('there is an error after SELECT USER by count is not one in editRequirementRelationView.php');
 		}
 
 		// [BC] 取得該project的所有requirements
 		$selectReq = "SELECT rid, rname, rtype, rdes, rowner, rstatus, version FROM req WHERE rproject=$pid AND (rstatus=1 OR rstatus=2 OR rstatus=3)";
+		$result = $sqli->query($selectReq) or die('there is an error when SELECT req in editRequirementRelationView.php');
+		$reqs = array();
+		while($data = $result->fetch_array(MYSQLI_ASSOC)){
+			$reqs[$data['rid']]['rid'] = $data['rid'];
+			$reqs[$data['rid']]['rname'] = $data['rname'];
+			$reqs[$data['rid']]['rtype'] = $data['rtype'];
+			$reqs[$data['rid']]['rdes'] = $data['rdes'];
+			$reqs[$data['rid']]['rowner'] = $data['rowner'];
+			$reqs[$data['rid']]['rstatus'] = $data['rstatus'];
+			$reqs[$data['rid']]['version'] = $data['version'];
+		}
 	?>
 	<script type="text/javascript">
 	function addRequirement(){
@@ -88,44 +101,64 @@
 			<a href="requirementListView.php?pid=<?=$pid?>" class="backLink">back</a>
 			<h1 class="greyBox">Edit Requirement Relationship</h1>
 		</div>
-		<div class="w3-row" align="center">
-			<div class="w3-col blackBox" style="width: 450;height: 500">
-				<div class="w3-third formBox" algin="left">
-					<form id="requirementForm" action="javascript:addRequirement()" >
-						<input type="hidden" id="pid" name="pid" value="<?=$pid;?>" />
-						<input type="hidden" id="uid" name="uid" value="<?=$user['uid'];?>" />
-						<div class="formElement">
-							<div id="name">Name:</div>
-							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" />
-						</div>
-						<div class="formElement">
-							<div>Type:</div>
-							<SELECT name="typeName" id="typeName" class="selectBoxStyle">
-								<option value="0">non-Functional</option>
-								<option value="1">Functional</option>
-							</SELECT>
-						</div>
-						<div class="formElement">
-							<div>Priority:</div>
-							<SELECT name="priority" id="priority" class="selectBoxStyle">
-								<option value="0">Low</option>
-								<option value="1">Medium</option>
-								<option value="2">High</option>
-							</SELECT>
-						</div>
-						<div class="formElement">
-							<div>Description:</div>
-							<textarea type="text" id="requirementDes" name="requirementDes" class="textBoxStyle" rows="5" required></textarea>
-						</div>
-						<div class="formElement" style="font-size:16px"> <!-- Keep Space For Exit Button -->
-							<button class="w3-teal formButton" style="float: left" type="submit" id="addButton">Add</button>
-							<a href=<?="requirementListView.php?pid=$pid"?>>
-								<button type="button" class="w3-teal formButton" style="float: left">Exit</button>
-							</a>
-						</div>
-					</form>
+		<!--主要畫面-->
+		<div class="mainBox">
+			<div class="blackBox leftBox">
+				<div class="insideBox">
+					<p style="font-size:22px;font-weight:bold;margin:0px">Requirement:</p>
+					<select  name="requirements" id="requirements" multiple="yes" onchange="getData(value);">
+					<?php
+						foreach ($reqs as $req) {
+							echo "<option value=" . $req['rid'] . ">" . $req['rname'] . "</option>";
+						}
+					?>
+					</select>
 				</div>
 			</div>
-		</div>
+			<div id="rightBlock" class="blackBox rightBOx" style="margin-left:15px">
+				<div class="insideBox" style="float:left;">
+					<input type="hidden" name="pid" id="pid" value="<?=$pid; ?>">
+					<p style="font-size:22px;font-weight:bold;margin:0px;visibility:hidden">Blank Line</p>
+					<select  multiple="yes" name="notInList" id="notInList">
+						
+					</select>
+					<div style="float:left;width:110px;height:100%;text-align: center;">
+                            <div style="float:left;height:150px;width:100%;">
+                            </div>
+                            <div style="float:left;height:40px;width:100%;">
+                                <font style="font-size:20px" >Add</font>
+                            </div>
+                             <div style="float:left;height:30px;width:100%;">
+                                 <button type="reset" onclick="doAdd()" style="margin-left:30px;float:left;width:50px;height:30px;text-align: center;font-size:20px;background-color:rgb(100,100,100)"><b>></b></button>
+                            </div>
+                            <div style="float:left;height:40px;width:100%;">
+                                             <font style="font-size:20px">Remove</font>
+                            </div>
+                     
+                            <div style="float:left;height:30px;width:100%;"> 
+                                <button type="reset" onclick="doRemove()" style="margin-left:30px;float:left;width:50px;height:30px;text-align:center;font-size:20px;background-color:rgb(100,100,100)"><b></b></button>
+                            </div>
+
+                        </div> 
+
+                    <select multiple="yes" name="inList" id="inList">
+                    
+                    </select>
+                    
+          
+            </div>
+            <div style="float:right;margin-right:30px;margin-top:5px">
+                 <form action="editTestCaseRelation.php" method="POST" id="confirmForm" target="_iframe">
+                    <input hidden="hidden" name="rid" id="rid" value="">
+                    <select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes"   >
+                
+                    </select>
+                    <input  type="reset" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
+                 </form>
+                  <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
+            </div>
+                    
+        </div>
+    </div>
 	</body>
 </html>
