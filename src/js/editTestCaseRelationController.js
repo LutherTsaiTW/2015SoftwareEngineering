@@ -1,6 +1,5 @@
 
-
-var changed_rids = document.getElementById("changed_rids");
+var bool = false;
 
 //頁面載入完後ajax取得testcase
 var xmlhttp = new XMLHttpRequest();
@@ -10,7 +9,7 @@ xmlhttp.open("GET", url, true);
 xmlhttp.send();
 
 xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && !bool) {
         var arr = JSON.parse(xmlhttp.responseText);
         var testcase = arr.testcases;
         testcase = Object.keys(testcase).map(function(k) {
@@ -24,33 +23,34 @@ xmlhttp.onreadystatechange = function() {
                 option.style.color='black';
                 document.getElementById("testcase").options.add(option);
         }
+        bool=true;
     }
 }
 
 function getData(tid){
-        alert(tid);
+    document.getElementById("tid").value=tid;
     showRelationWindow();
     //ajax
     var xmlhttp2 = new XMLHttpRequest();
     var url2 = "getTestCaseRelation.php?tid="+tid+"&pid="+document.getElementById("pid").value;
 
-    xmlhttp2.open("GET", url2, true);
+    xmlhttp2.open("GET", url2, false);
     xmlhttp2.send();
+    
     insertInList(xmlhttp2.responseText);
-     alert(xmlhttp2.responseText);
+
 
     var xmlhttp3 = new XMLHttpRequest();
     var url3 = "getTestCaseNoRelation.php?tid="+tid+"&pid="+document.getElementById("pid").value;
 
-    xmlhttp3.open("GET", url3, true);
+    xmlhttp3.open("GET", url3, false);
     xmlhttp3.send();
     insertNotInList(xmlhttp3.responseText);
   
 }
 
 function insertInList(response) {
-        alert(response);
-    if(inList!=null)
+
     document.getElementById("inList").options.length=0;
     if(response){
 
@@ -72,9 +72,7 @@ function insertInList(response) {
 }
 
 function insertNotInList(response) {
-        alert(response);
 
-    if(notInList!=null)
     document.getElementById("notInList").options.length=0;
     if(response){
   var arr = JSON.parse(response);
@@ -97,52 +95,65 @@ function insertNotInList(response) {
 //顯示右方的視窗，並清空changed_rids
 function showRelationWindow() {
     document.getElementById("rightBlock").style.visibility = "visible";
-    if(changed_rids!=null)
-    changed_rids.options.length=0;
+    if( document.getElementById("changed_rids")!=null)
+     document.getElementById("changed_rids").options.length=0;
 }
 
 //confirm
 function confirm() {
-    setSelect(changed_rids);
+    setSelect( document.getElementById("changed_rids"));
     document.getElementById("confirmForm").submit();
     return false;
 }
 
 
 
-function doAdd() {
-    var inList=document.getElementById("inList");
-    var notInList=document.getElementById("notInList");
-    if(inList.options.selected.length>0)
-    {
-        for(var i=0;i<inList.options.selected.length;i++)
-        {
-            inChanged.options.add(Option(inList.options.selected[i]));
-            var newOption = notInList.options.add(Option(inList.options.selected[i]));
-            newOption.style.background="red";
-            inList.remove(inList.options.selected[i].index);
-        }
-    }
-}
-
-
 function doRemove() {
     var inList=document.getElementById("inList");
     var notInList=document.getElementById("notInList");
-        if(notInList.options.selected.length>0)
+    if(inList.options.length>0)
     {
-        for(var i=0;i<notInList.options.selected.length;i++)
+        for(var i=0;i<inList.options.length;i++)
         {
-            inChanged.options.add(Option(notInList.options.selected[i]));
-            var newOption =inList.options.add(Option(notInList.options.selected[i]));
-            newOption.style.background="red";
-            notInList.remove(notInList.options.selected[i].index);
+            if(inList.options[i].selected){
+                var newOption =inList.options[i];
+                 if(!inChanged(newOption))                 
+                {newOption.style.background="red";}
+                else
+                 {   newOption.style.background="white";}
+                notInList.options.add(newOption);           
+              }
         }
     }
+        setNotSelect(inList);
+    setNotSelect(notInList);
+}
+
+
+function  doAdd(){
+    var inList=document.getElementById("inList");
+    var notInList=document.getElementById("notInList");
+    if(notInList.options.length>0)
+    {
+         for(var i=0;i<notInList.options.length;i++)
+        {
+            if(notInList.options[i].selected){
+                var newOption =notInList.options[i];
+                if(!inChanged(newOption))             
+                 {newOption.style.background="red";}
+                 else
+                   { newOption.style.background="white";}
+                inList.options.add(newOption);           
+              }
+        }
+    }
+    setNotSelect(inList);
+    setNotSelect(notInList);
 }
 
 function inChanged(option)
 {
+    var changed_rids= document.getElementById("changed_rids");
     var changed = false;
     if(changed_rids.options.length>0)
     {
@@ -156,8 +167,13 @@ function inChanged(option)
         }
     }
 
-    if(changed==false)
-       changed_rids.options.add(Option(option));
+    if(!changed){
+
+        var option2= new Option('',option.value);
+       changed_rids.options.add(option2);
+    }
+
+   return changed;
 }
 
 
@@ -166,6 +182,14 @@ function setSelect(zone) {
     for(var i = length;i >= 0; i--)
     {
             zone.options[i].selected= true;
+    }
+}
+
+function setNotSelect(zone) {
+    var length = zone.options.length - 1;
+    for(var i = length;i >= 0; i--)
+    {
+            zone.options[i].selected= false;
     }
 }
 
