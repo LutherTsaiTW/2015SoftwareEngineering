@@ -304,9 +304,9 @@ a:active {
                   <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
                  </select>
                     <div style="float:left;width:40px;height:300px;margin-left:15px;">
-                        <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px">Add</font>
+                        <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px;color:white">Add</font>
                         <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b>></b></button>
-                         <font style="margin-left:-10px;font-size:16px">Remove</font>
+                         <font style="margin-left:-10px;font-size:16px;color:white">Remove</font>
                         <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b><</b></button>
                     </div> 
 
