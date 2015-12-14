@@ -84,18 +84,18 @@
 					Edit Project
 			</h1>
     </div>
-    <div class="w3-row " style="Height:40%">
-        <div class="w3-col m4">
+    <div class="w3-row " style="Height:40%" align="center">
+        <div class="w3-col m5">
             <p></p>
         </div>
-        <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px">
+        <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px;width:382px">
             <div class="w3-col m4">
                 <p></p>
             </div>
             <form action="javascript:doEdit()" method="POST" id="editProject">
                 <br>
-                <div class="w3-row formBlock" style>
-                    <div class="w3-col m2">
+                <div class="w3-row formBlock">
+                    <div class="w3-col m1">
 						<p></p>
                     </div>
                     <div class="w3-col m4" align="left">
@@ -134,6 +134,7 @@
                         <font color="white">Name:</font>
                         <br>
                         <input id="name" type="text" name="name" required style="border-radius: 3px" placeholder="Enter a name" value="<?=$row["p_name"] ?>"/>
+                        <br>
                         <font color="white">Company:</font>
                         <br>
                         <input id="company" type="text" name="company" required style="border-radius: 3px" placeholder="Enter the company's name" value="<?=$row["p_company"] ?>"/>
@@ -141,11 +142,17 @@
                         <font color="white">Start Time:</font>
                         <br>
                         <div id="date_picker">
-							<input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value="<?=$row["p_start_time"] ?>"/>
+							<?php
+                                $stime = explode(" ", $row["p_start_time"])[0];
+							?>
+							<input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value="<?=$stime ?>"/>
 							<br>
 							<font color="white">End Time:</font>
 							<br>
-							<input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value="<?=$row["p_end_time"] ?>"/>
+							<?php
+								$etime = explode(" ", $row["p_end_time"])[0];
+							?>
+							<input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value="<?=$etime ?>"/>
                         </div>
                         <script>
 							function getExceptDays() {
@@ -154,15 +161,15 @@
 									var endTimeObj = document.getElementById("endTime");
 									var endTime = endTimeObj.value;
 									var days = document.getElementById("days");
-									startTime = moment(startTime, "YYYY-MM-DD HH:mm:ss");
-									endTime = moment(endTime, "YYYY-MM-DD HH:mm:ss");
+									startTime = moment(startTime, "YYYY-MM-DD");
+									endTime = moment(endTime, "YYYY-MM-DD");
 									var diffDays = endTime.diff(startTime, 'days') + 1;
 									days.innerHTML = "Except: " + diffDays.toString() + " Days";
 							}
 							
 							$("#date_picker").dateRangePicker({
 								separator : 'to',
-								format: 'YYYY-MM-DD HH:mm:ss',
+								format: 'YYYY-MM-DD',
 								getValue: function()
 								{
 									if ($('#startTime').val() && $('#endTime').val() )
@@ -200,7 +207,7 @@
                         <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea rows="4" name="des" id="des" width="322px"><?=$row["p_des"] ?></textarea> 
+                        <textarea rows="4" name="des" id="des" width="322px" style="resize: none;"><?=$row["p_des"] ?></textarea> 
                         <br>
                         <font color="red"><span id="error"></span></font>
                         <br>
@@ -230,7 +237,7 @@
                         <br>
                 </div>
             </form>
-            <div class="w3-col m4">
+            <div class="w3-col m2">
                 <p></p>
             </div>
         </div>

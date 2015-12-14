@@ -297,28 +297,28 @@ a:active {
         <div id="addMemberWindow" class="addMemberWindow">
             <form id="addMemberForm"   action="addMember.php" method="POST" target="_iframe">
                 <input hidden="hidden" name="pid" value="<?php echo $pid ?>">
-                <select  multiple="yes"name="removeusers[]" id="removeZone"  class="addZone" >
+                <select  multiple="yes"name="removeusers[]" id="removeZone"  class="addZone" style="background-color:white">
                   <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
                 </select>
-                <select hidden="hidden"  name="iniremoveusers[]" id="iniRemoveZone" multiple="yes"  >
+                <select hidden="hidden"  name="iniremoveusers[]" id="iniRemoveZone" multiple="yes">
                   <?php for($i=0;$i<$countMemberNotInProject;$i++) { echo '<option value= "'.$membersNotInProject[$i][2].'">'.$membersNotInProject[$i][0].'-'.$membersNotInProject[$i][1].'</option>'; }?>
                  </select>
                     <div style="float:left;width:40px;height:300px;margin-left:15px;">
                         <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px">Add</font>
-                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color:rgb(100,100,100)"><b>></b></button>
+                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b>></b></button>
                          <font style="margin-left:-10px;font-size:16px">Remove</font>
-                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color:rgb(100,100,100)"><b><</b></button>
+                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b><</b></button>
                     </div> 
 
-                <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px">
+                <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px;background-color:white">
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
                 </select>
                  <select hidden="hidden" name="iniaddusers[]" id="iniAddZone"  multiple="yes"   >
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
                 </select>
 
-                    <input  type="reset" onclick ="showSuccessWindow()"  value="Ok" class="addButton" > 
-                    <button type="reset" onclick="back();" class="addButton">Cancel</button>
+                    <input  type="reset" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white"> 
+                    <button type="reset" onclick="back();" class="addButton" style="color:white">Cancel</button>
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -326,7 +326,7 @@ a:active {
 
     <div id="successWindow" class="successWindow">
         <p style="color:white;  font-weight: 600;font-size: 25">Add Member Success!</p>
-         <button onclick="window.location.assign(window.location.href);;back()" style=";background-color:green" >OK</button>
+         <button onclick="window.location.assign(window.location.href);;back()" style=";background-color:green;color:white" >OK</button>
     </div>
     <br/>
     <div style="z-index:1">
@@ -378,9 +378,15 @@ a:active {
                         <table>
                             <tr >
                                 <td>
-                                <?php              
-                                    echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_end_time'],0,10),"</font><br/>";
-                                    echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:lightgreen;float:right;margin-right:5px\">",substr($projectdetail['p_start_time'],0,10),"</font><br/>";
+                                <?php
+                                    $stime = explode(" ", $projectdetail['p_start_time'])[0]; 
+									$stime = str_replace("-", "/", $stime);
+                                    echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:white;float:right;margin-right:5px\">",$stime,"</font><br/>";
+                                    
+									$etime = explode(" ", $projectdetail['p_end_time'])[0];
+									$etime = str_replace("-", "/", $etime);
+                                    echo "<font class=\"detailBoxFont\"> <b>End Time: </b></font> <font id=\"endTime\" class=\"detailBoxFont\" style=\"color:white;float:right;margin-right:5px\">",$etime,"</font><br/>";
+                                    
                                     echo "<font id=\"days\" class=\"detailBoxFont\" style=\"float:right;color:grey;font-size:16;margin-right:5px\"></font><br/>";  
 
                                     $Ow=mb_strimwidth  ( $projectdetail['p_owner']  ,0 ,15, "...", "UTF-8" );

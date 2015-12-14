@@ -122,7 +122,7 @@
 						</div>
 						<div class="formElement">
 							<div>Description:</div>
-							<textarea type="text" id="description" name="description" class="textBoxStyle" rows="5" required><?=$requirement['rdes'] ?></textarea>
+							<textarea type="text" id="description" name="description" class="textBoxStyle" rows="5" required style="resize:none"><?=$requirement['rdes'] ?></textarea>
 						</div>
 						<div class="formElement" style="font-size:16px"> <!-- Keep Space For Exit Button -->
 							<button class="w3-teal formButton" style="float: left" type="submit" id="editButton">Edit</button>
