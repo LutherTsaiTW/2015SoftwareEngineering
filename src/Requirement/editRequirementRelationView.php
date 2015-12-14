@@ -116,49 +116,37 @@
 				</div>
 			</div>
 			<div id="rightBlock" class="blackBox rightBOx" style="margin-left:15px">
-				<div class="insideBox" style="float:left;">
+				<div class="insideBox" style="float:left;height:500px">
 					<input type="hidden" name="pid" id="pid" value="<?=$pid; ?>">
-					<p style="font-size:22px;font-weight:bold;margin:0px;visibility:hidden">Blank Line</p>
+					<p style="font-size:18px;margin:0px;" id="editReq" name="editReq">Requirement : </p>
 					<select  multiple="yes" name="notInList" id="notInList">
 						
 					</select>
 					<div style="float:left;width:110px;height:100%;text-align: center;">
-                            <div style="float:left;height:150px;width:100%;">
-                            </div>
-                            <div style="float:left;height:40px;width:100%;">
-                                <font style="font-size:20px" >Add</font>
-                            </div>
-                             <div style="float:left;height:30px;width:100%;">
-                                 <button type="reset" onclick="doAdd()" style="margin-left:30px;float:left;width:50px;height:30px;text-align: center;font-size:20px;background-color:rgb(100,100,100)"><b>></b></button>
-                            </div>
-                            <div style="float:left;height:40px;width:100%;">
-                                             <font style="font-size:20px">Remove</font>
-                            </div>
-                     
-                            <div style="float:left;height:30px;width:100%;"> 
-                                <button type="reset" onclick="doRemove()" style="margin-left:30px;float:left;width:50px;height:30px;text-align:center;font-size:20px;background-color:rgb(100,100,100)"><b></b></button>
-                            </div>
+						<div style="float: left;width: inherit;margin: 130px 0px 20px 0px;">
+							<p style="font-size:20px;margin:0px;" >Add</p>
+							<button type="reset" onclick="doAdd()" class="arrow">></button>
+						</div>
+						<div style="float: left;width: inherit;">
+							<p style="font-size:20px;margin:0px;">Remove</p>
+							<button type="reset" onclick="doRemove()" class="arrow"><</button>
+						</div>
+					</div>
+					<select multiple="yes" name="inList" id="inList">
+						
+					</select>
+				</div>
+				<div style="float:right;margin-right:30px;">
+					<form action="editRequirementRelation.php" method="POST" id="confirmForm" target="_iframe">
+						<input hidden="hidden" name="rid" id="rid" value="">
+						<select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes" >
 
-                        </div> 
-
-                    <select multiple="yes" name="inList" id="inList">
-                    
-                    </select>
-                    
-          
-            </div>
-            <div style="float:right;margin-right:30px;margin-top:5px">
-                 <form action="editTestCaseRelation.php" method="POST" id="confirmForm" target="_iframe">
-                    <input hidden="hidden" name="rid" id="rid" value="">
-                    <select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes"   >
-                
-                    </select>
-                    <input  type="reset" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
-                 </form>
-                  <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
-            </div>
-                    
-        </div>
-    </div>
+						</select>
+						<input  type="reset" onclick="confirm();" class="w3-teal" value="confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
+					</form>
+					<iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
