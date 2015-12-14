@@ -43,7 +43,7 @@
 			}
 			
 			$reqs = array();
-			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 ORDER BY rpriority DESC;") or die($sqli->error);
+			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.version, r.oldVersion, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 ORDER BY rid DESC;") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$reqs[$row['rid']]['id'] = $row['rid'];
@@ -52,7 +52,16 @@
 				$reqs[$row['rid']]['des'] = $row['rdes'];
 				$reqs[$row['rid']]['status'] = $row['rstatus'];
 				$reqs[$row['rid']]['priority'] = $row['rpriority'];
+				$reqs[$row['rid']]['version'] = $row['version'];
+				$reqs[$row['rid']]['oldVersion'] = $row['oldVersion'];
 				$reqs[$row['rid']]['owner'] = $row['owner'];
+			}
+
+			foreach ($reqs as $value) {
+				if ($value['oldVersion'] != NULL)
+				{
+					unset($reqs[$value['oldVersion']]);
+				}
 			}
 		?>
 		<title><?= $project_info['p_name']; ?> Requirements</title>
@@ -419,7 +428,7 @@
 								{
 						?>
 						<tr class="items <?php if($req['type'] == 0) echo("nonfunctional"); else echo("functional"); ?>">
-							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name']; ?></a></td>
+							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name'] . " v" . $req['version']; ?></a></td>
 							<td>
 								<?php
 									if($req['status']==0) echo "Terminated";

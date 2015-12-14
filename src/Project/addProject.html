@@ -64,6 +64,18 @@ a:active {
 }
 </style>
 <script>
+function getExpectDays() {
+	var startTimeObj = document.getElementById("startTime");
+	var startTime = startTimeObj.value;
+	var endTimeObj = document.getElementById("endTime");
+	var endTime = endTimeObj.value;
+	var days = document.getElementById("days");
+	startTime = moment(startTime, "YYYY-MM-DD");
+	endTime = moment(endTime, "YYYY-MM-DD");
+	var diffDays = endTime.diff(startTime, 'days') + 1;
+	days.innerHTML = "Expect: " + diffDays.toString() + " Days";
+}
+								
 function submitAddProject() {
 	// [BC] 檢查是不是ntut，大小寫不管，只要是這四個字母，就會回傳錯誤
 	var company = $('input[id=project_company]').val();
@@ -125,8 +137,8 @@ function submitAddProject() {
         <div class="w3-col">
             <form action="javascript:submitAddProject();">
                 <br>
-                <div class="w3-row formBlock" style>
-                    <div class="w3-col m4">
+                <div class="w3-row formBlock" style="width:382px">
+                    <div class="w3-col m1">
                         <p/>
                     </div>
                     <div class="w3-third" align="left">
@@ -139,55 +151,49 @@ function submitAddProject() {
                         <br>
                         <input id="project_company" type="text" name="Company" autofocus required pattern="^(?:(?!\NTUT).)*$\r?\n?" style="border-radius: 3px" placeholder="Enter the company" />
                         <br>
-                        <font color="white">Start Time:</font>
-                        <br>
                         <div id="date_picker">
+							<font color="white">Start Time:</font>
+                            <br>
                             <input id="startTime" type="datetime" name="StartTime" required style="border-radius: 3px" value="" />
                             <br>
                             <font color="white">End Time:</font>
-                            <br>
                             <input id="endTime" type="datetime" name="EndTime" required style="border-radius: 3px" value="" />
+							<script>
+							$("#date_picker").dateRangePicker({
+								separator: 'to',
+								format: 'YYYY-MM-DD',
+								getValue: function() {
+									if ($('#startTime').val() && $('#endTime').val())
+										return $('#startTime').val() + ' to ' + $('#endTime').val();
+									else
+										return '';
+								},
+								setValue: function(s, s1, s2) {
+									$('#startTime').val(s1);
+									$('#endTime').val(s2);
+									var startTimeObj = document.getElementById("startTime");
+									var startTime = startTimeObj.value;
+									var endTimeObj = document.getElementById("endTime");
+									var endTime = endTimeObj.value;
+									var days = document.getElementById("days");
+									startTime = moment(startTime, "YYYY-MM-DD");
+									endTime = moment(endTime, "YYYY-MM-DD");
+									var diffDays = endTime.diff(startTime, 'days') + 1;
+									days.innerHTML = "Expect: " + diffDays.toString() + " Days";
+								}
+							});
+							</script>
+							<font color="gray"><span id="days">Expect:</span></font>
+							<script>
+							$(document).ready(function() {								
+								getExpectDays();
+								var startTimeObj = document.getElementById("startTime");
+								var endTimeObj = document.getElementById("endTime");
+								startTimeObj.onchange = getExpectDays;
+								endTimeObj.onchange = getExpectDays;
+							});
+							</script>
                         </div>
-                        <script>
-                        function getExceptDays() {
-                            var startTimeObj = document.getElementById("startTime");
-                            var startTime = startTimeObj.value;
-                            var endTimeObj = document.getElementById("endTime");
-                            var endTime = endTimeObj.value;
-                            var days = document.getElementById("days");
-                            startTime = moment(startTime, "YYYY-MM-DD HH:mm:ss");
-                            endTime = moment(endTime, "YYYY-MM-DD HH:mm:ss");
-                            var diffDays = endTime.diff(startTime, 'days') + 1;
-                            days.innerHTML = "Except: " + diffDays.toString() + " Days";
-                        }
-
-                        $("#date_picker").dateRangePicker({
-                            separator: 'to',
-                            format: 'YYYY-MM-DD HH:mm:ss',
-                            getValue: function() {
-                                if ($('#startTime').val() && $('#endTime').val())
-                                    return $('#startTime').val() + ' to ' + $('#endTime').val();
-                                else
-                                    return '';
-                            },
-                            setValue: function(s, s1, s2) {
-                                $('#startTime').val(s1);
-                                $('#endTime').val(s2);
-                                getExceptDays();
-                            }
-                        });
-                        </script>
-                        <font color="gray"><span id="days">Expect:</span></font>
-                        <script>
-                        $(document).ready(function() {
-                            getExceptDays();
-                            var startTimeObj = document.getElementById("startTime");
-                            var endTimeObj = document.getElementById("endTime");
-                            startTimeObj.onchange = getExceptDays;
-                            endTimeObj.onchange = getExceptDays;
-                        });
-                        </script>
-                        <br>
                         <font color="white">Status:</font>
                         <br>
                         <select name="Status" id="status">
@@ -198,7 +204,8 @@ function submitAddProject() {
                         <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea id="project_des" name="Description" cols="40" rows="5" required></textarea>
+                        <textarea id="project_des" name="Description" cols="40" rows="5" required style="resize:none;width:322px"></textarea>
+                        <br>
                         <br>
                         <input id="submitBtn" type="submit" name="submit" value="Add" class="w3-teal">
                         <input type="button" name="exit" value="Cancel" class="w3-teal" onclick="location.href='projectList.html';">

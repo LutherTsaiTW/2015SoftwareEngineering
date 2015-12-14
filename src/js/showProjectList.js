@@ -30,7 +30,7 @@ function closeDeleteWindow() {
 function insertHTML(response) {
     var arr = JSON.parse(response);
       
-    var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Owner</b></td><td><b>Company</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td> </td><td> </td></tr>";
+    var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Company</b></td><td><b>Owner</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td> </td><td> </td></tr>";
     document.getElementById("userName").innerHTML = "Welcome, " + arr.name + "!";
     if (arr.projects) {
         var project = arr.projects;
@@ -43,9 +43,9 @@ function insertHTML(response) {
                 out += "<tr><td><a href=\"projectDetailView.php?pid=" + project[i].pid + "\">" +
                     project[i].name +
                     "</a></td><td>" +
-                    project[i].owner +
-                    "</td><td>" +
                     project[i].company +
+                    "</td><td>" +
+                    project[i].owner +
                     "</td><td>" +
                     project[i].start_time.substr(0, 10) +
                     "</td><td>" +

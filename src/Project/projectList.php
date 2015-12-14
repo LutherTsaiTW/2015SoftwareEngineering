@@ -34,8 +34,15 @@
 		$feedback['projects'][$pid]['des'] = urlencode($row['p_des']);
 		$feedback['projects'][$pid]['company'] = urlencode($row['p_company']);
 		$feedback['projects'][$pid]['owner'] = urlencode($row_owner['name']);
-		$feedback['projects'][$pid]['start_time'] = urlencode($row['p_start_time']);
-		$feedback['projects'][$pid]['end_time'] = urlencode($row['p_end_time']);
+		
+		$stime = explode(" ", $row["p_start_time"])[0]; 
+		$stime = str_replace("-", "/", $stime);
+		$feedback['projects'][$pid]['start_time'] = urlencode($stime);
+		
+		$etime = explode(" ", $row["p_end_time"])[0];
+		$etime = str_replace("-", "/", $etime);
+		$feedback['projects'][$pid]['end_time'] = urlencode($etime);
+		
 		$feedback['projects'][$pid]['status'] = urlencode($row['status']);
 		$feedback['success'] = '1';
 		$feedback['message'] = 'ok';
