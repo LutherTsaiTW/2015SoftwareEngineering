@@ -29,6 +29,7 @@
 				$project_name = $project['p_name'];
 			}
 			
+			$testcases = Array();
 			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid WHERE t.pid = " . $pid . ";") or die($sqli->error);
 			while ($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
