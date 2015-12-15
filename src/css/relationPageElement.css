@@ -12,7 +12,7 @@
 }
 
 .rightBox {
-    /*visibility: hidden;*/
+    visibility: hidden;
     height: 550px;
     width: 650px;
     overflow: hidden;

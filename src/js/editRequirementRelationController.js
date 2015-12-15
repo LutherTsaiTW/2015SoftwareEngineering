@@ -1,4 +1,3 @@
-var r = r;
 function getData(rid){
 	document.getElementById("rid").value = rid;
 	var xmlhttp1 = new XMLHttpRequest();
@@ -58,10 +57,14 @@ function doRemove() {
 		for (var i = length; i >= 0; i--) {
 			if (inList.options[i].selected) {
 				var newOption =inList.options[i];
-				if(!inChanged(newOption))
+				if(!inChanged(newOption)){
 					newOption.style.background="red";
-				else
+					newOption.style.color="white";
+				}
+				else{
 					newOption.style.background="white";
+					newOption.style.color="black";
+				}
 				notInList.options.add(newOption);           
 			}
 		}
@@ -82,10 +85,13 @@ function  doAdd(){
 		for (var i = length; i >= 0; i--) {
 			if (notInList.options[i].selected) {
 				var newOption =notInList.options[i];
-				if(!inChanged(newOption))
+				if(!inChanged(newOption)){
 					newOption.style.background="red";
-				else
+					newOption.style.color="white";
+				} else{
 					newOption.style.background="white";
+					newOption.style.color="black";
+				}
 				inList.options.add(newOption);
 			}
 		}
@@ -139,10 +145,6 @@ function confirm() {
 	var arr = document.getElementById("changed_rids").options;
 	document.getElementById("confirmForm").submit();
 	initialize();
-	var sel = document.getElementById("requirements");
-	//document.getElementById("rid").value = r;
-	//getData(sel.options[sel.selectedIndex].value);
-	//alert(document.getElementById("requirements").options.selected);
 	return false;
 }
 
@@ -164,10 +166,12 @@ function initialize(){
 	for(var i = length;i >= 0; i--) {
 		inList.options[i].selected= false;
 		inList.options[i].style.background="white";
+		inList.options[i].style.color="black";
 	}
 	var length = notInList.options.length - 1;
 	for(var i = length;i >= 0; i--) {
 		notInList.options[i].selected= false;
 		notInList.options[i].style.background="white";
+		notInList.options[i].style.color="black";
 	}
 }
