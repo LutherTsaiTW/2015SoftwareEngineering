@@ -305,9 +305,9 @@ a:active {
                  </select>
                     <div style="float:left;width:40px;height:300px;margin-left:15px;">
                         <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px;color:white">Add</font>
-                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b>></b></button>
+                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color: #009688 !important;color:white"><b>></b></button>
                          <font style="margin-left:-10px;font-size:16px;color:white">Remove</font>
-                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color:rgb(100,100,100);color:white"><b><</b></button>
+                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color: #009688 !important;color:white"><b><</b></button>
                     </div> 
 
                 <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px;background-color:white">
@@ -317,8 +317,8 @@ a:active {
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
                 </select>
 
-                    <input  type="reset" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white"> 
-                    <button type="reset" onclick="back();" class="addButton" style="color:white">Cancel</button>
+                    <input type="button" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white;background-color: #009688 !important;"> 
+                    <button type="reset" onclick="back();" class="addButton" style="color:white;background-color: #009688 !important;">Cancel</button>
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -326,7 +326,7 @@ a:active {
 
     <div id="successWindow" class="successWindow">
         <p style="color:white;  font-weight: 600;font-size: 25">Add Member Success!</p>
-         <button onclick="window.location.assign(window.location.href);;back()" style=";background-color:green;color:white" >OK</button>
+         <button onclick="window.location.assign(window.location.href);;back()" style="background-color: #009688 !important;color:white" >OK</button>
     </div>
     <br/>
     <div style="z-index:1">

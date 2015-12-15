@@ -17,7 +17,7 @@
     }
 
     $sqli->query("SET NAMES 'UTF8'"); // [CLY] Let Chinese charcters show correctly
-    $result = $sqli->query("SELECT COUNT(uid) AS c, uid, name, previlege FROM user_info WHERE account_id='" . $user . "' AND password='" . md5($password) . "';") or die('Query error');
+    $result = $sqli->query("SELECT COUNT(uid) AS c, uid, name, previlege FROM user_info WHERE account_id='" . $user . "' AND password='" . md5($password) . "';") or die($sqli->error);
     
     while($row = $result->fetch_array(MYSQLI_ASSOC))
     {
@@ -26,7 +26,7 @@
             session_start();
             $sid = md5("{$row['uid']}{$now['year']}{$now['mon']}{$now['mday']}{$now['hours']}{$now['minutes']}{$now['seconds']}"); // [CLY] Generate Session ID
             $_SESSION['sessionid'] = $sid; // [CLY] Save Session ID
-            $sqli->query("UPDATE user_info SET user_session='" . $sid . "' WHERE uid=" . $row['uid'] . " AND account_id='" . $user . "';") or die('Query error'); // [CLY] Upload Session ID
+            $sqli->query("UPDATE user_info SET user_session='" . $sid . "' WHERE uid=" . $row['uid'] . " AND account_id='" . $user . "';") or die($sqli->error); // [CLY] Upload Session ID
             session_write_close();
             
             $feedback = array();
