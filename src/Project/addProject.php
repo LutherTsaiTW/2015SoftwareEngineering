@@ -61,7 +61,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 	
 	// [BC] get user info
-	$query = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
+	$query = "SELECT uid FROM user_info WHERE user_session='" . $session . "'";
 	$result = $sqli->query($query) or die('Query Error when SELECT USER in addProject.php');
 	
 	if ($user = $result->fetch_array(MYSQLI_ASSOC)) {

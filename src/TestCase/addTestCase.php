@@ -23,7 +23,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] 取得user_info
-	$findUser = "SELECT * FROM user_info WHERE user_session='" . $_SESSION['sessionid'] . "'";
+	$findUser = "SELECT uid FROM user_info WHERE user_session='" . $_SESSION['sessionid'] . "'";
 	$result = $sqli->query($findUser);
 	if (!$result) {
 		$resopnse = array('success' => 0, 'message' => 'there is an error when SELECT user_info in addTestCase.php');
