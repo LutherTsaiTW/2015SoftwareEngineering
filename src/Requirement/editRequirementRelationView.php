@@ -82,6 +82,13 @@
 		);
 	}
 	</script>
+
+	<style type="text/css">
+		select{
+			background-color: white;
+		}
+	</style>
+
 	<body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 		<div><br></div>
 		<div class="w3-row">
