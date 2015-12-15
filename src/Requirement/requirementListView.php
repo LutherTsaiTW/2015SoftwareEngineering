@@ -410,6 +410,9 @@
 							</tr>
 						</table>
 					</div>
+					<div style="float:left;width:100%;height:70px;text-align:center;" class="listButton">
+					<a href="editRequirementRelationView.php?pid=<?=$pid; ?>" style="font-size:36px;" >Relaitonship</a>
+					</div>
 				</div>
 				<div style="float:right;margin-left:350px" id="listTable">
 					<table class="listTable">
