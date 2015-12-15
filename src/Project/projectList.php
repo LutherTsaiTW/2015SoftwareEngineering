@@ -19,7 +19,7 @@
 	$user = $result->fetch_array(MYSQLI_ASSOC);
 
     /* [CLY] Get project list */
-    $result = $sqli->query("SELECT p.p_id, p.p_name, p.p_des, p.p_company, p.p_owner, p.p_start_time, p.p_end_time, p.status FROM project AS p LEFT JOIN project_team AS t ON p.p_id = t.project_id WHERE t.user_id = " . $user['uid'] . ";") or die('Project query error');
+    $result = $sqli->query("SELECT p.p_id, p.p_name, p.p_company, p.p_owner, p.p_start_time, p.p_end_time, p.status FROM project AS p LEFT JOIN project_team AS t ON p.p_id = t.project_id WHERE t.user_id = " . $user['uid'] . ";") or die('Project query error');
     
 	$feedback['name'] = urlencode($user['name']);
 	while($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -29,7 +29,6 @@
 		$pid = $row['p_id'];
 		$feedback['projects'][$pid]['pid'] = $pid;
 		$feedback['projects'][$pid]['name'] = urlencode($row['p_name']);
-		$feedback['projects'][$pid]['des'] = urlencode($row['p_des']);
 		$feedback['projects'][$pid]['company'] = urlencode($row['p_company']);
 		$feedback['projects'][$pid]['owner'] = urlencode($row_owner['name']);
 		
