@@ -1,3 +1,4 @@
+var r = r;
 function getData(rid){
 	document.getElementById("rid").value = rid;
 	var xmlhttp1 = new XMLHttpRequest();
@@ -138,6 +139,10 @@ function confirm() {
 	var arr = document.getElementById("changed_rids").options;
 	document.getElementById("confirmForm").submit();
 	initialize();
+	var sel = document.getElementById("requirements");
+	//document.getElementById("rid").value = r;
+	//getData(sel.options[sel.selectedIndex].value);
+	//alert(document.getElementById("requirements").options.selected);
 	return false;
 }
 

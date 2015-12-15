@@ -106,7 +106,7 @@
 			<div class="blackBox leftBox">
 				<div class="insideBox">
 					<p style="font-size:22px;font-weight:bold;margin:0px">Requirement:</p>
-					<select  name="requirements" id="requirements" multiple="yes" onchange="getData(value);">
+					<select  name="requirements" id="requirements" multiple="yes" onclick="getData(value);">
 					<?php
 						foreach ($reqs as $req) {
 							echo "<option value=" . $req['rid'] . ">" . $req['rname'] . "</option>";
@@ -138,11 +138,11 @@
 				</div>
 				<div style="float:right;margin-right:30px;">
 					<form action="editRequirementRelation.php" method="POST" id="confirmForm" target="_iframe">
-						<input hidden="hidden" name="rid" id="rid" value="">
-						<select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes" >
+						<input type="text" name="rid" id="rid" value="" style="color:black;">
+						<select name="changed_rids[]" id="changed_rids"  multiple="yes" style="visibility:hidden">
 
 						</select>
-						<input  type="reset" onclick="confirm();" class="w3-teal" value="confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
+						<button  onclick="confirm();" class="w3-teal" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>confirm</button>
 					</form>
 					<iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
 				</div>
