@@ -100,7 +100,7 @@
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && !bool) {
 
-            var arr = JSON.parse(xmlhttp.responseText);
+            var arr = $.parseJSON(xmlhttp.responseText);
             var testcase = arr.testcases;
             testcase = Object.keys(testcase).map(function(k) {
                 return testcase[k];

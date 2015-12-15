@@ -5,7 +5,7 @@ function getData(rid){
 
 	xmlhttp1.open("GET", url1, false);
 	xmlhttp1.send();
-	var res = JSON.parse(xmlhttp1.responseText);	
+	var res = $.parseJSON(xmlhttp1.responseText);	
 	document.getElementById("editReq").innerHTML = "Requirement : " + res.rname;
 	
 	var pid = document.getElementById("pid").value
@@ -31,7 +31,7 @@ function insertIntoList(response, listName) {
 	//alert(listName);
 	document.getElementById(listName).options.length=0;
 	if(response){
-		var arr = JSON.parse(response);
+		var arr = $.parseJSON(response);
 		//alert(arr.length);
 		for(var i = 0;i < arr.length;i++){
 			var option = new Option(arr[i].rname, arr[i].rid);

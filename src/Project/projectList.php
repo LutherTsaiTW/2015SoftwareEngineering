@@ -22,27 +22,28 @@
     $result = $sqli->query("SELECT p.p_id, p.p_name, p.p_company, p.p_owner, p.p_start_time, p.p_end_time, p.status FROM project AS p LEFT JOIN project_team AS t ON p.p_id = t.project_id WHERE t.user_id = " . $user['uid'] . ";") or die('Project query error');
     
 	$feedback['name'] = urlencode($user['name']);
+	$pos = 0;
 	while($row = $result->fetch_array(MYSQLI_ASSOC))
 	{
 		$result_owner = $sqli->query("SELECT name FROM user_info WHERE uid = " . $row['p_owner'] . ";");
 		$row_owner = $result_owner->fetch_array(MYSQLI_ASSOC);
-		$pid = $row['p_id'];
-		$feedback['projects'][$pid]['pid'] = $pid;
-		$feedback['projects'][$pid]['name'] = urlencode($row['p_name']);
-		$feedback['projects'][$pid]['company'] = urlencode($row['p_company']);
-		$feedback['projects'][$pid]['owner'] = urlencode($row_owner['name']);
+		$feedback['projects'][$pos]['pid'] = $row['p_id'];
+		$feedback['projects'][$pos]['name'] = urlencode($row['p_name']);
+		$feedback['projects'][$pos]['company'] = urlencode($row['p_company']);
+		$feedback['projects'][$pos]['owner'] = urlencode($row_owner['name']);
 		
 		$stime = explode(" ", $row["p_start_time"])[0]; 
 		$stime = str_replace("-", "/", $stime);
-		$feedback['projects'][$pid]['start_time'] = urlencode($stime);
+		$feedback['projects'][$pos]['start_time'] = urlencode($stime);
 		
 		$etime = explode(" ", $row["p_end_time"])[0];
 		$etime = str_replace("-", "/", $etime);
-		$feedback['projects'][$pid]['end_time'] = urlencode($etime);
+		$feedback['projects'][$pos]['end_time'] = urlencode($etime);
 		
-		$feedback['projects'][$pid]['status'] = urlencode($row['status']);
+		$feedback['projects'][$pos]['status'] = urlencode($row['status']);
 		$feedback['success'] = '1';
 		$feedback['message'] = 'ok';
+		$pos++;
     }
 	echo(urldecode(json_encode($feedback))); // [CLY] urldecode : Decode html code to let it show correctly
 	$feedback=json_encode($feedback);

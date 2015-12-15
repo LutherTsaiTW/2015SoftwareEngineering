@@ -28,7 +28,11 @@ function closeDeleteWindow() {
 }
 
 function insertHTML(response) {
-    var arr = JSON.parse(response);
+    try{
+        var arr = $.parseJSON(response);
+    }catch (err){
+        alert("error: " + err.message);
+    }
       
     var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Company</b></td><td><b>Owner</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td> </td><td> </td></tr>";
     document.getElementById("userName").innerHTML = "Welcome, " + arr.name + "!";

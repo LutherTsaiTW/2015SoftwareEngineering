@@ -30,7 +30,7 @@ function insertInList(response) {
     document.getElementById("inList").options.length=0;
     if(response){
 
-    var arr = JSON.parse(response);
+    var arr = $.parseJSON(response);
             if (arr.inLists) {
             var inList = arr.inLists;
             inList = Object.keys(inList).map(function(k) {
@@ -51,7 +51,7 @@ function insertNotInList(response) {
 
     document.getElementById("notInList").options.length=0;
     if(response){
-  var arr = JSON.parse(response);
+  var arr = $.parseJSON(response);
             if (arr.notInLists) {
                 var notInList = arr.notInLists;
                 notInList = Object.keys(notInList).map(function(k) {
