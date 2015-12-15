@@ -517,7 +517,7 @@
 						<?php
 							$existingReviewers = array();
 
-							if($req_info['rstatus']==1)
+							if($req_info['rstatus']==1 && ($userinfo['previlege'] == 111 || $userinfo['previlege'] == 999))
 							{
 								echo "<div style=\"float:left;width:100%;height:70px;text-align:center;\" class=\"listButton\">";
 								echo "<a href=\"javascript:ConfirmRequirement();\" style=\"font-size:36px;\" >Confirm</a>";
@@ -639,7 +639,7 @@
 									if ($isInReview)
 									{
 										//Get User Info
-										$userResult = $sqli->query("SELECT name FROM user_info WHERE uid=" . $row['user_id']) or die($sqli->error);
+										$userResult = $sqli->query("SELECT name FROM user_info WHERE (previlege=777 OR previlege=999) AND uid=" . $row['user_id']) or die($sqli->error);
 										if (!($reviewers = $userResult->fetch_array(MYSQLI_ASSOC)))
 										{
 											$feedback = array('success' => 0, 'message' => 'userinfo_fetch_error');
