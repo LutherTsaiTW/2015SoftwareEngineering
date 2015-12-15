@@ -25,7 +25,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] insert 到 requirement table 中
-	$insert = "INSERT INTO req(rid, rname, rtype, rdes, rowner, rpriority, rproject, rstatus) VALUES (NULL, '$rName', $rType, '$rDescription', $uid, $rPriority, $pid, 1)";
+	$insert = "INSERT INTO req(rid, rname, rtype, rdes, rowner, rpriority, rproject, rstatus, version) VALUES (NULL, '$rName', $rType, '$rDescription', $uid, $rPriority, $pid, 1, 1.0)";
 	$result = $sqli->query($insert);
 	if(!$result)
 	{
