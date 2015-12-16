@@ -196,7 +196,7 @@
                     </select>
                     <input  type="reset" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
                  </form>
-                  <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
+   
             </div>
                     
         </div>
