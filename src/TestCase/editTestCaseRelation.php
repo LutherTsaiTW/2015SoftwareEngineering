@@ -29,7 +29,7 @@
 		}
 		else
 		{
-			$sqli->query("INSERT INTO test_relation(tid, rid) VALUES(" . $tid . ", " . $change . ");") or die($sqli->error);
+			$sqli->query("INSERT INTO test_relation(tid, rid,confirmed) VALUES(" . $tid . ", " . $change . ",1);") or die($sqli->error);
 		}
 	}
 	
