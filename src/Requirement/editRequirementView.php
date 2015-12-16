@@ -89,7 +89,6 @@
 	        <div class="w3-container" style="float:right;font-size:18">
 				<?php echo "Welcome, ",$user['name'] . "!"; ?>
 			</div>
-			<!--<script type="text/javascript" src="../js/getUser.js"></script>-->
 	    </div>
 	    <div class="w3-row" style="text-align: center">
 			<h1 class="greyBox">Edit Requirement</h1>

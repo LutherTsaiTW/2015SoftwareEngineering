@@ -37,7 +37,7 @@
 		}
 
 		// [BC] 取得該project的所有requirements
-		$selectReq = "SELECT rid, rname, rtype, rdes, rowner, rstatus, version FROM req WHERE rproject=$pid AND (rstatus=1 OR rstatus=2 OR rstatus=3)";
+		$selectReq = "SELECT rid, rname, rtype, rdes, rowner, rstatus, version FROM req WHERE rproject=$pid AND (rstatus=1 OR rstatus=2 OR rstatus=3 OR rstatus=4)";
 		$result = $sqli->query($selectReq) or die('there is an error when SELECT req in editRequirementRelationView.php');
 		$reqs = array();
 		while($data = $result->fetch_array(MYSQLI_ASSOC)){
@@ -82,6 +82,13 @@
 		);
 	}
 	</script>
+
+	<style type="text/css">
+		select{
+			background-color: white;
+		}
+	</style>
+
 	<body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 		<div><br></div>
 		<div class="w3-row">
@@ -106,7 +113,7 @@
 			<div class="blackBox leftBox">
 				<div class="insideBox">
 					<p style="font-size:22px;font-weight:bold;margin:0px">Requirement:</p>
-					<select  name="requirements" id="requirements" multiple="yes" onchange="getData(value);">
+					<select  name="requirements" id="requirements" size="2" onchange="getData(value);">
 					<?php
 						foreach ($reqs as $req) {
 							echo "<option value=" . $req['rid'] . ">" . $req['rname'] . "</option>";
@@ -142,7 +149,7 @@
 						<select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes" >
 
 						</select>
-						<input  type="reset" onclick="confirm();" class="w3-teal" value="confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
+						<input  type="button" onclick="confirm();" class="w3-teal" value="confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
 					</form>
 					<iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
 				</div>

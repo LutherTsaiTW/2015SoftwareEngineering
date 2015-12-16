@@ -22,8 +22,8 @@
 	}
 	$sqli->query("SET NAMES 'UTF8'");
 
-	// [BC] 取得所有的requirement
-	$selectRequirement = "SELECT rid, rname FROM req WHERE rproject=$pid AND rid!=$rid";
+	// [BC] 取得所有非目標的requirement，而且status 是1(open) 2(in Review) 3(Approved) 4(Disapproved)
+	$selectRequirement = "SELECT rid, rname FROM req WHERE rproject=$pid AND rid!=$rid AND (rstatus=1 OR rstatus=2 OR rstatus=3 OR rstatus=4)";
 	$result = $sqli->query($selectRequirement);
 
 	// [BC] 判斷requirement是否符合我們的條件

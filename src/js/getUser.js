@@ -13,6 +13,6 @@ xmlhttp.onreadystatechange=function() {
 
 
 function insertWelcomeGreeting(response) {
-    var arr = JSON.parse(response);
+    var arr = $.parseJSON(response);
 	document.getElementById("userName").innerHTML ="Welcome, "+arr.name+"!";
 }

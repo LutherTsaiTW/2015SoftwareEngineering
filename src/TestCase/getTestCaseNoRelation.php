@@ -16,7 +16,7 @@
 
 
         // [KL] 取得與testcase無關的的req
-        $selectReq = "SELECT * FROM req as r WHERE r.rid NOT IN (SELECT rid FROM test_relation WHERE tid =" . $tid . ")  AND r.rproject = ".$pid;
+        $selectReq = "SELECT * FROM req as r WHERE r.rid NOT IN (SELECT rid FROM test_relation WHERE tid =" . $tid . ")  AND r.rproject=$pid AND (r.rstatus=1 OR r.rstatus=2 OR r.rstatus=3 OR r.rstatus=4)";
         $result = $sqli->query($selectReq);
         if (!$result)
         {

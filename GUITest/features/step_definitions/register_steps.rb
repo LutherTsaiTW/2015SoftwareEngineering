@@ -23,7 +23,7 @@ Given /^I am in register page$/ do
 end
 
 When /^I entered all the data$/ do
-	 accountID = generate_account
+	accountID = generate_account
 	@b.text_field(:name => 'AccountID').set accountID
 	@b.text_field(:name => 'Password').set password
 	@b.text_field(:name => 'PasswordConfirm').set password
