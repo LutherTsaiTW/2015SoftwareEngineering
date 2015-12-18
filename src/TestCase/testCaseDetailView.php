@@ -39,12 +39,25 @@
         }
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $tname=urlencode($row['name']);
-            $tdes=urlencode($row['t_des']);
-            $tdata=urlencode($row['data']);
+            $tname = whitespaceHandler(urlencode($row['name']));
+            $tdes = whitespaceHandler(urlencode($row['t_des']));
+            $tdata = whitespaceHandler(urlencode($row['data']));
+            $tresult = whitespaceHandler(urlencode($row['result']));
             $tpid=urlencode($row['pid']);
             $towner_id=urlencode($row['owner_id']);
-            $tresult=urlencode($row['result']);
+        }
+
+        //取得testcase owner資訊
+        $getTestCaseOwner = "SELECT name FROM user_info WHERE uid=".$towner_id;
+        $result = $sqli->query($getTestCaseOwner);
+        if (!$result )
+        {
+            echo "Error: there is an error when getTestCaseOwner";
+            exit();
+        }
+        while($row = $result->fetch_array(MYSQLI_ASSOC))
+        {
+            $towner=whitespaceHandler(urlencode($row['name']));
         }
 
         //取得使用者資訊
@@ -78,25 +91,54 @@
                 $notConfirmed++;
         }
 
-         //取得與testcase有關的的所有 req
-        $getReq = "SELECT * FROM req as r WHERE r.rid IN (SELECT rid FROM test_relation WHERE tid=".$tid.")";
-        $result = $sqli->query($getReq);
+         //取得與testcase有關的not confirmed req
+        $getReqNotConfirmed = "SELECT * FROM req as r WHERE r.rid IN (SELECT rid FROM test_relation WHERE (tid=".$tid." AND confirmed = 0))";
+        $result = $sqli->query($getReqNotConfirmed);
         if (!$result )
         {
-            echo "Error: there is an error when getReq";
+            echo "Error: there is an error when getReqNotConfirmed";
             exit();
         }
 
         $i=0;
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $req['req'][$i]['rid']=urlencode($row['rid']);
-            $req['req'][$i]['name']=urlencode($row['rname']);
+            $notConfirmedReq['req'][$i]['rid']=urlencode($row['rid']);
+            $notConfirmedReq['req'][$i]['name']=whitespaceHandler(urlencode($row['rname']));
             $i++;
-            $req['count'] = $i;
+            $notConfirmedReq['count'] = $i;
         }   
+
+         //取得與testcase有關的 confirmed req
+        $getReqConfirmed = "SELECT * FROM req as r WHERE r.rid IN (SELECT rid FROM test_relation WHERE (tid=".$tid." AND confirmed = 1))";
+        $result = $sqli->query($getReqConfirmed);
+        if (!$result )
+        {
+            echo "Error: there is an error when getReqConfirmed";
+            exit();
+        }
+
+        $i=0;
+        while($row = $result->fetch_array(MYSQLI_ASSOC))
+        {
+            $confirmedReq['req'][$i]['rid']=urlencode($row['rid']);
+            $confirmedReq['req'][$i]['name']=whitespaceHandler(urlencode($row['rname']));
+            $i++;
+            $confirmedReq['count'] = $i;
+        }  
+
+        function whitespaceHandler($vstring)
+        {   
+            $REG = '/[%0D%0A]+/';
+            $space = '/[+]/';
+            $string = preg_replace($REG, '<br />', $vstring);
+            $string = preg_replace($space, '&nbsp;', $string);
+            return $string;
+        }
     ?>
 
+
+    
     <body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
 
         <!--頁面上半部-->
@@ -124,17 +166,63 @@
         <div class="mainBox">
             <div class="upperBox">
                 <div class="tag">
-                <a>Detail</a>
+                <a onclick="switchBox(1)">Detail</a>
                 </div>
                 <div class="tag tagGap">
-                <a>Input/Ouput</a>
+                <a onclick="switchBox(2)">Input/Ouput</a>
                 </div>
                 <div class="tag tagGap">
-                <a>Relationship</a>
+                <a onclick="switchBox(3)">Relationship</a>
                 </div>
             </div>
-            <div class="bottomBox"> 
-                
+            <div class="bottom">
+                <div class="bottomBox" id="detailBox"> 
+                        <div id="detail"  class="insideBox-detail">
+                            <font class="bold-22">Owner: </font><font class="font-22"><?php echo $towner;?></font><br>
+                            <font class="bold-22">Description: </font><font class="font-22"><?php echo $tdes;?></font>
+                        </div>
+                </div>
+                <div class="bottomBox hidden" id="dataBox"> 
+                        <div id="inputBox"  class="insideBox-data">
+                             <font class="bold-22">Input Data: </font><br><font class="font-22"><?php echo $tdata;?></font><br>  
+                        </div>
+                         <div id="outputBox"  class="insideBox-data">
+                             <font class="bold-22">Output Data: </font><br><font class="font-22"><?php echo $tresult;?></font>
+                        </div>
+                </div>
+                <div class="bottomBox hidden" id="relationBox"> 
+                        <div id="notConfirmBox"  class="relationshipBox">
+                            <div>
+                             <table class="font-22" >
+                                <tr>
+                                    <td ><font class="bold-22">Not Confirm: </font></td>
+                                </tr>
+                                    <?php 
+                                        if($notConfirmedReq['count']>0){
+                                            foreach ($notConfirmedReq['req'] as $t ) {
+                                                echo "<tr><td>". $t['name'] ."</td> <td><button class='btn' onclick'doConfirm(".$t['rid'].")'>Confirm</button></td> <td><button class='btn' onclick'doRemove(".$t['rid'].")'>Remove</button></td></tr>";
+                                            }
+                                        } 
+                                    ?>                               
+                             </table>
+                             </div>                            
+                        </div>
+                         <div id="confirmedBox"  class="relationshipBox">
+                                   <table class="font-22">
+                                <tr>
+                                    <td ><font class="bold-22">Confirmed: </font></td>
+                                </tr>
+                                    <?php 
+                                        if($confirmedReq['count']>0){
+
+                                            foreach ($confirmedReq['req'] as $t ) {
+                                                echo "<tr><td>". $t['name'] ."</td><td> </td><td> </td></tr>";
+                                            }
+                                        } 
+                                    ?>                               
+                             </table> 
+                        </div>
+                </div>
             </div>
         </div>
     </body>
