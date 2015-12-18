@@ -30,13 +30,14 @@
 			}
 			
 			$testcases = Array();
-			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid WHERE t.pid = " . $pid . ";") or die($sqli->error);
+			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner, r.confirmed FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid LEFT JOIN test_relation AS r ON t.tid = r.tid WHERE t.pid = " . $pid . ";") or die($sqli->error);
 			while ($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$testcases[$row['tid']]['tid'] = $row['tid'];
 				$testcases[$row['tid']]['name'] = $row['name'];
 				$testcases[$row['tid']]['ownerid'] = $row['owner_id'];
 				$testcases[$row['tid']]['owner'] = $row['owner'];
+				$testcases[$row['tid']]['confirmed'] = $row['confirmed'];
 			}
 		?>
 		<title><?= $project_name; ?> - Test Cases</title>
@@ -292,7 +293,7 @@
 								{
 							?>
 							<tr class="items">
-								<td style="font-size:22px"><a href="testCaseDetailView?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
+								<td style="font-size:22px"><?php if($testcase['confirmed'] == 0) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
