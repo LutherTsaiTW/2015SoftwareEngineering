@@ -52,6 +52,11 @@
 		$response = array('SUCCESS' => 0, 'MESSAGE' => 'ERROR IN INSERT - changeRequirement.php');
 		exit(json_encode($response));
 	}
+	else
+	{
+		 $newREQID = $sqli->insert_id;
+		 echo $newREQID;
+	}
 
 	$update = "UPDATE req SET rstatus = 5 WHERE rid = " . $oldRID .";";
 	$result = $sqli->query($update);
@@ -61,17 +66,7 @@
 		exit(json_encode($response));
 	}
 
-	$select = "SELECT LAST_INSERT_ID();";
-	$result = $sqli->query($select);
-	if(!($req_info = $result->fetch_array(MYSQLI_ASSOC)))
-	{
-		$response = array('SUCCESS' => 0, 'MESSAGE' => 'ERROR IN SELECT - changeRequirement.php');
-		exit(json_encode($response));
-	}
-
-	$newREQID = $req_info['rid'];
-
-	$update = "UPDATE req_relation SET rid_a = " . $newREQID ."WHERE rid_a = " . $oldRID .";";
+	$update = "UPDATE req_relation SET rid_a = " . $newREQID ." WHERE rid_a = " . $oldRID .";";
 	$result = $sqli->query($update);
 	if(!$result)
 	{
@@ -79,7 +74,7 @@
 		exit(json_encode($response));
 	}
 
-	$update = "UPDATE req_relation SET rid_b = " . $newREQID ."WHERE rid_b = " . $oldRID .";";
+	$update = "UPDATE req_relation SET rid_b = " . $newREQID ." WHERE rid_b = " . $oldRID .";";
 	$result = $sqli->query($update);
 	if(!$result)
 	{
@@ -87,7 +82,7 @@
 		exit(json_encode($response));
 	}
 
-	$update = "UPDATE test_relation SET rid = " . $newREQID ."WHERE rid = " . $oldRID .";";
+	$update = "UPDATE test_relation SET rid = " . $newREQID ." WHERE rid = " . $oldRID .";";
 	$result = $sqli->query($update);
 	if(!$result)
 	{
