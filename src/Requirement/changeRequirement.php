@@ -1,11 +1,11 @@
 <?php
-	// $oldRID = $_POST['old_rid'];
-	// $versionType = $_POST['version_type'];
-	// $description = $_POST['des'];
+	$oldRID = $_POST['old_rid'];
+	$versionType = $_POST['version_type'];
+	$description = $_POST['des'];
 
-	$oldRID = 10;
-	$versionType = 1;
-	$description = "testing";
+	// $oldRID = 10;
+	// $versionType = 1;
+	// $description = "testing";
 
 	require_once '../assist/DBConfig.php';
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
