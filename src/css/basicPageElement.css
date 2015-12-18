@@ -1,4 +1,4 @@
-/* [BC] 一些基礎的元素CSS */
+﻿/* [BC] 一些基礎的元素CSS */
 
 .greyBox {
     background-color: grey;
@@ -69,3 +69,35 @@
     margin-left: 0px;
     margin-right: 10px;
 }
+
+/*--[KL] link的表示 */
+    a {
+    color: lightgrey;
+    cursor: pointer;
+    }
+
+    a:link {
+
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: lightgrey;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: white;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: white;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+ 
+/*[KL] link的表示 --*/
