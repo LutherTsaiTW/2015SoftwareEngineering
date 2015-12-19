@@ -1,7 +1,7 @@
 .mainBox {
     margin: 0px auto;
     width: 920px;
-    height: 530px;
+    min-height: 530px;
 }
 
 .upperBox {
@@ -71,7 +71,6 @@
     border-radius: 15px;
     background-color: grey;
     margin-top: 20px;
-    margin-left: 20px;
     white-space:normal;
     word-wrap:break-word; 
     width: 880px;
@@ -89,6 +88,10 @@
     float: left;
     color: grey;
 }
+.relationIframe{
+    border: 0px;
+    width: inherit;
+}
 .tagGap
 {
     margin-left: 10px;
@@ -100,6 +103,7 @@
 }
 .font-22
 {
+    color: white;
     white-space:pre-wrap;
     font-size: 22px;    
 }

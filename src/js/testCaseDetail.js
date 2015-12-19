@@ -22,3 +22,18 @@ function back() {
     document.getElementById("dataBox").style.visibility = "hidden";
     document.getElementById("relationBox").style.visibility = "hidden";
 }
+
+function doConfirm(tid,rid)
+{
+    refresh();
+}
+
+function doRemove(tid,rid)
+{
+    refresh();
+}
+
+function refresh()
+{
+    location.reload()
+}
