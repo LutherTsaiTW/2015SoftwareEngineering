@@ -293,7 +293,7 @@
 								{
 							?>
 							<tr class="items">
-								<td style="font-size:22px"><?php if($testcase['confirmed'] == 0) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
+								<td style="font-size:22px"><?php if($testcase['confirmed'] == 0) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
