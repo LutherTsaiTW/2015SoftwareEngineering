@@ -333,7 +333,7 @@
 				</div>
 			<div style="float:left;padding-left:10px">
 				<div class="listButton">
-					<a href="editTestCaseRelationView.php?pid=<?php echo $pid;?>">Relation</a>
+					<a href="editTestCaseRelationView.php?pid=<?php echo $pid;?>">Relationship</a>
 				</div>
 			</div>
 			</div>
