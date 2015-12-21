@@ -130,7 +130,7 @@
 
         <br/>
         <div class="w3-row" style="text-align: center">
-            <a href="testCaseListView.php?pid=<?=$pid?>" class="backLink">back</a>
+            <a href="testCaseListView.php?pid=<?=$pid?>" class="backLink">Back</a>
             <h1 class="greyBox title">Edit Test Case Relationship</h1>
         </div>
 
@@ -176,14 +176,14 @@
           
             </div>
             <div style="float:right;margin-right:30px;margin-top:5px">
-                 <form action="editTestCaseRelation.php" method="POST" id="confirmForm" target="_iframe">
+                <form action="editTestCaseRelation.php" method="POST" id="confirmForm" target="_iframe">
                     <input hidden="hidden" name="tid" id="tid" value="">
                     <select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes"   >
                 
                     </select>
-                    <input  type="button" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
-                 </form>
-   
+                    <input  type="button" onclick="confirm();" value="Confirm" style="text-align:center;background-color:rgb(0,149,135)">
+                </form>
+                <iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
             </div>
                     
         </div>

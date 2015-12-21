@@ -105,7 +105,7 @@
 			</div>
 		</div>
 		<div class="w3-row" style="text-align: center">
-			<a href="requirementListView.php?pid=<?=$pid?>" class="backLink">back</a>
+			<a href="requirementListView.php?pid=<?=$pid?>" class="backLink">Back</a>
 			<h1 class="greyBox">Edit Requirement Relationship</h1>
 		</div>
 		<!--主要畫面-->
@@ -149,7 +149,7 @@
 						<select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes" >
 
 						</select>
-						<input  type="button" onclick="confirm();" class="w3-teal" value="confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
+						<input  type="button" onclick="confirm();" class="w3-teal" value="Confirm" style="font-size:20px;" id="confirmButton" name="confirmButton" disabled>
 					</form>
 					<iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
 				</div>
