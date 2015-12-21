@@ -23,6 +23,7 @@
         function doChange () {
             alert("fuck");
             document.getElementById("mainForm").submit();
+            doExit();
         }
 
         function doExit(){
@@ -58,7 +59,7 @@
         <div class="mainBox">
 
                 <div class="leftBox">
-                    <form id="mainForm">
+                    <form id="mainForm" action="changeRequirement.php" method="POST">
                         <input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
                         <table>
                             <tr>
@@ -107,7 +108,7 @@
                             <tr>
                                 <td> </td>
                                 <td class="align-left font-20">
-                                    <input class="radioBtn" type="radio"  name="version_type" value="1" checked> significant</input>  
+                                    <input class="radioBtn" type="radio"  name="version_type" value="1" > significant</input>  
                                 </td>
                             </tr> 
                             <tr>
@@ -115,7 +116,7 @@
                                 <td></td>
                             </tr>     
                         </table>
-                        <textarea class="desBox" name="des"></textarea>
+                        <textarea class="desBox blackFont" name="des"><?php echo $req['rdes'];?></textarea>
                     </form>                      
                     <button class="Btn" onclick="doChange();" >Change</button>
                     <button class="Btn" onclick="doExit();" >Exit</button>
@@ -124,11 +125,24 @@
             <div class="rightBox">
                 <div class="listBox">
                     <div class="affectedFont bold-20">Affected Requirements:</div>
-                    <div class="list"></div>
+                    <div class="list font-20">
+                    <?php
+                        if(count($relReq)>0)
+                        foreach ( $relReq['req'] as $va ) {
+                            echo "<a class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
+                        }
+                    ?>
+                    </div>
                 </div>
                 <div class="listBox">
                     <div class="affectedFont bold-20">Affected Test Cases:</div>
-                    <div class="list"></div>   
+                    <div class="list">
+                    <?php
+                        if(count($relTestCase)>0)
+                        foreach ( $relTestCase['testcase'] as $va ) {
+                            echo "<a class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
+                        }
+                    ?></div>   
                 </div>             
             </div>  
         </div>

@@ -21,7 +21,7 @@
             exit('there is an error after SELECT USER ');
         }
 
-         //取得與testcase有關的 confirmed req
+         //取得req
         $getReq = "SELECT * FROM req as r WHERE r.rid =".$rid;
         $result = $sqli->query($getReq);
         if (!$result )
@@ -32,8 +32,70 @@
         if ($result )
         $req = $result->fetch_array(MYSQLI_ASSOC);
         $req['rdes']=whitespaceHandler($req['rdes']);
- 
 
+        //取得與req有關的requirement
+        $relIndex=0;
+        $getRelationReqA = "SELECT * FROM req_relation as r WHERE r.rid_a =".$rid;
+        $resultA = $sqli->query($getRelationReqA);
+
+        if (!$resultA )
+        {
+            echo "Error: there is an error when getRelationReqA";
+            exit();
+        }
+        while($row1 = $resultA->fetch_array(MYSQLI_ASSOC))
+        {
+
+            $relReq['req'][$relIndex]['rid']=urlencode($row1['rid_b']);
+            $relIndex++;
+        }
+        $getRelationReqB = "SELECT * FROM req_relation as r WHERE r.rid_b =".$rid;
+        $resultB = $sqli->query($getRelationReqB);
+        if (!$resultB )
+        {
+            echo "Error: there is an error when getRelationReqB";
+            exit();
+        }
+        while($row2 = $resultB->fetch_array(MYSQLI_ASSOC))
+        {
+            $relReq['req'][$relIndex]['rid']=urlencode($row2['rid_a']);
+            $relIndex++;
+        }
+        if(count($relReq)>0)
+        {
+            $relIndex=0;
+            foreach ( $relReq['req']as $v ) {
+                 
+                $getRelationReq = "SELECT * FROM req as r WHERE r.rid =".$v['rid'];
+
+                $result = $sqli->query($getRelationReq);
+                if (!$result )
+                {
+                    echo "Error: there is an error when getRelationReq";
+                    exit();
+                }   
+                    $row = $result->fetch_array(MYSQLI_ASSOC);
+                    $relReq['req'][$relIndex]['rname']=urlencode($row['rname']);
+                    $relIndex++;
+            }
+        }
+
+        //取得有關的testcase
+        $relTIndex=0;
+        $getRelationTestCase = "SELECT * FROM testcase WHERE tid IN (SELECT tid FROM test_relation  WHERE rid =".$rid.")";
+        $result = $sqli->query($getRelationTestCase);
+        if (!$result )
+        {
+            echo "Error: there is an error when getRelationTestCase";
+            exit();
+        }
+        while($row = $result->fetch_array(MYSQLI_ASSOC))
+        {
+
+            $relTestCase['testcase'][$relIndex]['tid']=urlencode($row['tid']);
+            $relTestCase['testcase'][$relIndex]['name']=whitespaceHandler(urlencode($row['name']));
+            $relIndex++;
+        }
 
         function whitespaceHandler($vstring)
         {   
