@@ -334,7 +334,7 @@ a:active {
     </div>
 
     <div id="successWindow" class="successWindow">
-        <p style="color:white;  font-weight: 600;font-size: 25">Add Member Success!</p>
+        <p style="color:white;  font-weight: 600;font-size: 25">Edit Member Success!</p>
          <button onclick="window.location.assign(window.location.href);;back()" style="background-color: #009688 !important;color:white" >OK</button>
     </div>
     <br/>
