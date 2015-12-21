@@ -78,59 +78,52 @@ a:active {
 				Register
 			</h1>
     </div>
-    <div class="w3-row" align="center">
-        <div class="w3-col">
-            <form action="javascript:checkRegisterInput();">
-                <br>
-                <div class="w3-row formBlock" style>
-                    <div class="w3-col m2">
-                        <p/>
-                    </div>
-                    <div class="w3-third" align="left">
-                        <br>
-                        <font color="white">Account:</font>
-                        <br>
-                        <input id="account" type="text" name="AccountID" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{8,14}" style="border-radius: 3px" placeholder="Enter a Account ID" title="帳號需至少包含8個字元與一個英文字母、一個阿拉伯數字，不包含特出字元" />
-                        <br>
-                        <font color="white">Password:</font>
-                        <br>
-                        <input id="password" type="password" name="Password" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Enter a password" title="密碼需至少包含6個字元與一個小寫英文字母、大寫英文字母、一個阿拉伯數字" />
-                        <br>
-                        <font style="display: block;width: 200;color: white" >Password Comfirm:</font>
-                        <input id="pwdConfirm" type="password" name="PasswordConfirm" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius: 3px" placeholder="Re-Type your password" />
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="w3-row">
-                    <p/>
-                </div>
-                <div class="w3-row formBlock">
-                    <div class="w3-col m2">
-                        <p/>
-                    </div>
-                    <div class="w3-col m4" align="left">
-                        <br>
-                        <font color="white">Real Name:</font>
-                        <br>
-                        <input id="realName" type="text" name="Name" autofocus required pattern="(?=.*[\u4E00-\u9fa5A-Za-z]+$).{3,}" style="border-radius: 3px" placeholder="Enter your name" title="僅接受至少三個字的中文或英文姓名" />
-                        <br>
-                        <font color="white">E-mail Address:</font>
-                        <br>
-                        <input id="email" type="email" name="Email" required style="border-radius: 3px" placeholder="Enter your email" title="請輸入有效的E-mail信箱" />
-                        <br>
-                        <font color="white">Company:</font>
-                        <br>
-                        <input id="company" type="text" name="Company" required style="border-radius: 3px" placeholder="Enter your company" />
-                        <br>
-                        <br>
-                        <input id="privilege" type="hidden" name="Previlege" value="111" style="border-radius: 3px" />
-                        <input type="submit" name="submit" value="Register" class="w3-teal">
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </form>
+    <div style="text-align:center">
+        <div style="margin:0px auto;width:400px;height:150px">
+			<center>
+				<form action="javascript:checkRegisterInput();">
+					<br>
+					<div class="formBlock" style="height:190px">
+						<div align="left">
+							<font color="white" style="margin-left:39px;margin-top:20px;float:left">Account:</font>
+							<br>
+							<input id="account" type="text" name="AccountID" autofocus required pattern="(?=.*^\w+$)(?=.*\d).{8,14}" style="border-radius:3px;margin-left:39px;float:left" placeholder="Enter a Account ID" title="帳號需至少包含8個字元與一個英文字母、一個阿拉伯數字，不包含特出字元" />
+							<br>
+							<font color="white" style="margin-left:39px;float:left">Password:</font>
+							<br>
+							<input id="password" type="password" name="Password" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius:3px;margin-left:39px;float:left" placeholder="Enter a password" title="密碼需至少包含6個字元與一個小寫英文字母、大寫英文字母、一個阿拉伯數字" />
+							<br>
+							<font style="display:block;width:200;color:white;margin-left:39px;float:left">Password Comfirm:</font>
+							<input id="pwdConfirm" type="password" name="PasswordConfirm" autofocus required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,14}" style="border-radius:3px;margin-left:39px;float:left" placeholder="Re-Type your password" />
+							<br>
+							<br>
+						</div>
+					</div>
+					<br>
+					<div class="formBlock" style="height:234px">
+						<div align="left">
+							<font color="white" style="margin-left:39px;margin-top:20px;float:left">Real Name:</font>
+							<br>
+							<input id="realName" type="text" name="Name" autofocus required pattern="(?=.*[\u4E00-\u9fa5A-Za-z]+$).{3,}" style="border-radius:3px;margin-left:39px;float:left" placeholder="Enter your name" title="僅接受至少三個字的中文或英文姓名" />
+							<br>
+							<font color="white" style="margin-left:39px;float:left">E-mail Address:</font>
+							<br>
+							<input id="email" type="email" name="Email" required style="border-radius:3px;margin-left:39px;float:left" placeholder="Enter your email" title="請輸入有效的E-mail信箱" />
+							<br>
+							<font color="white" style="margin-left:39px;float:left">Company:</font>
+							<br>
+							<input id="company" type="text" name="Company" required style="border-radius:3px;margin-left:39px;float:left" placeholder="Enter your company" />
+							<br>
+							<br>
+							<br>
+							<input id="privilege" type="hidden" name="Previlege" value="111" style="border-radius: 3px" />
+							<input type="submit" name="submit" value="Register" class="w3-teal" style="margin-left:39px;float:left">
+							<br>
+							<br>
+						</div>
+					</div>
+				</form>
+            </center>
         </div>
     </div>
 </body>
