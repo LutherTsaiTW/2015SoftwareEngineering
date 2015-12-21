@@ -181,7 +181,7 @@
                     <select hidden="hidden" name="changed_rids[]" id="changed_rids"  multiple="yes"   >
                 
                     </select>
-                    <input  type="button" onclick="confirm();" value="confirm" style="text-align:center;background-color:rgb(0,149,135)">
+                    <input  type="button" onclick="confirm();" value="Confirm" style="text-align:center;background-color:rgb(0,149,135)">
                  </form>
    
             </div>
