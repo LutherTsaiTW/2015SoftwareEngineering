@@ -35,6 +35,7 @@
 
         //取得與req有關的requirement
         $relIndex=0;
+        $relReq=null;
         $getRelationReqA = "SELECT * FROM req_relation as r WHERE r.rid_a =".$rid;
         $resultA = $sqli->query($getRelationReqA);
 
@@ -61,6 +62,8 @@
             $relReq['req'][$relIndex]['rid']=urlencode($row2['rid_a']);
             $relIndex++;
         }
+
+        //取得requirement的name
         if(count($relReq)>0)
         {
             $relIndex=0;
@@ -89,6 +92,7 @@
             echo "Error: there is an error when getRelationTestCase";
             exit();
         }
+        $relTestCase=null;
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
 

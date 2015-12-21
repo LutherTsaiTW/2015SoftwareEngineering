@@ -24,6 +24,7 @@
 }
 
 .desBox {
+    border-radius: 15px;
     background-color: white;
     border: 0px;
     height: 306.4px;
@@ -112,6 +113,8 @@ td
 textarea
 {
     color: black;
+    resize:none;
+    padding: 10px;
 }
 
 

@@ -116,7 +116,7 @@
                                 <td></td>
                             </tr>     
                         </table>
-                        <textarea class="desBox blackFont" name="des"><?php echo $req['rdes'];?></textarea>
+                        <textarea class="desBox blackFont" name="des" ><?php echo $req['rdes'];?></textarea>
                     </form>                      
                     <button class="Btn" onclick="doChange();" >Change</button>
                     <button class="Btn" onclick="doExit();" >Exit</button>
