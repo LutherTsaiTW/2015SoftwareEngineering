@@ -131,18 +131,23 @@
                         foreach ( $relReq['req'] as $va ) {
                             echo "<a class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
                         }
+                        else
+                            echo "無";
                     ?>
                     </div>
                 </div>
                 <div class="listBox">
                     <div class="affectedFont bold-20">Affected Test Cases:</div>
-                    <div class="list">
+                    <div class="list font-20">
                     <?php
                         if(count($relTestCase)>0)
                         foreach ( $relTestCase['testcase'] as $va ) {
                             echo "<a class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
                         }
-                    ?></div>   
+                        else
+                            echo "無";
+                    ?>
+                    </div>   
                 </div>             
             </div>  
         </div>

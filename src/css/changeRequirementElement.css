@@ -97,6 +97,7 @@ td
 }
 .list
 {
+    padding: 5px;
     color: black;
     overflow: hidden;
     float: top;
