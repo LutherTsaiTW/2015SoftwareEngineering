@@ -1,0 +1,138 @@
+<html style="height: 100%">
+    <head>
+        <title>Change Requirement</title>
+        <meta charset="utf-8" />
+        
+        <link rel="stylesheet" href="../css/w3.css">
+        <link rel="stylesheet" href="../css/dateRangePicker.css">
+        <link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
+        <link rel="stylesheet" type="text/css" href="../css/changeRequirementElement.css">
+
+        <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+        <script type="text/javascript" src="../js/sessionCheck.js"></script>
+    </head>
+
+    <?php 
+        @$rid = $_GET['rid'];
+        require_once 'getRequirementDetailData.php';
+    ?>
+
+    <script type="text/javascript">
+
+        function doChange () {
+            alert("fuck");
+            document.getElementById("mainForm").submit();
+        }
+
+        function doExit(){
+            document.getElementById("backLink").click();
+        }
+
+    </script>
+    
+    <body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
+
+        <!--頁面上半部-->
+       <br/>
+      <div class="w3-row ">
+            <div style="float:left">
+               <img  src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
+            </div>
+            <div class="w3-container greyBox logoutLink">
+                <a href="../logout.php">Logout</a>
+            </div>
+            <div class="w3-container WelcomeMessage" style="float:right">
+                <?php echo "Welcome, ",$user['name'] . "!"; ?>
+            </div>
+        </div>
+
+        <br/>
+        <div class="w3-row greyBox " style="text-align: center">
+            <font class="title">Requirement Change</font>
+            <a id="backLink" href="requirementListView.php?pid=<?=$req['rproject'];?>" class="backLink" style="float:left">Back</a>
+        </div>
+
+        <!--主要畫面-->
+        <br>
+        <div class="mainBox">
+
+                <div class="leftBox">
+                    <form id="mainForm">
+                        <input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
+                        <table>
+                            <tr>
+                                <td class="align-left bold-20">Name: </td>
+                                <td class="align-right font-20"><?php echo $req['rname'];?></td>
+                            </tr>
+                            <tr>
+                                <td class="align-left bold-20">Type: </td>
+                                <td class="align-right font-20">
+                                    <?php 
+                                    switch ($req['rtype']) {
+                                        case '0':
+                                            echo "non-functional";
+                                        break;
+                                        case '1':
+                                            echo "functional";
+                                        break;
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-left bold-20">Priority: </td>
+                                <td class="align-right font-20">
+                                    <?php 
+                                        switch ($req['rpriority']) {
+                                            case '0':
+                                                echo "Low";
+                                            break;
+                                            case '1':
+                                                echo "Medium";
+                                            break;
+                                            case '2':
+                                                echo "High";
+                                            break;
+                                              };
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-left bold-20">Change: </td>
+                                <td class="align-left font-20" >
+                                    <input class="radioBtn" type="radio"  name="version_type" value="0" checked> minor</input>
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <td> </td>
+                                <td class="align-left font-20">
+                                    <input class="radioBtn" type="radio"  name="version_type" value="1" checked> significant</input>  
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td class="align-left bold-20">Description: </td>
+                                <td></td>
+                            </tr>     
+                        </table>
+                        <textarea class="desBox" name="des"></textarea>
+                    </form>                      
+                    <button class="Btn" onclick="doChange();" >Change</button>
+                    <button class="Btn" onclick="doExit();" >Exit</button>
+                </div>
+
+            <div class="rightBox">
+                <div class="listBox">
+                    <div class="affectedFont bold-20">Affected Requirements:</div>
+                    <div class="list"></div>
+                </div>
+                <div class="listBox">
+                    <div class="affectedFont bold-20">Affected Test Cases:</div>
+                    <div class="list"></div>   
+                </div>             
+            </div>  
+        </div>
+
+
+    </body>
+</html>

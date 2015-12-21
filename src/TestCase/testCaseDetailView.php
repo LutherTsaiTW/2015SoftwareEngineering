@@ -1,6 +1,6 @@
 <html style="height: 100%">
     <head>
-        <title>Edit TestCase Relation</title>
+        <title>TestCase Detail</title>
         <meta charset="utf-8" />
         
         <link rel="stylesheet" href="../css/w3.css">

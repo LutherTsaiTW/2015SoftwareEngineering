@@ -70,6 +70,7 @@
         }
 
         $notConfirmed=0;
+        if( $row!=null)
         foreach ( $relation['relation'] as $ifConfirm) {
             if($ifConfirm['confirmed'] == 0)
                 $notConfirmed++;
