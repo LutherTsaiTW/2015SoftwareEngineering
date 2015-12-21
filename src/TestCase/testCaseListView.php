@@ -40,7 +40,7 @@
 				$testcases[$row['tid']]['confirmed'] = $row['confirmed'];
 			}
 		?>
-		<title><?= $project_name; ?> - Test Cases</title>
+		<title><?= $project_name; ?> Test Cases</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="../css/w3.css">
 		<link rel="stylesheet" type="text/css" href="../css/html5tooltips.css" />
@@ -293,7 +293,7 @@
 								{
 							?>
 							<tr class="items">
-								<td style="font-size:22px"><?php if($testcase['confirmed'] == 0) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
+								<td style="font-size:22px"><?php if($testcase['confirmed'] != 1 && $testcase['confirmed'] != NULL) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
