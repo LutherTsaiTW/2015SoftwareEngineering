@@ -277,7 +277,7 @@
 				</div>
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
 				<a id="edit" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Project/projectDetailView.php?pid=<?=$pid; ?>">Back</a>
-				<h1 style="background-color:grey;border-radius:5px;font-weight:bold"><?= $project_name; ?> - Test Cases</h1>
+				<h1 style="background-color:grey;border-radius:5px;font-weight:bold"><?= $project_name; ?> Test Cases</h1>
 			</div>
 			<div class="w3-row " style="height:40%;margin:0 auto;width:1210px">
 				<div id="listTable" style="float:left;">
