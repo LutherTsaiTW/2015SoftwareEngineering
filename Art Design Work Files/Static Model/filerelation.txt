@@ -1,0 +1,52 @@
+  VIEW                                 API
+
+  login.html──────────────────────────>loginCheck.js─>login.php
+  register.html───────────────────────>registerCheck.js─>register.php
+# Project 
+  projectList.html─┬──────────────────>showProjectList.js─┌─>projectList.php
+                   └──────────────────>deleteProject.php  │
+  addProject.html───────┬─────────────>addProject.php     │
+                      ┌─├─────────────>projectCheck.php   │
+                      ├─└─────────────>getUser.js─────────┘
+  editProjectView.php─┴───────────────>editProject.php
+  projectDetailView.php─┬─────────────>addMember.php
+                        └─────────────>getMember.php
+# Requirement
+  requirementDetailView.php─┬─────────>addMemo.php
+                            ├─────────>addReviewer.php
+                            ├─────────>confirmReq.php
+                            ├─────────>deleteReviewer.php
+                            └─────────>doDecision.php
+  requirementListView.php─────────────>deleteRequirement.php
+  editRequirementRelationView.php─┬─┬─────────────────────────────────────────>editRequirementRelation.php
+                                  └─│─>editRequirementRelationController.js─┬─>getRequirement.php
+                                    │                                       └─>getRequirementRelation.php
+  addRequirementView.php────────────└─────────────────────────────────────────>addRequirement.php
+  editRequirementView.php─────────────>editRequirement.php
+                                    ?─>changeRequirement.php
+                                    ?─>checkRequirementName.php
+# Test Case
+  addTestCaseView.php──┬──────────────>addTestCase.php
+  editTestCaseView.php─┴──────────────>editTestCase.php
+  editTestCaseRelationView.php─┬──────>editTestCaseRelation.php
+                               ├──────>getTestCase.php
+                               └──────>editTestCaseRelationController.js─┬─>getTestCaseNoRelation.php
+                                                                         └─>getTestCaseRelation.php
+  testCaseDetailView.php─┬────────────>testCaseDetailRelationTable.php─┌─>getTestCaseDetailData.php
+                         └─────────────────────────────────────────────┘
+  testCaseListView.php────────────────>deleteTestCase.php
+                                    ?─>source.php
+
+# End
+# ┌ ┬ ┐
+#
+# ├ ┼ ┤
+#
+# └ ┴ ┘
+# ─ │
+
+# Line:10 getUser.js->projectList.php
+# Line:21 editRequirementRelationView.php->addRequirement.php
+# Line:29 addTestCaseView.php->editTestCase.php
+# Line:30 editTestCaseView.php->addTestCase.php
+# Line:35 testCaseDetailView.php->getTestCaseDetailData.php
