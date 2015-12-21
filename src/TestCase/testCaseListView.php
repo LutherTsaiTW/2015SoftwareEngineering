@@ -40,7 +40,7 @@
 				$testcases[$row['tid']]['confirmed'] = $row['confirmed'];
 			}
 		?>
-		<title><?= $project_name; ?> - Test Cases</title>
+		<title><?= $project_name; ?> Test Cases</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="../css/w3.css">
 		<link rel="stylesheet" type="text/css" href="../css/html5tooltips.css" />
