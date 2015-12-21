@@ -23,16 +23,19 @@ function back() {
     document.getElementById("relationBox").style.visibility = "hidden";
 }
 
+//[KL]未完成 confirm 
 function doConfirm(tid,rid)
 {
     refresh();
 }
 
+//[KL]未完成 remove
 function doRemove(tid,rid)
 {
     refresh();
 }
 
+//[KL]刷新顯示relation的iframe
 function refresh()
 {
     location.reload()

@@ -1,7 +1,6 @@
 .mainBox {
     margin: 0px auto;
     width: 920px;
-    min-height: 530px;
 }
 
 .upperBox {
@@ -113,6 +112,7 @@
     padding-right: 10px;
     text-align: center;
 }
+
 td
 {
     table-layout: fixed;

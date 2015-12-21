@@ -40,7 +40,7 @@
         <br/>
         <div class="w3-row greyBox " style="text-align: center">
             <font class="title"><img src="../imgs/alert_36.png" style="visibility:<?php if($notConfirmed == 0) echo 'hidden' ?>"> <?php echo $tname?></font>
-            <a href="testCaseListView.php?pid=<?=$tpid?>" class="backLink" style="float:left">back</a>
+            <a href="testCaseListView.php?pid=<?=$tpid?>" class="backLink" style="float:left">Back</a>
         </div>
 
         <!--主要畫面-->
@@ -78,6 +78,6 @@
             </div>
         </div>
 
-    </body>
 
+    </body>
 </html>
