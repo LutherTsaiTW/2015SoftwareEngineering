@@ -57,71 +57,65 @@
         <!--主要畫面-->
         <br>
         <div class="mainBox">
-
-                <div class="leftBox">
-                    <form id="mainForm" action="changeRequirement.php" method="POST">
-                        <input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
-                        <table>
-                            <tr>
-                                <td class="align-left bold-20">Name: </td>
-                                <td class="align-right font-20"><?php echo $req['rname'];?></td>
-                            </tr>
-                            <tr>
-                                <td class="align-left bold-20">Type: </td>
-                                <td class="align-right font-20">
-                                    <?php 
-                                    switch ($req['rtype']) {
-                                        case '0':
-                                            echo "non-functional";
-                                        break;
-                                        case '1':
-                                            echo "functional";
-                                        break;
-                                        }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-left bold-20">Priority: </td>
-                                <td class="align-right font-20">
-                                    <?php 
-                                        switch ($req['rpriority']) {
-                                            case '0':
-                                                echo "Low";
-                                            break;
-                                            case '1':
-                                                echo "Medium";
-                                            break;
-                                            case '2':
-                                                echo "High";
-                                            break;
-                                              };
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-left bold-20">Change: </td>
-                                <td class="align-left font-20" >
-                                    <input class="radioBtn" type="radio"  name="version_type" value="0" checked> minor</input>
-                                </td>
-                            </tr>                            
-                            <tr>
-                                <td> </td>
-                                <td class="align-left font-20">
-                                    <input class="radioBtn" type="radio"  name="version_type" value="1" > significant</input>  
-                                </td>
-                            </tr> 
-                            <tr>
-                                <td class="align-left bold-20">Description: </td>
-                                <td></td>
-                            </tr>     
-                        </table>
-                        <textarea class="desBox blackFont" name="des" ><?php echo $req['rdes'];?></textarea>
-                    </form>                      
-                    <button class="Btn" onclick="doChange();" >Change</button>
-                    <button class="Btn" onclick="doExit();" >Exit</button>
-                </div>
-
+        	<div style="height:500px">
+			<div class="leftBox">
+				<form id="mainForm" action="changeRequirement.php" method="POST">
+					<input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
+					<table>
+						<tr>
+							<td class="align-left bold-20">Name: </td>
+							<td class="align-left font-20"><?php echo $req['rname'];?></td>
+						</tr>
+						<tr>
+							<td class="align-left bold-20">Type: </td>
+							<td class="align-left font-20">
+							<?php 
+								switch ($req['rtype']) {
+								case '0':
+									echo "non-functional";
+									break;
+								case '1':
+									echo "functional";
+								break;
+								}
+							?>
+							</td>
+						</tr>
+						<tr>
+							<td class="align-left bold-20">Priority: </td>
+							<td class="align-left font-20">
+							<?php 
+								switch ($req['rpriority']) {
+								case '0':
+									echo "Low";
+									break;
+								case '1':
+									echo "Medium";
+									break;
+								case '2':
+									echo "High";
+								break;
+								};
+							?>
+							</td>
+						</tr>
+						<tr>
+							<td class="align-left bold-20">Change: </td>
+							<td class="align-left font-20" >
+								<input class="radioBtn" type="radio"  name="version_type" value="1" checked> Significant</input>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td class="align-left font-20">
+								<input class="radioBtn" type="radio"  name="version_type" value="0" > Minor</input>
+							</td>
+						</tr>
+					</table>
+					<div class="align-left bold-20">Description: </div>
+					<textarea class="desBox blackFont" name="des" rows="10"><?php echo $req['rdes'];?></textarea>
+				</form>
+			</div>
             <div class="rightBox">
                 <div class="listBox">
                     <div class="affectedFont bold-20">Affected Requirements:</div>
@@ -132,7 +126,7 @@
                             echo "<a class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
                         }
                         else
-                            echo "無";
+                            echo "None";
                     ?>
                     </div>
                 </div>
@@ -145,11 +139,16 @@
                             echo "<a class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
                         }
                         else
-                            echo "無";
+                            echo "None";
                     ?>
                     </div>   
                 </div>             
-            </div>  
+            </div>
+            </div>
+            <div style="margin-left:30px;width:800px;height:30px">
+				<button class="Btn" onclick="doChange();" >Change</button>
+				<button class="Btn" onclick="doExit();" >Exit</button>
+			</div>
         </div>
 
 
