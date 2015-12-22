@@ -112,7 +112,7 @@
 						</tr>
 					</table>
 					<div class="align-left bold-20">Description: </div>
-					<textarea class="desBox blackFont" name="des" rows="10"><?php echo $req['rdes'];?></textarea>
+					<textarea id="des" class="desBox blackFont" name="des" rows="10"><?php echo $req['rdes'];?></textarea>
 				</form>
 			</div>
             <div class="rightBox">
