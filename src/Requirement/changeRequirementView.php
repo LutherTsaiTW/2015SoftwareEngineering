@@ -21,7 +21,6 @@
     <script type="text/javascript">
 
         function doChange () {
-            alert("fuck");
             document.getElementById("mainForm").submit();
             doExit();
         }

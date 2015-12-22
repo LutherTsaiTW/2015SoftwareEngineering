@@ -53,6 +53,7 @@
         }
 
         //取得testcase 的所有 relation
+        $relation=null;
         $getTestCaseRelation = "SELECT * FROM test_relation WHERE tid=".$tid;
         $result = $sqli->query($getTestCaseRelation);
         if (!$result )
@@ -70,11 +71,12 @@
         }
 
         $notConfirmed=0;
-        if( $row!=null)
+        if( $relation!=null)
         foreach ( $relation['relation'] as $ifConfirm) {
             if($ifConfirm['confirmed'] == 0)
                 $notConfirmed++;
         }
+        echo $row;
 
          //取得與testcase有關的not confirmed req
         $getReqNotConfirmed = "SELECT * FROM req as r WHERE r.rid IN (SELECT rid FROM test_relation WHERE (tid=".$tid." AND confirmed = 0))";
