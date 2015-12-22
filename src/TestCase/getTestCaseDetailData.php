@@ -23,10 +23,10 @@
         }
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $tname = whitespaceHandler(urlencode($row['name']));
-            $tdes = whitespaceHandler(urlencode($row['t_des']));
-            $tdata = whitespaceHandler(urlencode($row['data']));
-            $tresult = whitespaceHandler(urlencode($row['result']));
+            $tname = urlencode($row['name']);
+            $tdes = urlencode($row['t_des']);
+            $tdata = urlencode($row['data']);
+            $tresult = urlencode($row['result']);
             $tpid=urlencode($row['pid']);
             $towner_id=urlencode($row['owner_id']);
         }
@@ -41,7 +41,7 @@
         }
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $towner=whitespaceHandler(urlencode($row['name']));
+            $towner=urlencode($row['name']);
         }
 
         //取得使用者資訊
@@ -93,7 +93,7 @@
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
             $notConfirmedReq['req'][$i]['rid']=urlencode($row['rid']);
-            $notConfirmedReq['req'][$i]['name']=whitespaceHandler(urlencode($row['rname']));
+            $notConfirmedReq['req'][$i]['name']=urlencode($row['rname']);
             $i++;
             $notConfirmedReq['count'] = $i;
         }   
@@ -113,7 +113,7 @@
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
             $confirmedReq['req'][$i]['rid']=urlencode($row['rid']);
-            $confirmedReq['req'][$i]['name']=whitespaceHandler(urlencode($row['rname']));
+            $confirmedReq['req'][$i]['name']=urlencode($row['rname']);
             $i++;
             $confirmedReq['count'] = $i;
         }  
