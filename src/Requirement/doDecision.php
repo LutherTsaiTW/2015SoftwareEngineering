@@ -54,9 +54,9 @@
 		exit();
 	}
 	$response['MESSAGE'] = $response['MESSAGE'] . 'successfully find the result of review conclusion, ';
-	$all = $resultAll->fetch_array(MYSQL_ASSOC);
-	$app = $resultApp->fetch_array(MYSQL_ASSOC);
-	$dis = $resultDis->fetch_array(MYSQL_ASSOC);
+	$all = $resultAll->fetch_array(MYSQLI_ASSOC);
+	$app = $resultApp->fetch_array(MYSQLI_ASSOC);
+	$dis = $resultDis->fetch_array(MYSQLI_ASSOC);
 	//echo "all = " . $all['c'] . " app = " . $app['c'] . " dis = " . $dis['c'] . " sum = " . ($app['c'] + $dis['c']) . "<br>";
 
 	// [BC]

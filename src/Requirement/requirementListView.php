@@ -43,7 +43,7 @@
 			}
 			
 			$reqs = array();
-			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.version, r.oldVersion, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 ORDER BY rid DESC;") or die($sqli->error);
+			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.version, r.oldVersion, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 AND rstatus != 5 ORDER BY rid DESC;") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$reqs[$row['rid']]['id'] = $row['rid'];
@@ -434,7 +434,7 @@
 							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name'] . " v" . $req['version']; ?></a></td>
 							<td>
 								<?php
-									if($req['status']==0) echo "Terminated";
+									if($req['status']==0) echo "Deleted";
 									if($req['status']==1) echo "Open";
 									if($req['status']==2) echo "In Review";
 									if($req['status']==3) echo "Approved";
@@ -472,7 +472,7 @@
 									</script>
 							<?php
 								}
-								elseif($req['status']==3 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
+								elseif(($req['status']==3 || $req['status']==4) && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
 									echo("<td><a href='changeRequirementView.php?rid=" . $req['id'] . "'>Change</a></td>");
 								}
