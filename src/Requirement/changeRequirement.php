@@ -3,9 +3,9 @@
 	$versionType = $_POST['version_type'];
 	$description = $_POST['des'];
 
-	// $oldRID = 10;
-	// $versionType = 1;
-	// $description = "testing";
+	// $oldRID = 12;
+	// $versionType = 0;
+	// $description = "testing Change 2";
 
 	require_once '../assist/DBConfig.php';
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -29,6 +29,7 @@
 	$pid = $req_info['rproject'];
 	$uid = $req_info['rowner'];
 	$rName = $req_info['rname'];
+	$rNumber = $req_info['rnumber'];
 	$rType = $req_info['rtype'];
 	$rPriority = $req_info['rpriority'];
 	$oldVerionID = $req_info['rid'];
@@ -45,7 +46,7 @@
 
 	$newVersion = $currentVersionPrefixVal . "." . $currentVersionSuffixVal;
 
-	$insert = "INSERT INTO req(rid, rname, rtype, rdes, rowner, rpriority, rproject, rstatus, version, oldVersion) VALUES (NULL, '$rName', $rType, '$description', $uid, $rPriority, $pid, 1, '$newVersion', $oldVerionID);";
+	$insert = "INSERT INTO req(rid, rnumber, rname, rtype, rdes, rowner, rpriority, rproject, rstatus, version, oldVersion) VALUES (NULL, '$rNumber', '$rName', $rType, '$description', $uid, $rPriority, $pid, 1, '$newVersion', $oldVerionID);";
 	$result = $sqli->query($insert);
 	if(!$result)
 	{
@@ -55,7 +56,6 @@
 	else
 	{
 		 $newREQID = $sqli->insert_id;
-		 echo $newREQID;
 	}
 
 	$update = "UPDATE req SET rstatus = 5 WHERE rid = " . $oldRID .";";
