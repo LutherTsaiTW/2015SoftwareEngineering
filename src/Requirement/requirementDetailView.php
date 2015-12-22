@@ -325,7 +325,7 @@
 					}
 					else if($req_info['rstatus'] == 3 || $req_info['rstatus'] == 4 )
 					{
-						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"\">Change</a>";
+						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"changeRequirementView.php?rid=" . $rid ."\">Change</a>";
 					}
 				?>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname'] . " v" . $req_info['version']; ?></h1>
