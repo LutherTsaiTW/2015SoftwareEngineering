@@ -58,7 +58,8 @@
         <div class="mainBox">
         	<div style="height:500px">
 			<div class="leftBox">
-				<form id="mainForm" action="changeRequirement.php" method="POST">
+                <iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
+				<form id="mainForm" action="changeRequirement.php" method="POST" target="_iframe">
 					<input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
 					<table>
 						<tr>
