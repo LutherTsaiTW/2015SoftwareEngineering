@@ -3,7 +3,8 @@ require 'rspec'
 
 username =''
 password =''
-title = ''
+@title = ''
+@size = 0
 
 def generate_title
 	charset = Array('a' .. 'z')
@@ -17,7 +18,6 @@ Given /^I have an account$/ do
 end
 
 When /^I login$/ do
-	@b.goto "http://luthertsai.com/2015softwareengineering/login.html"
 	@b.text_field(:name => 'account_id').set username
 	@b.text_field(:name => 'password').set password
 	@b.button(:name => 'submit').click
@@ -51,13 +51,13 @@ And /^I can link to the add project page$/ do
 end
 
 When /^I input data$/ do
-	title = generate_title
-	@b.text_field(:name => 'Name').set title
+	@title = generate_title
+	@b.text_field(:name => 'Name').set @title
 	@b.text_field(:name => 'Company').set 'Test Team'
 	@b.execute_script("$('input#startTime').val('2015-01-01')")
 	@b.execute_script("$('input#endTime').val('2015-01-02')")
 	@b.select(:name => 'Status').select_value '1'
-	@b.textarea(:name => 'Description').set title
+	@b.textarea(:name => 'Description').set @title
 end
 
 Then /^I can see the Expect days$/ do
@@ -76,9 +76,9 @@ Then /^I can see my project on the project list$/ do
 		@b.url.should == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'
 		@b.table(:class => 'listTable').exists?.should == true
 	end
-	size = @b.table(:class => 'listTable').rows.length
+	@size = @b.table(:class => 'listTable').rows.length
 	target = @b.table(:class => 'listTable')[size - 2]
-	target[0].a.text.should == title
+	target[0].a.text.should == @title
 	target[1].text.should == 'Test Team'
 	target[2].text.should == 'Dont Delete'
 	target[3].text.should == '2015/01/01'
