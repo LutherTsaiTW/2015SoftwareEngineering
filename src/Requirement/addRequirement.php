@@ -23,9 +23,14 @@
 		exit();
 	}
 	$sqli->query("SET NAMES 'UTF8'");
+	
+	$getrn = "SELECT rnumber FROM req ORDER BY rnumber DESC LIMIT 1;";
+	$result = $sqli->query($getrn) or die($sqli->error);
+	$rnumber = ++($result->fetch_array(MYSQLI_ASSOC))["rnumber"];
+	$rnumber = sprintf("%03d", $rnumber);
 
 	// [BC] insert 到 requirement table 中
-	$insert = "INSERT INTO req(rid, rname, rtype, rdes, rowner, rpriority, rproject, rstatus, version) VALUES (NULL, '$rName', $rType, '$rDescription', $uid, $rPriority, $pid, 1, 1.0)";
+	$insert = "INSERT INTO req(rnumber, rid, rname, rtype, rdes, rowner, rpriority, rproject, rstatus, version) VALUES ('$rnumber', NULL, '$rName', $rType, '$rDescription', $uid, $rPriority, $pid, 1, 1.0)";
 	$result = $sqli->query($insert);
 	if(!$result)
 	{
