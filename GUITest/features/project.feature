@@ -18,9 +18,9 @@ Feature: Project System
     
     Scenario: In add project page, I can cancel the addition of new project
 		Given I have an account
-		When I login and see the project list page
-		Then I can click the add project link
-		And I can go to the add project page
+		When I login
+		Then I can click the add project button
+		And I can link to the add project page
 		When I input data
 		Then I can see the expect data in input field
 		When I click the cancel button to cancel
@@ -30,7 +30,7 @@ Feature: Project System
     Scenario Outline: In project list page, I can edit the project detail
 		Given I have an account
 		And I have a project
-		When I login and see the project list
+		When I login
 		And I click the edit button
 		Then I can see the edit project page title
 		And I can see the data of the project
