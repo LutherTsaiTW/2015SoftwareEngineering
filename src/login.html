@@ -69,16 +69,25 @@ a:active {
         <div style="margin:0px auto;background-color:rgb(40, 40, 40);border-radius:15px;width:400px;height:150px">
 			<center>
 				<form action="javascript:checkOnLogin();">
-					<br>
-					<font color="white" style="float:left;margin-left:10px">Account:</font>
-					<input id="account" type="text" name="account_id" autofocus required pattern="[A-Za-z0-9]{1,}" style="border-radius:3px;width:300px;float:right;margin-right:15px">
-					<br>
-					<br>
-					<font color="white" style="float:left;margin-left:10px">Password:</font>
-					<input id="password" type="password" name="password" required pattern="[A-Za-z0-9]{1,}" style="border-radius:3px;width:300px;float:right;margin-right:15px">
-					<br>
-					<br>
-					<input type="submit" name="submit" value="Login" class="w3-teal">
+					<table>
+						<tbody>
+						<br>
+							<tr>
+								<td><font color="white" style="float:left;margin-left:10px">Account:</font></td>
+								<td><input id="account" type="text" name="account_id" autofocus required pattern="[A-Za-z0-9]{1,}" style="border-radius:3px;width:280px;float:left"></td>
+							</tr>
+							<tr>
+								<td>
+									<br>
+								</td>
+							</tr>
+							<tr>
+								<td><font color="white" style="float:left;margin-left:10px">Password:</font></td>
+								<td><input id="password" type="password" name="password" required pattern="[A-Za-z0-9]{1,}" style="border-radius:3px;width:280px;float:left"></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="submit" name="submit" value="Login" class="w3-teal" style="margin-top:10px">
 				</form>
             </center>
             <div class="w3-col m4">
