@@ -249,8 +249,5 @@
         <p></p>
     </div>
 </body>
-<footer style="Height:rest;text-align:center">
-    <span style="text-decoration:underline;color:white">About Us</span>
-</footer>
 
 </html>
