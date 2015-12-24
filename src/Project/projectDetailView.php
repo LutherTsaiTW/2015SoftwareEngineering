@@ -403,7 +403,7 @@ a:active {
                                     echo "<tr><td><font class=\"detailBoxFont\"> <b>Company: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$projectdetail['p_company'],"</font></td></tr>"; 
                                 ?>
                                 <?php
-                                    echo "<tr><td style=\"word-wrap:break-word;width:290px;vertical-align: baseline\" class=\"detailBoxFont\" ><font>";
+                                    echo "<tr height='60'><td style=\"word-wrap:break-word;width:290px;vertical-align: baseline\" class=\"detailBoxFont\" ><font>";
                                     echo "<b>Members: </b></font></td>";
                                     $mem = "";
                                     for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
@@ -414,7 +414,7 @@ a:active {
                                     }
                                     $longmem = $mem;  
                                     $mem = mb_strimwidth  ( $mem  ,0 ,45, "...", "UTF-8" );
-                                    echo "<td style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><font data-tooltip=\"". $longmem ."\" data-tooltip-stickto=\"left\" data-tooltip-color=\"stone\" data-tooltip-animate-function=\"scalein\">".$mem."</font></td></tr>";
+                                    echo "<td height=\"60px\" style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><div style=\"height:58px;overflow:hidden\" data-tooltip=\"". $longmem ."\" data-tooltip-stickto=\"left\" data-tooltip-color=\"stone\" data-tooltip-animate-function=\"scalein\">".$mem."</div></td></tr>";
                                 ?>
                                 <?php
                                     echo "<tr><td><font class=\"detailBoxFont\"> <b>Status: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">";     
