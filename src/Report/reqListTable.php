@@ -3,12 +3,13 @@
 	$mysqli = new mysqli($dburl, $dbuser, $dbpass, $db);
 	$mysqli->query("SET NAMES 'UTF8'");
 	$project = $_GET['pid'];
-	$reqs = array(1 => array(), 2 => array(), 3 => array(), 4 => array());
-	$stasus = array('Open' => 1, 'In Review' => 2, 'Approved' => 3, 'Disapproved' => 4);
+	$reqs = array();
+	$tables = array('Open' => 1, 'In Review' => 2, 'Approved' => 3, 'Disapproved' => 4);
 	$types = ['non-Functional', 'Functional'];
 	$priorities  = ['Low', 'Medium', 'High'];
 	$query = "SELECT rnumber, rname, version, rtype, rpriority, rstatus "
-	. "FROM req WHERE rproject = ". $project. " AND rstatus BETWEEN 1 AND 4";
+	. "FROM req WHERE rproject = ". $project. " AND rstatus BETWEEN 1 AND 4 "
+	. "ORDER BY rnumber";
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_row()) {
 			$type = $types[$row[3]];
@@ -18,29 +19,45 @@
 		$result->close();
 	}
 ?>
-<?php
-	$heads = "<th width = 100>Number</th>
-	<th width = 300>Name</th>
-	<th width = 100>Version</th>
-	<th width = 200>Type</th>
-	<th width = 150>Priority</th>";
-?>
-<font size="12px">Status: Open</font>
-<table border = 1px style = "font-size:6px; border-collapse: collapse; text-align: center;">
-	<tr><?php echo $heads?><tr>
 
-		<?php
-			foreach ($reqs[1] as $req) {
-				echo "<tr>";
-				foreach ($req as $val) {
-					echo "<td>" . $val . "</td>";
-				}
-				echo "</tr>";
+<?php
+	$heads = '<tr>
+	<th width = 100px>Number</th>
+	<th width = 300px>Name</th>
+	<th width = 100px>Version</th>
+	<th width = 200px>Type</th>
+	<th width = 150px>Priority</th>
+	</tr>
+	';
+?>
+
+<?php 
+	$table_start = '<table border = 1px style = "font-size:6px; border-collapse: collapse; text-align: center;">
+	';
+?>
+
+<?php
+	foreach (array_keys($tables) as $table) {
+		$index = $tables[$table];
+		if (!array_key_exists($index, $reqs)) {
+			return;
+		}
+		echo '<font size="12px">Status: <font class="table.'
+		. $table . '">' . $table . '</font></font>
+		';
+		echo $table_start;
+		echo $heads;
+		foreach ($reqs[$index] as $req) {
+			echo "<tr>
+			";
+			foreach ($req as $val) {
+				echo "<td>" . $val . "</td>
+				";
 			}
-		?>
-		<td>Number</td>
-		<td>Name</td>
-		<td>Version</td>
-		<td>Type</td>
-		<td>Priority</td>
-</table>
+			echo "</tr>
+			";
+		}
+		echo '</table>
+		';
+	}
+?>
