@@ -26,14 +26,11 @@
 	
 	$getrn = "SELECT rnumber FROM req WHERE rproject='$pid' ORDER BY rnumber DESC LIMIT 1;";
 	$result = $sqli->query($getrn) or die($sqli->error);
-	if($result)
+	$rnumber = "001";
+	if($array = $result->fetch_array(MYSQLI_ASSOC))
 	{
-		$rnumber = ++($result->fetch_array(MYSQLI_ASSOC))["rnumber"];
+		$rnumber = ++$array["rnumber"];
 		$rnumber = sprintf("%03d", $rnumber);
-	}
-	else
-	{
-		$rnumber = "001";
 	}
 	
 	// [BC] insert 到 requirement table 中
