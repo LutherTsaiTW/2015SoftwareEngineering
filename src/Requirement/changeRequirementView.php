@@ -22,7 +22,7 @@
 
         function doChange () {
             document.getElementById("mainForm").submit();
-            doExit();
+            doExit();.
         }
 
         function doExit(){
