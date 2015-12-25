@@ -12,7 +12,6 @@ def generate_account
 end
 
 Given /^I am in register page$/ do
-	@b.goto "http://luthertsai.com/2015softwareengineering/register.html"
 	@b.text_field(:name => 'AccountID').exists?.should == true
 	@b.text_field(:name => 'Password').exists?.should == true
 	@b.text_field(:name => 'PasswordConfirm').exists?.should == true

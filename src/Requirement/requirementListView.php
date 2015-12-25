@@ -421,7 +421,6 @@
 							<td><b>Status</b></td>
 							<td><b>Priority</b></td>
 							<td><b>Owner</b></td>
-							<td><b>Task Amount</b></td>
 							<td></td>
 						</tr>
 						<?php
@@ -450,7 +449,6 @@
 								?>
 							</td>
 							<td><?= $req['owner']; ?></td>
-							<td>0</td>
 							<?php
 								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
@@ -491,12 +489,7 @@
 						{
 						?>
 						<tr id="link">
-							<td><a href="addRequirementView.php?pid=<?=$pid; ?>" style="white-space:nowrap;font-size:22px"><b>Add New Requirement</b></a></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td colspan="5"><a href="addRequirementView.php?pid=<?=$pid; ?>" style="white-space:nowrap;font-size:22px;float:left"><b>Add New Requirement</b></a></td>
 						</tr>
 						<?php
 						}

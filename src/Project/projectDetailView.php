@@ -314,9 +314,9 @@ a:active {
                  </select>
                     <div style="float:left;width:40px;height:300px;margin-left:15px;">
                         <font style="margin-left:5px;float:left;font-size:16px; margin-top: 90px;color:white">Add</font>
-                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color: #009688 !important;color:white"><b>></b></button>
+                        <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color: #282828 !important;color:white"><b>></b></button>
                         <font style="margin-left:-10px;font-size:16px;color:white">Remove</font>
-                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color: #009688 !important;color:white"><b><</b></button>
+                        <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color: #282828 !important;color:white"><b><</b></button>
                     </div> 
 
                 <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px;background-color:white">
@@ -326,8 +326,8 @@ a:active {
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
                 </select>
 
-                    <input type="button" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white;background-color:#009688!important;width:60px"> 
-                    <button type="reset" onclick="back();" class="addButton" style="color:white;background-color:#009688!important;width:60px">Cancel</button>
+                    <input type="button" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white;background-color:#009688!important;width:auto"> 
+                    <button type="reset" onclick="back();" class="addButton" style="color:white;background-color:#009688!important;width:auto">Cancel</button>
             </form>
             <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
         </div>
@@ -403,7 +403,7 @@ a:active {
                                     echo "<tr><td><font class=\"detailBoxFont\"> <b>Company: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$projectdetail['p_company'],"</font></td></tr>"; 
                                 ?>
                                 <?php
-                                    echo "<tr><td style=\"word-wrap:break-word;width:290px;vertical-align: baseline\" class=\"detailBoxFont\" ><font>";
+                                    echo "<tr height='60'><td style=\"word-wrap:break-word;width:290px;vertical-align: baseline\" class=\"detailBoxFont\" ><font>";
                                     echo "<b>Members: </b></font></td>";
                                     $mem = "";
                                     for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
@@ -414,7 +414,7 @@ a:active {
                                     }
                                     $longmem = $mem;  
                                     $mem = mb_strimwidth  ( $mem  ,0 ,45, "...", "UTF-8" );
-                                    echo "<td style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><font data-tooltip=\"". $longmem ."\" data-tooltip-stickto=\"left\" data-tooltip-color=\"stone\" data-tooltip-animate-function=\"scalein\">".$mem."</font></td></tr>";
+                                    echo "<td height=\"60px\" style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><div style=\"height:58px;overflow:hidden\" data-tooltip=\"". $longmem ."\" data-tooltip-stickto=\"left\" data-tooltip-color=\"stone\" data-tooltip-animate-function=\"scalein\">".$mem."</div></td></tr>";
                                 ?>
                                 <?php
                                     echo "<tr><td><font class=\"detailBoxFont\"> <b>Status: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">";     
