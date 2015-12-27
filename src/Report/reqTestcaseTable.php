@@ -7,13 +7,18 @@
 	// 然後會直接 echo 出表格的形式
 	echo "<style>
 			table, th, td {
-		    	border: 3px solid black;
+		    	border: 5px solid white;
 			    border-collapse: collapse;
-			    color: black;
+			    color: white;
 			    text-align: center;
+			    font-size: 12pt;
+			    padding: 0 0 0 0;
+			}
+			td {
+				width:45px;
 			}
 		</style>";
-	//echo "<body style='background:black;color:white'>";
+	echo "<body style='background:black;color:white'>";
 	$pid = $_GET['pid'];
 
 	// [BC] 取得DB連線
@@ -55,30 +60,57 @@
 	//echo json_encode($testcases) . "<br>";
 
 	// [BC] 開始輸出表格
-	echo "<table><tr><th></th>";
-	foreach ($reqs as $req) {
-		echo "<th>R" . $req['rnumber'] . "</th>";
-	}
-	echo "</tr>";
-	foreach ($testcases as $key) {
-		echo "<tr><td>" . $key['name'] . "</td>";
-		foreach ($reqs as $req) {
-			$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $req['rid'];
-			$result = $sqli->query($getRelation);
-			if(!$result){
-				echo "there is an error when $getRelation in reqTestcaseTable.php";
-				exit();
-			}
-			$temp = $result->fetch_array();
-			if($temp['c'] == 1){
-				echo "<td>O</td>";
-			} else {
-				echo "<td> </td>";
-			}
+	$pos = 0;
+
+	while(true){
+		echo "<table><tr><th></th>";
+		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
+			echo "<th>R" . $reqs[$i]['rnumber'] . "</th>";
 		}
+		//foreach ($reqs as $req) {
+		//	echo "<th>R" . $req['rnumber'] . "</th>";
+		//}
 		echo "</tr>";
+		foreach ($testcases as $key) {
+			echo "<tr><td style='width:180px'>" . $key['name'] . "</td>";
+			for($i = $pos;$i < $pos+14 && $i < $rpos; $i++){
+				$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $reqs[$i]['rid'];
+				$result = $sqli->query($getRelation);
+				if(!$result){
+					echo "there is an error when $getRelation in reqTestcaseTable.php";
+					exit();
+				}
+				$temp = $result->fetch_array();
+				if($temp['c'] == 1){
+					echo "<td>O</td>";
+				} else {
+					echo "<td> </td>";
+				}
+			}
+			/*foreach ($reqs as $req) {
+				$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $req['rid'];
+				$result = $sqli->query($getRelation);
+				if(!$result){
+					echo "there is an error when $getRelation in reqTestcaseTable.php";
+					exit();
+				}
+				$temp = $result->fetch_array();
+				if($temp['c'] == 1){
+					echo "<td>O</td>";
+				} else {
+					echo "<td> </td>";
+				}
+			}*/
+			echo "</tr>";
+		}
+		echo "</tr></table>";
+		$pos += 14;
+		if($pos < $rpos){
+			echo "<br><br>";
+		}else {
+			break;
+		}
 	}
-	echo "</tr></table>";
 
 	echo "<body>";
 ?>
