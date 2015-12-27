@@ -1,4 +1,5 @@
 <?php $print = $_GET['print']; ?>
+
 <html>
 	<head>
 		<title>Print Report</title>
@@ -27,7 +28,7 @@
 			}
 		?>
 		<script>
-			windows.print();
+			print();
 		</script>
 	</body>
 </html>
