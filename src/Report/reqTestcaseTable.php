@@ -7,13 +7,13 @@
 	// 然後會直接 echo 出表格的形式
 	echo "<style>
 			table, th, td {
-		    	border: 3px solid white;
+		    	border: 3px solid black;
 			    border-collapse: collapse;
-			    color: white;
-			    width:auto;
+			    color: black;
+			    text-align: center;
 			}
 		</style>";
-	echo "<body style='background:black;color:white'>";
+	//echo "<body style='background:black;color:white'>";
 	$pid = $_GET['pid'];
 
 	// [BC] 取得DB連線
@@ -39,7 +39,7 @@
 	while($data = $result->fetch_array()){
 		$reqs[$rpos++] = $data;
 	}
-	echo json_encode($reqs) . "<br>";
+	//echo json_encode($reqs) . "<br>";
 
 	// [BC] 取得Test Cases
 	$selectTestCase = "SELECT tid, name FROM testcase WHERE pid=$pid ORDER BY tid";
@@ -52,16 +52,31 @@
 	while ($data = $result->fetch_array()) {
 		$testcases[$tpos++] = $data;
 	}
-	echo json_encode($testcases) . "<br>";
+	//echo json_encode($testcases) . "<br>";
 
 	// [BC] 開始輸出表格
 	echo "<table><tr><th></th>";
 	foreach ($reqs as $req) {
 		echo "<th>R" . $req['rnumber'] . "</th>";
 	}
-	echo "</tr><tr>";
+	echo "</tr>";
 	foreach ($testcases as $key) {
-		echo "<td></td>";
+		echo "<tr><td>" . $key['name'] . "</td>";
+		foreach ($reqs as $req) {
+			$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $req['rid'];
+			$result = $sqli->query($getRelation);
+			if(!$result){
+				echo "there is an error when $getRelation in reqTestcaseTable.php";
+				exit();
+			}
+			$temp = $result->fetch_array();
+			if($temp['c'] == 1){
+				echo "<td>O</td>";
+			} else {
+				echo "<td> </td>";
+			}
+		}
+		echo "</tr>";
 	}
 	echo "</tr></table>";
 
