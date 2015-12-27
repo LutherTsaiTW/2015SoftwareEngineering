@@ -44,7 +44,6 @@
 	while($data = $result->fetch_array()){
 		$reqs[$rpos++] = $data;
 	}
-	//echo json_encode($reqs) . "<br>";
 
 	// [BC] 取得Test Cases
 	$selectTestCase = "SELECT tid, name FROM testcase WHERE pid=$pid ORDER BY tid";
@@ -57,7 +56,6 @@
 	while ($data = $result->fetch_array()) {
 		$testcases[$tpos++] = $data;
 	}
-	//echo json_encode($testcases) . "<br>";
 
 	// [BC] 開始輸出表格
 	$pos = 0;
@@ -67,9 +65,7 @@
 		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
 			echo "<th>R" . $reqs[$i]['rnumber'] . "</th>";
 		}
-		//foreach ($reqs as $req) {
-		//	echo "<th>R" . $req['rnumber'] . "</th>";
-		//}
+		
 		echo "</tr>";
 		foreach ($testcases as $key) {
 			echo "<tr><td style='width:180px'>" . $key['name'] . "</td>";
@@ -87,20 +83,6 @@
 					echo "<td> </td>";
 				}
 			}
-			/*foreach ($reqs as $req) {
-				$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $req['rid'];
-				$result = $sqli->query($getRelation);
-				if(!$result){
-					echo "there is an error when $getRelation in reqTestcaseTable.php";
-					exit();
-				}
-				$temp = $result->fetch_array();
-				if($temp['c'] == 1){
-					echo "<td>O</td>";
-				} else {
-					echo "<td> </td>";
-				}
-			}*/
 			echo "</tr>";
 		}
 		echo "</tr></table>";
