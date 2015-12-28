@@ -31,7 +31,7 @@
                     </tr>
                         <?php 
                             if($notConfirmedReq['count']>0){
-                                if($user['previlege']==777){
+                                if($user['previlege']==777 || $user['previlege']==999){
                                     foreach ($notConfirmedReq['req'] as $t ) {
                                     echo "<tr><td>". $t['name'] ."</td> <td><button class='btn font-22' onclick='doConfirm(".$tid.",".$t['rid'].")'>Confirm</button></td> <td><button class='btn font-22' onclick='doRemove(".$tid.",".$t['rid'].")'>Remove</button></td></tr>";
                                     }

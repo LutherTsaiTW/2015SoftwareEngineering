@@ -4,18 +4,29 @@ function switchBox(box) {
     switch(box)
     {
         case 1:
+            switchColor(document.getElementById("tag1"));
             document.getElementById("detailBox").style.visibility = "visible";
             break;
         case 2:
+            switchColor(document.getElementById("tag2"));
             document.getElementById("dataBox").style.visibility = "visible";
             break;
         case 3:
+            switchColor(document.getElementById("tag3"));
             document.getElementById("relationBox").style.visibility = "visible";
             break;
 
     }
  }
 
+//切換顏色
+function switchColor(obj)
+{   
+    document.getElementById("tag1").style.backgroundColor ="rgb(40, 40, 40)";
+    document.getElementById("tag2").style.backgroundColor ="rgb(40, 40, 40)";
+    document.getElementById("tag3").style.backgroundColor ="rgb(40, 40, 40)";
+    obj.style.backgroundColor ="grey";
+}
 //關閉所有小視窗
 function back() {
     document.getElementById("detailBox").style.visibility = "hidden";

@@ -8,7 +8,7 @@
         if($errno)
         {
             $user = array('success' => 0, 'message' => 'db_error');
-            echo(json_encode($user));
+            echo($user);
             exit();
         }
         $sqli->query("SET NAMES 'UTF8'");
@@ -23,12 +23,12 @@
         }
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $tname = urlencode($row['name']);
-            $tdes = urlencode($row['t_des']);
-            $tdata = urlencode($row['data']);
-            $tresult = urlencode($row['result']);
-            $tpid=urlencode($row['pid']);
-            $towner_id=urlencode($row['owner_id']);
+            $tname = $row['name'];
+            $tdes = $row['t_des'];
+            $tdata = $row['data'];
+            $tresult = $row['result'];
+            $tpid=$row['pid'];
+            $towner_id=$row['owner_id'];
         }
 
         //取得testcase owner資訊
@@ -41,7 +41,7 @@
         }
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $towner=urlencode($row['name']);
+            $towner=$row['name'];
         }
 
         //取得使用者資訊
@@ -65,8 +65,8 @@
         $i=0;
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $relation['relation'][$i]['rid']=urlencode($row['rid']);
-            $relation['relation'][$i]['confirmed']=urlencode($row['confirmed']);
+            $relation['relation'][$i]['rid']=$row['rid'];
+            $relation['relation'][$i]['confirmed']=$row['confirmed'];
             $i++;
         }
 
@@ -92,8 +92,8 @@
         if ($result )
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $notConfirmedReq['req'][$i]['rid']=urlencode($row['rid']);
-            $notConfirmedReq['req'][$i]['name']=urlencode($row['rname']);
+            $notConfirmedReq['req'][$i]['rid']=$row['rid'];
+            $notConfirmedReq['req'][$i]['name']=$row['rname'];
             $i++;
             $notConfirmedReq['count'] = $i;
         }   
@@ -112,8 +112,8 @@
         if ($result )
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
-            $confirmedReq['req'][$i]['rid']=urlencode($row['rid']);
-            $confirmedReq['req'][$i]['name']=urlencode($row['rname']);
+            $confirmedReq['req'][$i]['rid']=$row['rid'];
+            $confirmedReq['req'][$i]['name']=$row['rname'];
             $i++;
             $confirmedReq['count'] = $i;
         }  

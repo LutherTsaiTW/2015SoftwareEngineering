@@ -47,13 +47,13 @@
         <br>
         <div class="mainBox">
             <div class="upperBox">
-                <div class="tag">
+                <div id="tag1" class="tag bgColor-grey">
                 <a onclick="switchBox(1)">Detail</a>
                 </div>
-                <div class="tag tagGap">
+                <div id="tag2" class="tag tagGap">
                 <a onclick="switchBox(2)">Input/Ouput</a>
                 </div>
-                <div class="tag tagGap">
+                <div id="tag3" class="tag tagGap">
                 <a onclick="switchBox(3)">Relationship</a>
                 </div>
             </div>

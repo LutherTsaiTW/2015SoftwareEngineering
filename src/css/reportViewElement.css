@@ -1,0 +1,68 @@
+.accordion__item {
+  width: 900px;
+
+}
+
+.accordion__item:first-child {
+  border: none;
+}
+
+.accordion__trigger {
+    font-size: 22px;
+    height: 100px;
+      border-radius: 10px;
+  display: block;
+  width: 900px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: grey;
+  border: none;
+}
+
+.accordion__item.is-open .accordion__trigger {
+  color: #fff;
+  background-color: grey;
+}
+
+.accordion__content {
+
+      border-radius: 10px;
+  background-color: black;
+}
+
+.accordion__content p {
+  margin: 0;
+  padding: 20px;
+}
+.main
+{
+    width: 900px;
+    margin: 0px auto;
+}
+ul
+{
+    padding: 0px;
+}
+.printBtn
+{
+    position: fixed;
+}
+.printAll
+{
+    float: right;
+    height: 50px;
+    width: 50px;
+}
+.print
+{
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    height: 30px;
+    width: 30px;
+}
+.printBlock
+{
+   height: 50px;
+   width: 100%;
+}
