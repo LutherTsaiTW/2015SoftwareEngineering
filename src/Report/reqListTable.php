@@ -31,7 +31,7 @@
 	';
 ?>
 
-<?php 
+<?php
 	$table_start = '<table border = 1px style = "font-size:6px; border-collapse: collapse; text-align: center;">
 	';
 ?>
@@ -40,7 +40,7 @@
 	foreach (array_keys($tables) as $table) {
 		$index = $tables[$table];
 		if (!array_key_exists($index, $reqs)) {
-			return;
+			continue;
 		}
 		echo '<font size="12px">Status: <font class="table.'
 		. $table . '">' . $table . '</font></font>
