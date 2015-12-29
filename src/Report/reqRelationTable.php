@@ -55,17 +55,17 @@
 		}
 
 		echo "</tr>";
-		foreach ($reqs as $key) {
-			echo "<tr><td class='cell'>R" . $key['rnumber'] . "</td>";
+		for ($a = $pos; $a < $pos+17 && $a < $rpos; $a++){
+			echo "<tr><td class='cell'>R" . $reqs[$a]['rnumber'] . "</td>";
 			for($i = $pos;$i < $pos+17 && $i < $rpos; $i++){
 				// [檢查是不是一樣的 requirement]
-				if($key['rnumber'] == $reqs[$i]['rnumber']){
+				if($reqs[$a]['rnumber'] == $reqs[$i]['rnumber']){
 					echo "<td class='empty'> </td>";
 					continue;
 				}
 
 				// [BC] 檢查 requirement 和 testcase 是否有關係
-				$getRelation = "SELECT count(relation_id) AS c FROM req_relation WHERE (rid_a=" . $key['rid'] . " AND rid_b=" . $reqs[$i]['rid'] . ") OR (rid_a=" . $reqs[$i]['rid'] . " AND rid_b=" . $key['rid'] . ")";
+				$getRelation = "SELECT count(relation_id) AS c FROM req_relation WHERE (rid_a=" . $reqs[$a]['rid'] . " AND rid_b=" . $reqs[$i]['rid'] . ") OR (rid_a=" . $reqs[$i]['rid'] . " AND rid_b=" . $reqs[$a]['rid'] . ")";
 				$result = $sqli->query($getRelation);
 				if(!$result){
 					echo "there is an error when $getRelation in reqRelationTable.php";
@@ -77,7 +77,7 @@
 				} else if($temp['c'] == 0){
 					echo "<td class='cell'> </td>";
 				} else {
-					echo "there is an error that req_relation table has two rows containing " . $key['rnumber'] . "and " . $reqs[$i]['rnumber'] . " in reqRelationTable.php";
+					echo "there is an error that req_relation table has two rows containing " . $reqs[$a]['rnumber'] . "and " . $reqs[$i]['rnumber'] . " in reqRelationTable.php";
 				}
 			}
 			echo "</tr>";
