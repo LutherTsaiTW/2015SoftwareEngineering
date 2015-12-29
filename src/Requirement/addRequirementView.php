@@ -92,7 +92,7 @@
 						<input type="hidden" id="uid" name="uid" value="<?=$user['uid'];?>" />
 						<div class="formElement">
 							<div id="name">Name:</div>
-							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" />
+							<input id="requirementName" type="text" name="requirementName" class="textBoxStyle" placeholder="Enter Requirement's Name" required=''/>
 						</div>
 						<div class="formElement">
 							<div>Type:</div>
