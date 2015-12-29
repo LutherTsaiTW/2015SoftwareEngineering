@@ -319,6 +319,8 @@
 			<div class="w3-row " style="Height:30%;color:white;text-align:center">
 				<a id="back" style="float:left;padding-left:10px;padding-top:10px;font-size:20px" href="../Requirement/requirementListView.php?pid=<?= $req_info['rproject']; ?>">Back</a>
 				<?php
+				if ($userinfo['previlege'] == 999 || $userinfo['previlege'] == 111)
+				{
 					if($req_info['rstatus']==1)
 					{
 						echo "<a id=\"edit\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"../Requirement/editRequirementView.php?rid=" . $rid ."\">Edit</a>";
@@ -327,6 +329,7 @@
 					{
 						echo "<a id=\"change\" style=\"float:right;padding-right:10px;padding-top:10px;font-size:20px\" href=\"changeRequirementView.php?rid=" . $rid ."\">Change</a>";
 					}
+				}
 				?>
 				<h1 style="background-color:grey;border-radius:5px"><?= $req_info['rname'] . " v" . $req_info['version']; ?></h1>
 			</div>
@@ -343,8 +346,15 @@
 								<?php
 									if($req_info['oldVersion'] != NULL)
 									{
-										echo "<pre>v" . $req_info['version'] . ":<br>" . $req_info['rdes'] . "</pre>";
-										echo "<pre style=\"color:rgb(0,255,0);\">v" . $req_old_info['version'] . ":<br>" . $req_old_info['rdes'] . "</pre>";
+										if($req_info['rstatus'] != 3 && $req_info['rstatus'] != 4)
+										{
+											echo "<pre>v" . $req_info['version'] . ":<br>" . $req_info['rdes'] . "</pre>";
+											echo "<pre style=\"color:rgb(0,255,0);\">v" . $req_old_info['version'] . ":<br>" . $req_old_info['rdes'] . "</pre>";
+										}
+										else
+										{
+											echo "<pre>" . $req_info['rdes'] . "</pre>";
+										}
 									}
 									else
 									{

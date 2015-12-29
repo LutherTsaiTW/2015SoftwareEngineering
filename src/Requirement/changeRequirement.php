@@ -82,7 +82,7 @@
 		exit(json_encode($response));
 	}
 
-	$update = "UPDATE test_relation SET rid = " . $newREQID ." WHERE rid = " . $oldRID .";";
+	$update = "UPDATE test_relation SET rid = " . $newREQID .", confirmed = 0 WHERE rid = " . $oldRID .";";
 	$result = $sqli->query($update);
 	if(!$result)
 	{
