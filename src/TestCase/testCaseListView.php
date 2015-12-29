@@ -293,7 +293,13 @@
 								{
 							?>
 							<tr class="items">
-								<td style="font-size:22px"><?php if($testcase['confirmed'] != 1 && $testcase['confirmed'] != NULL) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
+								<?php
+									if($testcase['confirmed'] != 1 && $testcase['confirmed'] != NULL)
+									{
+										$confirmed[$testcase['tid']] = 1;
+									}
+								?>
+								<td style="font-size:22px"><?php if($confirmed[$testcase['tid']]) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
