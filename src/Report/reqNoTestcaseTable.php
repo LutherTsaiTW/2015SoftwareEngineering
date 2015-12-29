@@ -47,28 +47,28 @@
 	// [BC] 開始輸出表格
 	$outputTable = array();
 	$size = 0;
-	//echo "<table><tr><th>Name</th><th>No Relation</th><th>non-Confirm</th></tr>";
 
 	foreach ($reqs as $req) {
 		$select = "SELECT count(relation_id) AS r FROM test_relation WHERE rid = " . $req['rid'];
 		$result = $sqli->query($select);
 		if(!$result){
-			echo "there is an error whent get relation informaion in testcaseNoReqTable.php";
+			echo "there is an error whent get relation informaion in testcaseNoReqTable.php<br>";
+			echo "error = " . $sqli->error . "<br>";
 			exit();
 		}
 		$data = $result->fetch_array();
 		if($data['r'] == 0){
 			$outputTable[$size++] = $req;
-			//echo "<tr><td>" . $testcase['name'] . "</td><td>O</td><td></td></tr>";
 		}
 	}
 
 	if($size != 0){
 		echo "<table><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:00px'>Status</th><th style='width:125px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
-		foreach ($outputTable as $key) {
-			echo "<tr><td>" . $key['rnumber'] . "</td><td>" . $key['rname'] . "</td>";
+		//foreach ($outputTable as $key) {
+		for ($i = 0; $i < $size;$i++){
+			echo "<tr><td>" . $outputTable[$i]['rnumber'] . "</td><td>" . $outputTable[$i]['rname'] . "</td>";
 
-			switch ($key['rstatus']) {
+			switch ($outputTable[$i]['rstatus']) {
 				case 1:
 					echo "<td>Open</td>";
 					break;
@@ -82,11 +82,11 @@
 					echo "<td>Disapproved</td>";
 					break;
 				default:
-					echo "there is an error that the requirement's status is " . $key['rstatus'] . " in reqNoTestcaseTable.php";
+					echo "there is an error that the requirement's status is " . $outputTable[$i]['rstatus'] . " in reqNoTestcaseTable.php";
 					break;
 			}
 
-			switch ($key['rtype']) {
+			switch ($outputTable[$i]['rtype']) {
 				case 0:
 					echo "<td>non-Functional</td>";
 					break;
@@ -94,12 +94,12 @@
 					echo "<td>Functional</td>";
 					break;
 				default:
-					echo "there is an error that the requirement's type is " . $key['rtype'] . " in reqNoTestcaseTable.php";
+					echo "there is an error that the requirement's type is " . $outputTable[$i]['rtype'] . " in reqNoTestcaseTable.php";
 					break;
 			}
-			echo "<td>" . $key['version'] . "</td>";
+			echo "<td>" . $outputTable[$i]['version'] . "</td>";
 			
-			switch ($key['rpriority']) {
+			switch ($outputTable[$i]['rpriority']) {
 				case 0:
 					echo "<td>Low</td>";
 					break;
@@ -110,7 +110,7 @@
 					echo "<td>High</td>";
 					break;
 				default:
-				echo "there is an error that the requriment's priority is " . $key['rpriority'] . " in reqNoTestcaseTable.php";
+				echo "there is an error that the requriment's priority is " . $outputTable[$i]['rpriority'] . " in reqNoTestcaseTable.php";
 					break;
 			}
 			echo "</tr>";
