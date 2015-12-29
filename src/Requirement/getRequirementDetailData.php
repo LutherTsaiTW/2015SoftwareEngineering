@@ -31,7 +31,7 @@
         }
         if ($result )
         $req = $result->fetch_array(MYSQLI_ASSOC);
-        $req['rdes']=whitespaceHandler($req['rdes']);
+        $req['rdes']=$req['rdes'];
 
         //取得與req有關的requirement
         $relIndex=0;
@@ -47,7 +47,7 @@
         while($row1 = $resultA->fetch_array(MYSQLI_ASSOC))
         {
 
-            $relReq['req'][$relIndex]['rid']=urlencode($row1['rid_b']);
+            $relReq['req'][$relIndex]['rid']=$row1['rid_b'];
             $relIndex++;
         }
         $getRelationReqB = "SELECT * FROM req_relation as r WHERE r.rid_b =".$rid;
@@ -59,7 +59,7 @@
         }
         while($row2 = $resultB->fetch_array(MYSQLI_ASSOC))
         {
-            $relReq['req'][$relIndex]['rid']=urlencode($row2['rid_a']);
+            $relReq['req'][$relIndex]['rid']=$row2['rid_a'];
             $relIndex++;
         }
 
@@ -78,7 +78,7 @@
                     exit();
                 }   
                     $row = $result->fetch_array(MYSQLI_ASSOC);
-                    $relReq['req'][$relIndex]['rname']=urlencode($row['rname']);
+                    $relReq['req'][$relIndex]['rname']=$row['rname'];
                     $relIndex++;
             }
         }
@@ -96,8 +96,8 @@
         while($row = $result->fetch_array(MYSQLI_ASSOC))
         {
 
-            $relTestCase['testcase'][$relIndex]['tid']=urlencode($row['tid']);
-            $relTestCase['testcase'][$relIndex]['name']=whitespaceHandler(urlencode($row['name']));
+            $relTestCase['testcase'][$relIndex]['tid']=$row['tid'];
+            $relTestCase['testcase'][$relIndex]['name']=$row['name'];
             $relIndex++;
         }
 

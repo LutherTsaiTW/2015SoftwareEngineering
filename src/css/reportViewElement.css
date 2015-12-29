@@ -25,12 +25,13 @@
 }
 
 .accordion__content {
-
-      border-radius: 10px;
-  background-color: black;
+        padding-top: 20px;
+    border-radius: 10px;
+    background-color: black;
 }
 
 .accordion__content p {
+
   margin: 0;
   padding: 20px;
 }
@@ -58,11 +59,34 @@ ul
     margin-top: 10px;
     margin-right: 10px;
     float: right;
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
 }
 .printBlock
 {
    height: 50px;
    width: 100%;
+}
+.table-Open
+{
+    font-size: 12pt;
+}
+.table-InReview
+{
+    color:yellow;
+    font-size: 12pt;
+}
+.table-Approved
+{
+    color: green; 
+    font-size: 12pt;
+}
+.table-Disapproved
+{
+    color: red;
+    font-size: 12pt;
+}
+.gap
+{
+    height: 10px;
 }

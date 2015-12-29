@@ -6,9 +6,8 @@
     <title>Report</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://cdn.rawgit.com/tonai/jquery-contenttoggle/gh-pages/stylesheets/codepen-base.css">
+    <link rel="stylesheet" href="../css/contenttoggle.css">
     <link rel="stylesheet" href="../css/w3.css">
-        <link rel="stylesheet" href="../css/dateRangePicker.css">
         <link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
         <link rel="stylesheet" type="text/css" href="../css/reportViewElement.css">
     
@@ -81,13 +80,13 @@
         <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirements</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqListTable.php';?>
-            <div class="printBlock">       
+            <div class="printBlock">     
                 <a href="printReport.php?print=1&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
         </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirements Relationship</button>
+        <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirement Relations</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqRelationTable.php';?>
             <div class="printBlock">       
@@ -96,7 +95,7 @@
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirements And Testcases Relationship</button>
+        <button class="accordion__trigger js-contentToggle__trigger" type="button">TestCase Requirement Relation</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqTestcaseTable.php';?>
             <div class="printBlock">        
@@ -105,7 +104,7 @@
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger" type="button">Testcases Without Requirement</button>
+        <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirements with No TestCase</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqNoTestcaseTable.php';?>
             <div class="printBlock">       
@@ -114,7 +113,7 @@
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger" type="button">Requirements Without Testcase</button>
+        <button class="accordion__trigger js-contentToggle__trigger" type="button">TestCases in special condition</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'testcaseNoReqTable.php';?>
             <div class="printBlock">       
