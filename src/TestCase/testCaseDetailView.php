@@ -73,9 +73,47 @@
                         </div>
                 </div>
                 <div class="bottomBox hidden" id="relationBox" > 
-                    <iframe  id="relationIframe" scrolling="no" class="relationIframe" src="testCaseDetailRelationTable.php?tid=<?php echo $tid?>"></iframe>
+			            <div id="notConfirmBox"  class="relationshipBox" <?php if($notConfirmedReq['count'] == 0) echo 'style="visibility:hidden;height:0px;padding:0;margin:0px"' ?>>
+			                <div>
+			                 <table class="font-22" id="notConfirmTable">
+			                    <tr>
+			                        <td ><font class="bold-22">Not Confirm: </font></td>
+			                    </tr>
+			                        <?php 
+			                            if($notConfirmedReq['count']>0){
+			                                if($user['previlege']==777 || $user['previlege']==999){
+			                                    foreach ($notConfirmedReq['req'] as $t ) {
+			                                    echo "<tr><td><a target='_block' href='../Requirement/requirementDetailView.php?rid=".$t['rid']."'>". $t['name'] ."</a></td> <td><button class='btn font-22' onclick='doConfirm(".$tid.",".$t['rid'].")'>Confirm</button></td> <td><button class='btn font-22' onclick='doRemove(".$tid.",".$t['rid'].")'>Remove</button></td></tr>";
+			                                    }
+			                                }
+			                                else
+			                                {
+			                                    foreach ($notConfirmedReq['req'] as $t ) {
+			                                    echo "<tr><td>". $t['name'] ."</td></tr>";
+			                                    }
+			                                }
+			                            } 
+			                        ?>                               
+			                 </table>
+			                 </div>                            
+			            </div>
+			             <div id="confirmedBox"  class="relationshipBox" <?php if($confirmedReq['count'] == 0) echo 'style="visibility:hidden;height:0px;padding:0;margin:0px"' ?>>
+			                <table class="font-22" id="confirmedTable">
+			                    <tr>
+			                        <td ><font class="bold-22">Confirmed: </font></td>
+			                    </tr>
+			                        <?php 
+			                            if($confirmedReq['count']>0){
+
+			                                foreach ($confirmedReq['req'] as $t ) {
+			                                    echo "<tr><td><a target='_block' href='../Requirement/requirementDetailView.php?rid=".$t['rid']."'>". $t['name'] ."</a></td><td> </td><td> </td></tr>";
+			                                }
+			                            } 
+			                        ?>                               
+			                 </table> 
+			            </div>
+			        </div>
                 </div>
-            </div>
         </div>
 
 

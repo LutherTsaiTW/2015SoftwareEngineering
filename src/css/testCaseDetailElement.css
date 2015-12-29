@@ -70,6 +70,7 @@
     border-radius: 15px;
     background-color: grey;
     margin-top: 20px;
+    margin-left: 20px;
     white-space:normal;
     word-wrap:break-word; 
     width: 880px;
@@ -86,11 +87,6 @@
     font-size: 36px;
     float: left;
     color: grey;
-}
-.relationIframe{
-    border: 0px;
-    width: inherit;
-
 }
 .tagGap
 {

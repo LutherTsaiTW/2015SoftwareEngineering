@@ -37,12 +37,36 @@ function back() {
 //[KL]未完成 confirm 
 function doConfirm(tid,rid)
 {
+    var xmlhttp = new XMLHttpRequest();
+    var url = "confirmTestCaseRelation.php?tid="+tid+"&rid="+rid;
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            insertHTML(xmlhttp.responseText);
+        }
+    }
+    
     refresh();
 }
 
 //[KL]未完成 remove
 function doRemove(tid,rid)
 {
+    var xmlhttp = new XMLHttpRequest();
+    var url = "removeTestCaseRelation.php?tid="+tid+"&rid="+rid;
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            insertHTML(xmlhttp.responseText);
+        }
+    }
+    
     refresh();
 }
 
