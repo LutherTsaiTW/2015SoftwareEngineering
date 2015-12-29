@@ -37,7 +37,8 @@
 				$testcases[$row['tid']]['name'] = $row['name'];
 				$testcases[$row['tid']]['ownerid'] = $row['owner_id'];
 				$testcases[$row['tid']]['owner'] = $row['owner'];
-				$testcases[$row['tid']]['confirmed'] = $row['confirmed'];
+				if($row['confirmed'] != 1)
+					$notconfirmed[$row['tid']] = 1;
 			}
 		?>
 		<title><?= $project_name; ?> Test Cases</title>
@@ -293,13 +294,7 @@
 								{
 							?>
 							<tr class="items">
-								<?php
-									if($testcase['confirmed'] != 1 && $testcase['confirmed'] != NULL)
-									{
-										$confirmed[$testcase['tid']] = 1;
-									}
-								?>
-								<td style="font-size:22px"><?php if($confirmed[$testcase['tid']]) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
+								<td style="font-size:22px"><?php if($notconfirmed[$testcase['tid']]) echo("<img src='../imgs/alert_22.png' />&nbsp;&nbsp;"); ?><a href="testCaseDetailView.php?tid=<?= $testcase['tid']; ?>"><?= $testcase['name']; ?></a></td>
 								<td style="font-size:22px"><?= $testcase['owner']; ?></td>
 									<?php
 										if($userinfo['previlege'] == 999 || $userinfo['previlege'] == 777)
