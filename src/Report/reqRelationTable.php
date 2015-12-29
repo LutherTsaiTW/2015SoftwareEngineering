@@ -7,23 +7,18 @@
 	// 然後會直接 echo 出表格的形式
 
 	echo "<style>
-			table, th, td {
-		    	border: 5px solid white;
-			    border-collapse: collapse;
-			    color: white;
-			    text-align: center;
-			    font-size: 12pt;
-			    padding: 0 0 0 0;
-			    margin: auto;
+			.reqRelation {
+				border-collapse: collapse;
+				text-align: center;
+				font-size: 12pt;
 			}
 			.empty{
 				background:grey;
 			}
-			th, td {
+			.cell {
 				width: 45px;
 			}
 		</style>";
-	//echo "<body style='background:black;color:white'>";
 	$pid = $_GET['pid'];
 
 	// [BC] 取得DB連線
@@ -39,7 +34,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] 取得requirements
-	$selectReq = "SELECT rid, rnumber FROM req WHERE rproject=$pid AND (rstatus != 0 OR rstatus != 5) ORDER BY rnumber";
+	$selectReq = "SELECT rid, rnumber FROM req WHERE rproject=$pid AND (rstatus != 0 AND rstatus != 5) ORDER BY rnumber";
 	$result = $sqli->query($selectReq);
 	if(!$result){
 		echo "there is an error when SELECT requirements in reqRelationTable.php";
@@ -54,14 +49,14 @@
 	$pos = 0;
 
 	while(true){
-		echo "<table><tr><th class='empty'></th>";
+		echo "<table class='reqRelation' border=1px><tr><th class='empty cell'></th>";
 		for ($i = $pos; $i < $pos+17 && $i < $rpos ; $i++) { 
-			echo "<th>R" . $reqs[$i]['rnumber'] . "</th>";
+			echo "<th class='cell'>R" . $reqs[$i]['rnumber'] . "</th>";
 		}
 
 		echo "</tr>";
 		foreach ($reqs as $key) {
-			echo "<tr><td>R" . $key['rnumber'] . "</td>";
+			echo "<tr><td class='cell'>R" . $key['rnumber'] . "</td>";
 			for($i = $pos;$i < $pos+17 && $i < $rpos; $i++){
 				// [檢查是不是一樣的 requirement]
 				if($key['rnumber'] == $reqs[$i]['rnumber']){
@@ -78,9 +73,9 @@
 				}
 				$temp = $result->fetch_array();
 				if($temp['c'] == 1){
-					echo "<td>O</td>";
+					echo "<td class='cell'>O</td>";
 				} else if($temp['c'] == 0){
-					echo "<td> </td>";
+					echo "<td class='cell'> </td>";
 				} else {
 					echo "there is an error that req_relation table has two rows containing " . $key['rnumber'] . "and " . $reqs[$i]['rnumber'] . " in reqRelationTable.php";
 				}
@@ -95,7 +90,4 @@
 			break;
 		}
 	}
-
-
-	//echo "</body>";
 ?>

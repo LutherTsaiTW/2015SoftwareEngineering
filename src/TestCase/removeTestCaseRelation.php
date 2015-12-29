@@ -2,6 +2,9 @@
 	$rid  = $_POST['rid'];
 	$tid = $_POST['tid'];
 
+	// $rid  = 31;
+	// $tid = 4;
+
 	/* [CLY] Database Setting */
 	require_once '../assist/DBConfig.php';
 
