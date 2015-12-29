@@ -3,7 +3,32 @@
 	<head>
 		<?php
 			$pid = $_GET['pid'];
-			
+			if(!isset($_GET['order']))
+			{
+				$order = 'ORDER BY rnumber';
+			}
+			else
+			{
+				switch($_GET['order'])
+				{
+					case 0:
+						$order = 'ORDER BY rnumber';
+						break;
+					case 1:
+						$order = 'ORDER BY rname';
+						break;
+					case 2:
+						$order = 'ORDER BY rpriority DESC';
+						break;
+					case 3:
+						$order = 'ORDER BY owner';
+						break;
+					case 4:
+						$order = 'ORDER BY rstatus';
+						break;
+				}
+			}
+
 			require_once '../assist/DBConfig.php';
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
@@ -12,14 +37,14 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
+
 			//Show Chinese Chracters Correctly
 			$sqli->query("SET NAMES 'UTF8'");
-			
+
 			session_start();
 			$session = $_SESSION['sessionid'];
 			session_write_close();
-			
+
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
 			if (!($userinfo = $result->fetch_array(MYSQLI_ASSOC)))
 			{
@@ -27,7 +52,7 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
+
 			$result = $sqli->query("SELECT p.p_id, p.p_name, p.p_des, p.p_company, u.name AS owner, p.p_start_time, p.p_end_time, p.status FROM project AS p LEFT JOIN user_info AS u ON p.p_owner = u.uid WHERE p_id=" . $pid . ";") or die($sqli->error);
 			if(!($project_info = $result->fetch_array(MYSQLI_ASSOC)))
 			{
@@ -35,15 +60,15 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
+
 			$result = $sqli->query("SELECT u.name FROM project_team AS p RIGHT JOIN user_info AS u ON u.uid = p.user_id WHERE p.project_id=" . $pid . ";") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$members[]['name'] = $row['name'];
 			}
-			
+
 			$reqs = array();
-			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.version, r.oldVersion, r.rstatus, r.rpriority, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 AND rstatus != 5 ORDER BY rid DESC;") or die($sqli->error);
+			$result = $sqli->query("SELECT r.rid, r.rname, r.rtype, r.rdes, r.version, r.oldVersion, r.rstatus, r.rpriority, r.rnumber, u.name AS owner FROM req AS r LEFT JOIN user_info AS u ON r.rowner = u.uid WHERE rproject=" . $pid . " AND rstatus != 0 AND rstatus != 5 " . $order . ";") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$reqs[$row['rid']]['id'] = $row['rid'];
@@ -52,6 +77,7 @@
 				$reqs[$row['rid']]['des'] = $row['rdes'];
 				$reqs[$row['rid']]['status'] = $row['rstatus'];
 				$reqs[$row['rid']]['priority'] = $row['rpriority'];
+				$reqs[$row['rid']]['rnumber'] = $row['rnumber'];
 				$reqs[$row['rid']]['version'] = $row['version'];
 				$reqs[$row['rid']]['oldVersion'] = $row['oldVersion'];
 				$reqs[$row['rid']]['owner'] = $row['owner'];
@@ -220,12 +246,12 @@
 		border-radius: 15px;
 
 	}
-	
+
 	.detailBoxFont
 	{
 		font-size: 20px;
 	}
-	
+
 	.listTable {
 		text-decoration: none;
 		table-layout: fixed;
@@ -235,11 +261,11 @@
 		border-spacing: 0 10px;
 		margin-top: -10px;
 	}
-	
+
 	.listTable .items {
 		font-size: 20px;
 	}
-	
+
 	.listTable #header,.listTable #link
 	{
 		font-size: 22px;
@@ -251,11 +277,11 @@
 		background-color: rgb(40, 40, 40);
 		valign: center;
 	}
-	
+
 	.listTable .nonfunctional td {
 		background-color: rgb(127, 106, 0);
 	}
-	
+
 	.listTable .functional td {
 		background-color: rgb(82, 127, 63);
 	}
@@ -271,7 +297,7 @@
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
 	}
-	
+
 	.html5tooltip-box
 	{
 		color: black;
@@ -315,7 +341,7 @@
 								<td>
 									<font id="startTime"  class="detailBoxFont" style="float:left;color:white">
 										<?php
-											$stime = explode(" ", $project_info["p_start_time"])[0]; 
+											$stime = explode(" ", $project_info["p_start_time"])[0];
 											echo(str_replace("-", "/", $stime));
 										?>
 									</font>
@@ -330,7 +356,7 @@
 								<td>
 									<font id="endTime" class="detailBoxFont" style="float:left;color:white">
 										<?php
-											$etime = explode(" ", $project_info["p_end_time"])[0]; 
+											$etime = explode(" ", $project_info["p_end_time"])[0];
 											echo(str_replace("-", "/", $etime));
 										?>
 									</font></td>
@@ -414,13 +440,14 @@
 					<a href="editRequirementRelationView.php?pid=<?=$pid; ?>" style="font-size:36px;" >Relationship</a>
 					</div>
 				</div>
-				<div style="float:right;margin-left:350px" id="listTable">
+				<div style="float:right;margin-left:310px" id="listTable">
 					<table class="listTable">
 						<tr id="header">
-							<td><b>Name</b></td>
-							<td><b>Status</b></td>
-							<td><b>Priority</b></td>
-							<td><b>Owner</b></td>
+							<td><b><a href='requirementListView.php?order=0&pid=<?=$pid; ?>'>Number</a></b></td>
+							<td><b><a href='requirementListView.php?order=1&pid=<?=$pid; ?>'>Name</a></b></td>
+							<td><b><a href='requirementListView.php?order=4&pid=<?=$pid; ?>'>Status</a></b></td>
+							<td><b><a href='requirementListView.php?order=2&pid=<?=$pid; ?>'>Priority</a></b></td>
+							<td><b><a href='requirementListView.php?order=3&pid=<?=$pid; ?>'>Owner</a></b></td>
 							<td></td>
 						</tr>
 						<?php
@@ -430,6 +457,7 @@
 								{
 						?>
 						<tr class="items <?php if($req['type'] == 0) echo("nonfunctional"); else echo("functional"); ?>">
+							<td>R<?=$req['rnumber']; ?></td>
 							<td><a href="requirementDetailView.php?rid=<?=$req['id']; ?>"><?= $req['name'] . " v" . $req['version']; ?></a></td>
 							<td>
 								<?php
@@ -452,7 +480,7 @@
 							<?php
 								if($req['status']==1 && ($userinfo['previlege']==111 || $userinfo['previlege']==999))
 								{
-									echo("<td><a id='deletelink' href='#' onclick='deleteReq" . $req['id'] . "()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></td>");
+									echo("<td style='text-align:right;border-bottom-right-radius:10px;border-top-right-radius:10px;'><div style='float:right'><a id='deletelink' href='#' onclick='deleteReq" . $req['id'] . "()'>Delete</a><span>&nbsp;&nbsp;</span><a href='editRequirementView.php?rid=" . $req['id'] . "'>Edit</a></div></td>");
 							?>
 							<script>function deleteReq<?= $req['id']; ?>()
 									{
@@ -489,7 +517,7 @@
 						{
 						?>
 						<tr id="link">
-							<td colspan="5"><a href="addRequirementView.php?pid=<?=$pid; ?>" style="white-space:nowrap;font-size:22px;float:left"><b>Add New Requirement</b></a></td>
+							<td colspan="6"><a href="addRequirementView.php?pid=<?=$pid; ?>" style="white-space:nowrap;font-size:22px;float:left"><b>Add New Requirement</b></a></td>
 						</tr>
 						<?php
 						}
