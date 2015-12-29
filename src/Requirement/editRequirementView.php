@@ -102,7 +102,7 @@
 		            	</div>
 		                <div class="formElement">
 							<div id="name">Name:</div>
-							<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" value="<?=$requirement['rname']?>"/>
+							<input id="name" type="text" name="name" class="textBoxStyle" placeholder="Enter Requirement's Name" value="<?=$requirement['rname']?>" required=''/>
 						</div>
 						<div class="formElement">
 							<div>Type:</div>
