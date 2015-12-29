@@ -33,6 +33,19 @@
 	}
 	$sqli->query("SET NAMES 'UTF8'");
 
+	// [BC] 先檢查有沒有 requirements
+	$findReq = "SELECT count(rid) AS c FROM req WHERE rproject=$pid AND rstatus != 0 AND rstatus != 5";
+	$result = $sqli->query($findReq);
+	if(!$result){
+		echo "there si an error when Count rid in reqRelationTable.php<br>";
+		echo "error message = " . $sqli->error;
+		exit();
+	}
+	$reqNum = $result->fetch_array();
+	if($reqNum['c'] == 0){
+		return;
+	}
+
 	// [BC] 取得requirements
 	$selectReq = "SELECT rid, rnumber FROM req WHERE rproject=$pid AND (rstatus != 0 AND rstatus != 5) ORDER BY rnumber";
 	$result = $sqli->query($selectReq);

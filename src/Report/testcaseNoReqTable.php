@@ -39,6 +39,7 @@
 		exit();
 	}
 	$tpos = 0;
+	$testcases = array();
 	while($data = $result->fetch_array()){
 		$testcases[$tpos++] = $data;
 	}
@@ -66,9 +67,10 @@
 
 	if($size != 0){
 		echo "<table class='testcaseNoReq' border=1px><tr><th class='cell'>Name</th><th class='cell'>No Relation</th><th class='cell'>non-Confirm</th></tr>";
-		foreach ($outputTable as $key) {
-			echo "<tr><td>" . $key['name'] . "</td>";
-			if($key['req'] == 1){
+		//foreach ($outputTable as $key) {
+		for($i = 0; $i < $size;$i++){
+			echo "<tr><td>" . $outputTable[$i]['name'] . "</td>";
+			if($outputTable[$i]['req'] == 1){
 				echo "<td>O</td><td></td>";
 			}else {
 				echo "<td></td><td>O</td>";

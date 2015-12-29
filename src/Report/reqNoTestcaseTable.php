@@ -7,17 +7,12 @@
 	// 然後會直接 echo 出表格的形式
 
 	echo "<style>
-			table, th, td {
-		    	border: 5px solid white;
-			    border-collapse: collapse;
-			    color: white;
-			    text-align: center;
-			    font-size: 12pt;
-			    padding: 0 0 0 0;
-			    margin: auto;
+			.reqNoTestcaseTable {
+		    	border-collapse: collapse;
+				text-align: center;
+				font-size: 12pt;
 			}
 		</style>";
-	echo "<body style='background:black;color:white'>";
 	$pid = $_GET['pid'];
 
 	// [BC] 取得DB連線
@@ -63,7 +58,7 @@
 	}
 
 	if($size != 0){
-		echo "<table><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:00px'>Status</th><th style='width:125px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
+		echo "<table class='reqNoTestcaseTable' border=1px><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:00px'>Status</th><th style='width:125px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
 		//foreach ($outputTable as $key) {
 		for ($i = 0; $i < $size;$i++){
 			echo "<tr><td>" . $outputTable[$i]['rnumber'] . "</td><td>" . $outputTable[$i]['rname'] . "</td>";
@@ -117,6 +112,4 @@
 		}
 		echo "</table>";
 	}
-
-	echo "</body>";
 ?>

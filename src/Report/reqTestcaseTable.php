@@ -50,12 +50,18 @@
 		exit();
 	}
 	$tpos = 0;
+	$testcases = array();
 	while ($data = $result->fetch_array()) {
 		$testcases[$tpos++] = $data;
 	}
 
 	// [BC] 開始輸出表格
 	$pos = 0;
+
+	// [BC] 如果 requirement 或是 testcase 的數量為零，直接跳出去
+	if($rpos == 0 || $tpos == 0){
+		exit();
+	}
 
 	while(true){
 		echo "<table class='reqTestcase' border=1px><tr><th></th>";
