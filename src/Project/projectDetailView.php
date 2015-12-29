@@ -368,7 +368,7 @@ a:active {
                     <?php
                         if($projectdetail['p_owner']==$user['name'])
                         {
-                            echo "<a id=\"edit\" style=\"font-size:20px;float:right;padding-right:10px;margin-top:10px\" href=\"editProjectView.php?pid=",$p_id,"\" >Edit </a>";
+                            echo "<a id=\"edit\" style=\"font-size:20px;float:right;padding-right:10px;margin-top:10px\" href=\"editProjectView.php?pid=",$p_id,"&from=1\" >Edit </a>";
                         }
                     ?>
         </div>

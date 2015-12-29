@@ -60,7 +60,7 @@ function insertHTML(response) {
                 else if (project[i].status == 2) out += "Terminated";
                 out += "</td> ";
                 if (project[i].owner == arr.name && (arr.previlege == 777 || arr.previlege == 999)) {
-                    out += "<td style=\"text-align:right;\"><a href=\"editProjectView.php?pid=" + project[i].pid + "\">Edit</a></td><td ><a onclick=\"showDeleteWindow(" + project[i].pid + ")\">Delete</a></td></tr>";
+                    out += "<td style=\"text-align:right;\"><a href=\"editProjectView.php?pid=" + project[i].pid + "&from=0\">Edit</a></td><td ><a onclick=\"showDeleteWindow(" + project[i].pid + ")\">Delete</a></td></tr>";
                 } else {
                     out += "<td></td><td></td></tr>";
                 }

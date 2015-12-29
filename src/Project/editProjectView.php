@@ -23,7 +23,19 @@
     float: right;
 }
 </style>
+<?php
+	// [BC]
+	// 決定要回去的地方
+	// 抓輸入參數，from
+	// 如果 from 是 0，就回到projectList頁面，反之，回到projectDetail頁面
+	$from = $_GET['from'];
 
+	if($from == '0'){
+		$goto = "projectList.html";
+	}else {
+		$goto = "projectDetailView.php?pid=" . $_GET['pid'];
+	}
+?>
 <script type="text/javascript">
 	// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
 	function doEdit(){
@@ -55,7 +67,7 @@
 		            return;
 		        }
 		        if(r.success == 1){
-		        	document.location.href = document.referrer;
+		        	document.location.href = "<?=$goto;?>";
 		        } else {
 		        	alert('edit project failed\nthe error message = ' + r.message);
 		        }
@@ -232,7 +244,7 @@
 									});
 							});
                         </script>
-                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="location.href = document.referrer;">
+                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="document.location.href = '<?=$goto;?>';">
                         <br>
                         <br>
                 </div>
