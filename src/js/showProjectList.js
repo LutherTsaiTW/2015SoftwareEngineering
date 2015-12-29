@@ -59,7 +59,7 @@ function insertHTML(response) {
                 else if (project[i].status == 1) out += "Open";
                 else if (project[i].status == 2) out += "Terminated";
                 out += "</td> ";
-                if (project[i].owner == arr.name) {
+                if (project[i].owner == arr.name && (arr.previlege == 777 || arr.previlege == 999)) {
                     out += "<td style=\"text-align:right;\"><a href=\"editProjectView.php?pid=" + project[i].pid + "\">Edit</a></td><td ><a onclick=\"showDeleteWindow(" + project[i].pid + ")\">Delete</a></td></tr>";
                 } else {
                     out += "<td></td><td></td></tr>";
@@ -68,6 +68,8 @@ function insertHTML(response) {
         }
 
     }
-    out += "<tr><td><a href=\"addProject.html\"><b>Add Project</b></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+    if (arr.previlege == 777 || arr.previlege == 999) {
+		out += "<tr><td><a href=\"addProject.html\"><b>Add Project</b></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+	}
     document.getElementById("listTable").innerHTML = out;
 }
