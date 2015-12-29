@@ -18,7 +18,7 @@
 					$order = 'ORDER BY name';
 				}
 			}
-			
+
 			require_once '../assist/DBConfig.php';
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 			if($sqli->connect_errno)
@@ -27,23 +27,24 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
+
 			//Show Chinese Chracters Correctly
 			$sqli->query("SET NAMES 'UTF8'");
-			
+
 			session_start();
 			$session = $_SESSION['sessionid'];
 			session_write_close();
-			
+
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
 			$userinfo = $result->fetch_array(MYSQLI_ASSOC);
-			
+
 			$result = $sqli->query("SELECT p_name FROM project WHERE p_id=" . $pid . ";") or die($sqli->error);
 			if ($project = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$project_name = $project['p_name'];
 			}
-			
+
+			$notconfirmed = Array();
 			$testcases = Array();
 			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner, r.confirmed FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid LEFT JOIN test_relation AS r ON t.tid = r.tid WHERE t.pid = " . $pid . " " . $order . ";") or die($sqli->error);
 			while ($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -52,8 +53,14 @@
 				$testcases[$row['tid']]['name'] = $row['name'];
 				$testcases[$row['tid']]['ownerid'] = $row['owner_id'];
 				$testcases[$row['tid']]['owner'] = $row['owner'];
-				if($row['confirmed'] != 1)
+				if($row['confirmed'] != NULL && $row['confirmed'] == 0)
+				{
 					$notconfirmed[$row['tid']] = 1;
+				}
+				elseif (($row['confirmed'] == 1 || $row['confirmed'] == NULL) && !isset($notconfirmed[$row['tid']]))
+				{
+					$notconfirmed[$row['tid']] = 0;
+				}
 			}
 		?>
 		<title><?= $project_name; ?> Test Cases</title>
@@ -211,12 +218,12 @@
 		border-radius: 15px;
 
 	}
-	
+
 	.detailBoxFont
 	{
 		font-size: 20px;
 	}
-	
+
 	.listTable {
 		text-decoration: none;
 		table-layout: fixed;
@@ -226,11 +233,11 @@
 		border-spacing: 0 10px;
 		margin-top: -10px;
 	}
-	
+
 	.listTable .items {
 		font-size: 20px;
 	}
-	
+
 	.listTable #header,.listTable #link
 	{
 		font-size: 22px;
@@ -242,11 +249,11 @@
 		background-color: rgb(40, 40, 40);
 		valign: center;
 	}
-	
+
 	.listTable .nonfunctional td {
 		background-color: rgb(127, 106, 0);
 	}
-	
+
 	.listTable .functional td {
 		background-color: rgb(82, 127, 63);
 	}
@@ -268,7 +275,7 @@
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
 	}
-	
+
 	.html5tooltip-box
 	{
 		color: black;
@@ -338,7 +345,7 @@
 										}
 									?>
 							</tr>
-							<?php	
+							<?php
 								}
 							?>
 							<tr id="link">

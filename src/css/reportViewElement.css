@@ -7,7 +7,7 @@
   border: none;
 }
 
-.accordion__trigger {
+.accordion__trigger{
     font-size: 22px;
     height: 100px;
       border-radius: 10px;
@@ -15,13 +15,17 @@
   width: 900px;
   padding: 10px 20px;
   color: #fff;
-  background-color: grey;
   border: none;
+}
+.greyBackground{
+    background-color: grey;
+}
+.blackBackground {
+    background-color: black;
 }
 
 .accordion__item.is-open .accordion__trigger {
   color: #fff;
-  background-color: grey;
 }
 
 .accordion__content {
