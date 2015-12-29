@@ -3,6 +3,21 @@
 	<head>
 		<?php
 			$pid = $_GET['pid'];
+			if(!isset($_GET['order']))
+			{
+				$order = 'ORDER BY name';
+			}
+			else
+			{
+				if($_GET['order'] == 1)
+				{
+					$order = 'ORDER BY owner';
+				}
+				else
+				{
+					$order = 'ORDER BY name';
+				}
+			}
 			
 			require_once '../assist/DBConfig.php';
 			$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -30,7 +45,7 @@
 			}
 			
 			$testcases = Array();
-			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner, r.confirmed FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid LEFT JOIN test_relation AS r ON t.tid = r.tid WHERE t.pid = " . $pid . ";") or die($sqli->error);
+			$result = $sqli->query("SELECT t.tid, t.name, t.owner_id, u.name AS owner, r.confirmed FROM testcase AS t LEFT JOIN user_info AS u ON t.owner_id = u.uid LEFT JOIN test_relation AS r ON t.tid = r.tid WHERE t.pid = " . $pid . " " . $order . ";") or die($sqli->error);
 			while ($row = $result->fetch_array(MYSQLI_ASSOC))
 			{
 				$testcases[$row['tid']]['tid'] = $row['tid'];
@@ -285,8 +300,8 @@
 					<div style="margin:0 auto;width:900px">
 						<table class="listTable" style="width:900px">
 							<tr id="header">
-								<td><b>Name</b></td>
-								<td><b>Owner</b></td>
+								<td><b><a href='testCaseListView.php?order=0&pid=<?= $pid; ?>'>Name</a></b></td>
+								<td><b><a href='testCaseListView.php?order=1&pid=<?= $pid; ?>'>Owner</a></b></td>
 								<td></td>
 							</tr>
 							<?php
