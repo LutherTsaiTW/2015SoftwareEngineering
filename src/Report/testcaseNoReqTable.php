@@ -7,16 +7,12 @@
 	// 然後會直接 echo 出表格的形式
 
 	echo "<style>
-			table, th, td {
-		    	border: 5px solid white;
+			.testcaseNoReq {
 			    border-collapse: collapse;
-			    color: white;
 			    text-align: center;
 			    font-size: 12pt;
-			    padding: 0 0 0 0;
-			    margin: auto;
 			}
-			th, td {
+			.cell {
 				width: 270px;
 			}
 		</style>";
@@ -69,7 +65,7 @@
 	}
 
 	if($size != 0){
-		echo "<table><tr><th>Name</th><th>No Relation</th><th>non-Confirm</th></tr>";
+		echo "<table class='testcaseNoReq' border=1px><tr><th class='cell'>Name</th><th class='cell'>No Relation</th><th class='cell'>non-Confirm</th></tr>";
 		foreach ($outputTable as $key) {
 			echo "<tr><td>" . $key['name'] . "</td>";
 			if($key['req'] == 1){

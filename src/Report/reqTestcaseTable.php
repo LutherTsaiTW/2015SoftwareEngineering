@@ -6,16 +6,12 @@
 	// $pid -> 專案的id
 	// 然後會直接 echo 出表格的形式
 	echo "<style>
-			table, th, td {
-		    	border: 5px solid white;
-			    border-collapse: collapse;
-			    color: white;
-			    text-align: center;
-			    font-size: 12pt;
-			    padding: 0 0 0 0;
-			    margin: auto;
+			.reqTestcase {
+				border-collapse: collapse;
+				text-align: center;
+				font-size: 12pt;
 			}
-			td {
+			.cell {
 				width:45px;
 			}
 		</style>";
@@ -35,7 +31,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] 取得requirements
-	$selectReq = "SELECT rid, rnumber FROM req WHERE rproject=$pid AND (rstatus != 0 OR rstatus != 5) ORDER BY rnumber";
+	$selectReq = "SELECT rid, rnumber FROM req WHERE rproject=$pid AND (rstatus != 0 AND rstatus != 5) ORDER BY rnumber";
 	$result = $sqli->query($selectReq);
 	if(!$result){
 		echo "there is an error when SELECT requirements in reqTestcaseTable.php";
@@ -62,9 +58,9 @@
 	$pos = 0;
 
 	while(true){
-		echo "<table><tr><th></th>";
+		echo "<table class='reqTestcase' border=1px><tr><th></th>";
 		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
-			echo "<th>R" . $reqs[$i]['rnumber'] . "</th>";
+			echo "<th class='cell'>R" . $reqs[$i]['rnumber'] . "</th>";
 		}
 		
 		echo "</tr>";
@@ -75,7 +71,8 @@
 				$getRelation = "SELECT count(relation_id) AS c FROM test_relation WHERE tid=" . $key['tid'] . " AND rid=" . $reqs[$i]['rid'];
 				$result = $sqli->query($getRelation);
 				if(!$result){
-					echo "there is an error when $getRelation in reqTestcaseTable.php";
+					//echo "there is an error when $getRelation in reqTestcaseTable.php<br>";
+					echo $sqli->error;
 					exit();
 				}
 				$temp = $result->fetch_array();
