@@ -20,7 +20,7 @@
 			}
 			if($print == 0 || $print == 4)
 			{
-				require_once('reqNoTestcaseTable.php>');
+				require_once('reqNoTestcaseTable.php');
 			}
 			if($print == 0 || $print == 5)
 			{
