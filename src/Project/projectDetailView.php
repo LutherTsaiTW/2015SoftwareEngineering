@@ -434,7 +434,7 @@ a:active {
                                 </div>
 
                                 <div class="listButton">
-                                    <a href="../RePoret/reportListView.php">Report</a>
+                                    <a href="../Report/reportView.php">Report</a>
                                 </div>
                                  <?php   
                                     if($projectdetail['p_owner']==$user['name'])
