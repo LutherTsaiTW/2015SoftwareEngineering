@@ -53,11 +53,11 @@
 				$testcases[$row['tid']]['name'] = $row['name'];
 				$testcases[$row['tid']]['ownerid'] = $row['owner_id'];
 				$testcases[$row['tid']]['owner'] = $row['owner'];
-				if($row['confirmed'] == 0)
+				if($row['confirmed'] != NULL && $row['confirmed'] == 0)
 				{
 					$notconfirmed[$row['tid']] = 1;
 				}
-				elseif ($row['confirmed'] == 1 && !isset($notconfirmed[$row['tid']]))
+				elseif (($row['confirmed'] == 1 || $row['confirmed'] == NULL) && !isset($notconfirmed[$row['tid']]))
 				{
 					$notconfirmed[$row['tid']] = 0;
 				}
