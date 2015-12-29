@@ -34,40 +34,41 @@ function back() {
     document.getElementById("relationBox").style.visibility = "hidden";
 }
 
-//[KL]未完成 confirm 
+//[KL]confirm 
 function doConfirm(tid,rid)
 {
     var xmlhttp = new XMLHttpRequest();
-    var url = "confirmTestCaseRelation.php?tid="+tid+"&rid="+rid;
+    var url = "../TestCase/confirmTestCaseRelation.php";
 
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+    xmlhttp.send("tid="+tid+"&rid="+rid);
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            insertHTML(xmlhttp.responseText);
+            refresh();
         }
     }
     
-    refresh();
+    
 }
 
-//[KL]未完成 remove
+//[KL]remove
 function doRemove(tid,rid)
 {
     var xmlhttp = new XMLHttpRequest();
-    var url = "removeTestCaseRelation.php?tid="+tid+"&rid="+rid;
+    var url = "../TestCase/removeTestCaseRelation.php?tid="+tid+"&rid="+rid;
 
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+    xmlhttp.send("tid="+tid+"&rid="+rid);
     xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            insertHTML(xmlhttp.responseText);
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {       
+            refresh();
         }
     }
     
-    refresh();
+    
 }
 
 //[KL]刷新顯示relation的iframe
