@@ -43,7 +43,7 @@
 			continue;
 		}
 		$class = str_replace(" ", "",$table);
-		echo '<reqtitle style = "font-size:12pt;">Status: <reqTitle class="'
+		echo '<reqtitle style = "font-size:20pt;">Status: <reqTitle class="'
 		. $class . '">' . $table . '</reqTitle></reqtitle>
 		';
 		echo $table_start;

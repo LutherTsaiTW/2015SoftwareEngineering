@@ -1,6 +1,6 @@
 <style>
 	reqtitle {
-		font-size: 36 !important;
+		font-size: 20pt !important;
 	}
 	reqtitle.open {
 		color: white;
