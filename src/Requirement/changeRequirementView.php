@@ -57,6 +57,7 @@
         <br>
         <div class="mainBox">
         	<div style="height:500px">
+            <!--左半部修改畫面-->
 			<div class="leftBox">
                 <iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
 				<form id="mainForm" action="changeRequirement.php" method="POST" target="_iframe">
@@ -123,7 +124,7 @@
                     <?php
                         if(count($relReq)>0)
                         foreach ( $relReq['req'] as $va ) {
-                            echo "<a class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
+                            echo "<a target='_block' class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
                         }
                         else
                             echo "None";
@@ -136,7 +137,7 @@
                     <?php
                         if(count($relTestCase)>0)
                         foreach ( $relTestCase['testcase'] as $va ) {
-                            echo "<a class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
+                            echo "<a target='_block' class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
                         }
                         else
                             echo "None";
