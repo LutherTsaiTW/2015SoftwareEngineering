@@ -32,7 +32,7 @@
 ?>
 
 <?php
-	$table_start = '<table border = 1px style = "font-size:6px; border-collapse: collapse; text-align: center;">
+	$table_start = '<table border = 1px style = "font-size:12pt; border-collapse:collapse; text-align:center;">
 	';
 ?>
 
@@ -42,8 +42,9 @@
 		if (!array_key_exists($index, $reqs)) {
 			continue;
 		}
-		echo '<font size="12px">Status: <font class="table.'
-		. $table . '">' . $table . '</font></font>
+		$class = str_replace(" ", "",$table);
+		echo '<reqtitle style = "font-size:12pt;">Status: <reqTitle class="'
+		. $class . '">' . $table . '</reqTitle></reqtitle>
 		';
 		echo $table_start;
 		echo $heads;
