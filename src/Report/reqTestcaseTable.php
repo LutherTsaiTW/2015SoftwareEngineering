@@ -77,7 +77,7 @@
 	while(!$empty && !$error){
 		echo "<table class='reqTestcase' border=1px><tr><th></th>";
 		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
-			echo "<th class='cellB'>R" . $reqs[$i]['rnumber'] . "</th>";
+			echo "<td class='cellB'>R" . $reqs[$i]['rnumber'] . "</td>";
 		}
 		
 		echo "</tr>";
