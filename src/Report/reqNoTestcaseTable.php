@@ -15,6 +15,9 @@
 		</style>";
 	$pid = $_GET['pid'];
 
+	// [BC] error用來檢查是否有錯誤產生，如果有為true，作為exit的替代
+	$error = false;
+
 	// [BC] 取得DB連線
 	require_once '../assist/DBConfig.php';
 	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
@@ -23,42 +26,47 @@
 	{
 		$user = array('success' => 0, 'message' => 'db_error in testcaseNoReqTable.php');
 		echo(json_encode($user));
-		exit();
+		$error = true;
 	}
 	$sqli->query("SET NAMES 'UTF8'");
 
-	// [BC] 取得requriement
-	$selectReq = "SELECT rid, rnumber, rname, rstatus, version, rpriority, rtype FROM req WHERE rproject=$pid AND rstatus != 0 AND rstatus != 5 ORDER BY rnumber";
-	$result = $sqli->query($selectReq);
-	if(!$result){
-		echo "there is an error when SELECT reqs in reqNoTestcaseTable.php";
-		exit();
-	}
-	$rpos = 0;
-	$reqs = array();
-	while($data = $result->fetch_array()){
-		$reqs[$rpos++] = $data;
+	if(!$error){
+		// [BC] 取得requriement
+		$selectReq = "SELECT rid, rnumber, rname, rstatus, version, rpriority, rtype FROM req WHERE rproject=$pid AND rstatus != 0 AND rstatus != 5 ORDER BY rnumber";
+		$result = $sqli->query($selectReq);
+		if(!$result){
+			echo "there is an error when SELECT reqs in reqNoTestcaseTable.php";
+			$error = true;
+		}
+		$rpos = 0;
+		$reqs = array();
+		while($data = $result->fetch_array()){
+			$reqs[$rpos++] = $data;
+		}
 	}
 
 	// [BC] 開始輸出表格
 	$outputTable = array();
 	$size = 0;
 
-	foreach ($reqs as $req) {
-		$select = "SELECT count(relation_id) AS r FROM test_relation WHERE rid = " . $req['rid'];
-		$result = $sqli->query($select);
-		if(!$result){
-			echo "there is an error whent get relation informaion in testcaseNoReqTable.php<br>";
-			echo "error = " . $sqli->error . "<br>";
-			exit();
-		}
-		$data = $result->fetch_array();
-		if($data['r'] == 0){
-			$outputTable[$size++] = $req;
+	if(!$error){
+		foreach ($reqs as $req) {
+			$select = "SELECT count(relation_id) AS r FROM test_relation WHERE rid = " . $req['rid'];
+			$result = $sqli->query($select);
+			if(!$result){
+				echo "there is an error whent get relation informaion in testcaseNoReqTable.php<br>";
+				echo "error = " . $sqli->error . "<br>";
+				$error = true;
+				break;
+			}
+			$data = $result->fetch_array();
+			if($data['r'] == 0){
+				$outputTable[$size++] = $req;
+			}
 		}
 	}
 
-	if($size != 0){
+	if($size != 0 && !$error){
 		echo "<table class='reqNoTestcaseTable' border=1px><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:00px'>Status</th><th style='width:125px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
 		foreach ($outputTable as $key) {
 		//for ($i = 0; $i < $size;$i++){outputTable[$i]
