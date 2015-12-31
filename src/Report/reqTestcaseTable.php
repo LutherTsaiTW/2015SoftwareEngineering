@@ -11,7 +11,7 @@
 				text-align: center;
 				font-size: 12pt;
 			}
-			.cell {
+			.cellB {
 				width:45px;
 			}
 		</style>";
@@ -77,7 +77,7 @@
 	while(!$empty && !$error){
 		echo "<table class='reqTestcase' border=1px><tr><th></th>";
 		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
-			echo "<th class='cell'>R" . $reqs[$i]['rnumber'] . "</th>";
+			echo "<th class='cellB'>R" . $reqs[$i]['rnumber'] . "</th>";
 		}
 		
 		echo "</tr>";

@@ -15,8 +15,8 @@
 			.empty{
 				background:grey;
 			}
-			.cell {
-				width: 45px;
+			.cellA {
+				width: 36px;
 			}
 		</style>";
 	$pid = $_GET['pid'];
@@ -72,14 +72,14 @@
 	// [BC] 開始輸出表格
 	$pos = 0;
 	while(!$error){
-		echo "<table class='reqRelation' border=1px><tr><th class='empty cell'></th>";
+		echo "<table class='reqRelation' border=1px><tr><th class='empty cellA'></th>";
 		for ($i = $pos; $i < $pos+17 && $i < $rpos ; $i++) { 
-			echo "<th class='cell'>R" . $reqs[$i]['rnumber'] . "</th>";
+			echo "<td class='cellA'>R" . $reqs[$i]['rnumber'] . "</td>";
 		}
 
 		echo "</tr>";
 		foreach ($reqs as $key) {
-			echo "<tr><td class='cell'>R" . $key['rnumber'] . "</td>";
+			echo "<tr><td class='cellA'>R" . $key['rnumber'] . "</td>";
 			for($i = $pos;$i < $pos+17 && $i < $rpos; $i++){
 				// [檢查是不是一樣的 requirement]
 				if($key['rnumber'] == $reqs[$i]['rnumber']){
@@ -97,9 +97,9 @@
 				}
 				$temp = $result->fetch_array();
 				if($temp['c'] == 1){
-					echo "<td class='cell'>O</td>";
+					echo "<td class='cellA'>O</td>";
 				} else if($temp['c'] == 0){
-					echo "<td class='cell'> </td>";
+					echo "<td class='cellA'> </td>";
 				} else {
 					echo "there is an error that req_relation table has two rows containing " . $key['rnumber'] . "and " . $reqs[$i]['rnumber'] . " in reqRelationTable.php";
 				}

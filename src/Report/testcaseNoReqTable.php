@@ -12,9 +12,6 @@
 			    text-align: center;
 			    font-size: 12pt;
 			}
-			.cell {
-				width: 270px;
-			}
 		</style>";
 	$pid = $_GET['pid'];
 
@@ -76,7 +73,7 @@
 	}
 
 	if($size != 0 && !$error){
-		echo "<table class='testcaseNoReq' border=1px><tr><th class='cell'>Name</th><th class='cell'>No Relation</th><th class='cell'>non-Confirm</th></tr>";
+		echo "<table class='testcaseNoReq' border=1px><tr><th style='width:270px'>Name</th><th style='width:270px'>No Relation</th><th style='width:270px'>non-Confirm</th></tr>";
 		for($i = 0; $i < $size;$i++){
 			echo "<tr><td>" . $outputTable[$i]['name'] . "</td>";
 			if($outputTable[$i]['req'] == 1){
