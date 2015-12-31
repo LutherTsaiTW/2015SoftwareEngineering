@@ -29,6 +29,7 @@
 }
 
 .accordion__content {
+  min-height: 1px;
   width: 900px;
     margin: 0px auto;
   padding-top: 20px;

@@ -57,13 +57,13 @@
 
 	// [BC] 開始輸出表格
 	$pos = 0;
-
+	$empty=false;
 	// [BC] 如果 requirement 或是 testcase 的數量為零，直接跳出去
 	if($rpos == 0 || $tpos == 0){
-		exit();
+		$empty=true;
 	}
 
-	while(true){
+	while(!$empty){
 		echo "<table class='reqTestcase' border=1px><tr><th></th>";
 		for ($i = $pos; $i < $pos+14 && $i < $rpos ; $i++) { 
 			echo "<th class='cell'>R" . $reqs[$i]['rnumber'] . "</th>";
