@@ -298,6 +298,36 @@
 				$memo['datetime'] = $row['datetime'];
 				array_push($memoArray, $memo);
 			}
+
+			//Get Relation
+			$relations = array();
+			$result = $sqli->query( "SELECT * FROM `req_relation` WHERE rid_a = $rid OR rid_b = $rid") or die($sqli->error);
+			while($row = $result->fetch_array(MYSQLI_ASSOC))
+			{
+				if ($row['rid_a'] == $rid)
+				{
+					//Get REQ Info
+					$res = $sqli->query("SELECT * FROM req WHERE rid = " . $row['rid_b'].";") or die($sqli->error);
+					if(!($req_info_for_relation = $res->fetch_array(MYSQLI_ASSOC)))
+					{
+						$feedback = array('success' => 0, 'message' => 'project_fetch_error');
+						echo(json_encode($feedback));
+						exit;
+					}
+					array_push($relations, $req_info_for_relation);
+				}
+				else
+				{
+					$res = $sqli->query("SELECT * FROM req WHERE rid = " . $row['rid_a'].";") or die($sqli->error);
+					if(!($req_info_for_relation = $res->fetch_array(MYSQLI_ASSOC)))
+					{
+						$feedback = array('success' => 0, 'message' => 'project_fetch_error');
+						echo(json_encode($feedback));
+						exit;
+					}
+					array_push($relations, $req_info_for_relation);
+				}
+			}
 		?>
 		<br>
 		<div style="z-index:1;">
@@ -359,6 +389,36 @@
 									else
 									{
 										echo "<pre>" . $req_info['rdes'] . "</pre>";
+									}
+								?>
+								</font>
+							</table>
+						</div>
+					</div>
+					<div style="float:left;width:100%;margin-right:5px;margin-top:10px">
+						<div id="relation_area" class="detail">
+							<table style="font-size:24px;">
+								<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
+									<b>Relations</b>
+								</font>
+								<br>
+								<font id="des_text" style="float:left;width:540px;margin-right:5px;font-size:20px;">
+								<?php
+								 	if(count($relations) != 0) {
+										foreach ($relations as $value) {
+											echo "<tr>";
+											echo "<td style=\"width:20%\">";
+											echo "R" . $value['rnumber'] . " --- ";
+											echo "</td>";
+											echo "<td style=\"width:80%\">";
+											echo "<a href=\"requirementDetailView.php?rid=" . $value['rid'] . "\">" . $value['rname'] . " v" . $value['version'] . "</a>";
+											echo "</td>";
+											echo "</tr>";
+										}
+									}
+									else
+									{
+										echo "NO RELATIONS!!";
 									}
 								?>
 								</font>
