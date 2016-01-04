@@ -117,14 +117,15 @@
 					<textarea id="des" class="desBox blackFont" name="des" rows="10"><?php echo $req['rdes'];?></textarea>
 				</form>
 			</div>
+            <!-- 右半部 requirement 連結 -->
             <div class="rightBox">
                 <div class="listBox">
-                    <div class="affectedFont bold-20">Affected Requirements:</div>
-                    <div class="list font-20">
+                    <div class="affectedFont bold-20" style="color: rgb(200, 10, 10)">Affected Requirements:</div>
+                    <div class="list font-20" style="background:inherit">
                     <?php
                         if(count($relReq)>0)
                         foreach ( $relReq['req'] as $va ) {
-                            echo "<a target='_block' class='blackFont' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
+                            echo "<a target='_block' class='font-20' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
                         }
                         else
                             echo "None";
@@ -132,12 +133,12 @@
                     </div>
                 </div>
                 <div class="listBox">
-                    <div class="affectedFont bold-20">Affected Test Cases:</div>
-                    <div class="list font-20">
+                    <div class="affectedFont bold-20" style="color: rgb(200, 10, 10)">Affected Test Cases:</div>
+                    <div class="list font-20" style="background:inherit">
                     <?php
                         if(count($relTestCase)>0)
                         foreach ( $relTestCase['testcase'] as $va ) {
-                            echo "<a target='_block' class='blackFont' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
+                            echo "<a target='_block' class='font-20' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
                         }
                         else
                             echo "None";

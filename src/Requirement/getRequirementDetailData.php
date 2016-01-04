@@ -21,7 +21,7 @@
             exit('there is an error after SELECT USER ');
         }
 
-         //取得req
+        //取得req
         $getReq = "SELECT * FROM req as r WHERE r.rid =".$rid;
         $result = $sqli->query($getReq);
         if (!$result )
@@ -83,9 +83,13 @@
             }
         }
 
+        // [BC] 排序req
+        sort($relReq['req']);
+
         //取得有關的testcase
         $relTIndex=0;
-        $getRelationTestCase = "SELECT * FROM testcase WHERE tid IN (SELECT tid FROM test_relation  WHERE rid =".$rid.")";
+        $getRelationTestCase = "SELECT * FROM testcase WHERE tid IN (SELECT tid FROM test_relation  WHERE rid =".$rid.") AND pid=" . $req['rproject'] . " ORDER BY tid";
+        echo $getRelationTestCase;
         $result = $sqli->query($getRelationTestCase);
         if (!$result )
         {
