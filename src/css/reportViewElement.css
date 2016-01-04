@@ -94,7 +94,7 @@ ul
 }
 .Disapproved
 {
-    color: red;
+    color: rgb(255,32,32);
     font-size: 20pt;
 }
 .gap
