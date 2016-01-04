@@ -89,7 +89,6 @@
         //取得有關的testcase
         $relTIndex=0;
         $getRelationTestCase = "SELECT * FROM testcase WHERE tid IN (SELECT tid FROM test_relation  WHERE rid =".$rid.") AND pid=" . $req['rproject'] . " ORDER BY tid";
-        echo $getRelationTestCase;
         $result = $sqli->query($getRelationTestCase);
         if (!$result )
         {
