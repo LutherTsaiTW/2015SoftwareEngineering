@@ -10,6 +10,7 @@
         <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 		<script type="text/javascript" src="../js/html5tooltips.js"></script>
 		<script type="text/javascript" src="../js/sessionCheck.js"></script>
+		<script type="text/javascript" src="../js/testCaseDetail.js"></script>
 	</head>
 	<style>
 	#block {
@@ -299,7 +300,7 @@
 				array_push($memoArray, $memo);
 			}
 
-			//Get Relation
+			//Get REQs Relation
 			$relations = array();
 			$result = $sqli->query( "SELECT * FROM `req_relation` WHERE rid_a = $rid OR rid_b = $rid") or die($sqli->error);
 			while($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -327,6 +328,24 @@
 					}
 					array_push($relations, $req_info_for_relation);
 				}
+			}
+
+			//Get TESTs Relation
+			$testcases = array();
+			$test = array();
+			$result = $sqli->query( "SELECT * FROM `test_relation` WHERE rid = $rid") or die($sqli->error);
+			while($row = $result->fetch_array(MYSQLI_ASSOC))
+			{
+				$test = $row;
+				//Get Test Case Info
+				$res = $sqli->query("SELECT * FROM testcase WHERE tid = " . $test['tid'].";") or die($sqli->error);
+				if(!($test_info = $res->fetch_array(MYSQLI_ASSOC)))
+				{
+					$feedback = array('success' => 0, 'message' => 'project_fetch_error');
+					echo(json_encode($feedback));
+					exit;
+				}
+				array_push($testcases, array_merge($test, $test_info));
 			}
 		?>
 		<br>
@@ -397,31 +416,78 @@
 					</div>
 					<div style="float:left;width:100%;margin-right:5px;margin-top:10px">
 						<div id="relation_area" class="detail">
-							<table style="font-size:24px;">
+							<table>
 								<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
 									<b>Relations</b>
 								</font>
 								<br>
-								<font id="des_text" style="float:left;width:540px;margin-right:5px;font-size:20px;">
+								<br>
 								<?php
 								 	if(count($relations) != 0) {
+								 		echo "<tr>";
+										echo "<font style=\"font-size:20px;\">Requirements</font>";
+										echo "</tr><br>";
+										echo "<table>";
 										foreach ($relations as $value) {
 											echo "<tr>";
-											echo "<td style=\"width:20%\">";
-											echo "R" . $value['rnumber'] . " --- ";
+											echo "<td style=\"width:15%\">";
+											echo "R" . $value['rnumber'] . " ----- ";
 											echo "</td>";
-											echo "<td style=\"width:80%\">";
+											echo "<td style=\"width:85%\">";
 											echo "<a href=\"requirementDetailView.php?rid=" . $value['rid'] . "\">" . $value['rname'] . " v" . $value['version'] . "</a>";
 											echo "</td>";
 											echo "</tr>";
 										}
+										echo "</table><br>";
 									}
 									else
 									{
-										echo "NO RELATIONS!!";
+										echo "<tr>";
+										echo "<font style=\"font-size:20px;\">Requirements</font>";
+										echo "</tr><br>";
+										echo "NO RELATIONS!!<br><br>";
+									}
+
+								 	if(count($testcases) != 0) {
+								 		echo "<tr>";
+										echo "<font style=\"font-size:20px;\">Test Cases</font>";
+										echo "</tr>";
+										echo "<table>";
+										foreach ($testcases as $value) {
+											echo "<tr>";
+											echo "<td style=\"width:5%\">";
+											if($value['confirmed'] == 0)
+											{
+												echo "<img src=\"../imgs/alert_22.png\" height=\"15px\" width=\"15px\"\"";
+											}
+											echo "</td>";
+											echo "<td style=\"width:40%\">";
+											echo "<a href=\"../TestCase/testCaseDetailView.php?tid=" . $value['tid'] . "\">" . $value['name'] . "</a>";
+											echo "</td>";
+											echo "<td style=\"width:25%\">";
+											if($value['confirmed'] == 0 && $req_info['rstatus'] == 2 && ($userinfo['previlege'] == 777 || $userinfo['previlege'] == 999))
+											{
+												echo "<button class=\"btn font-22\" style=\"background-color:green\" onclick=\"doConfirm(". $value['tid'] . ",". $rid . ")\">Confirm</button>";
+											}
+											echo "</td>";
+											echo "<td style=\"width:25%\">";
+											if($value['confirmed'] == 0 && $req_info['rstatus'] == 2 && ($userinfo['previlege'] == 777 || $userinfo['previlege'] == 999))
+											{
+												echo "<button class=\"btn font-22\" style=\"background-color:red\" onclick=\"doRemove(". $value['tid'] . ",". $rid . ")\">Remove</button>";
+											}
+											echo "</td>";
+											echo "</tr>";
+										}
+										echo "</table>";
+									}
+									else
+									{
+										echo "<tr>";
+										echo "<font style=\"font-size:20px;\">Test Cases</font>";
+										echo "</tr><br>";
+										echo "NO RELATIONS!!<br>";
 									}
 								?>
-								</font>
 							</table>
 						</div>
 					</div>
