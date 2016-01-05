@@ -14,7 +14,7 @@
 		while ($row = $result->fetch_row()) {
 			$type = $types[$row[3]];
 			$prioritiy = $priorities[$row[4]];
-			$reqs[$row[5]][] = [$row[0], $row[1], $row[2], $type, $prioritiy];
+			$reqs[$row[5]][] = ["R" . $row[0], $row[1], $row[2], $type, $prioritiy];
 		}
 		$result->close();
 	}
