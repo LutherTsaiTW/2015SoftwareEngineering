@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="../css/contenttoggle.css">
         <link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
         <link rel="stylesheet" type="text/css" href="../css/reportViewElement.css">
-    
+
             <script type="text/javascript" src="../js/sessionCheck.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   </head>
@@ -48,7 +48,7 @@
         }
         $project = $result->fetch_array(MYSQLI_ASSOC);
     ?>
- 
+
      <body class="w3-container" style="height: 100%; background-color: rgb(61, 61, 61); color: white">
        <!--頁面上半部-->
        <br/>
@@ -80,7 +80,7 @@
         <button class="accordion__trigger js-contentToggle__trigger greyBackground white30" type="button">Requirements</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqListTable.php';?>
-            <div class="printBlock">     
+            <div class="printBlock">
                 <a href="printReport.php?print=1&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
         </div>
@@ -89,34 +89,34 @@
         <button class="accordion__trigger js-contentToggle__trigger blackBackground white30" type="button">Requirement Relations</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqRelationTable.php';?>
-            <div class="printBlock">       
+            <div class="printBlock">
                 <a href="printReport.php?print=2&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger greyBackground white30" type="button">TestCase Requirement Relation</button>
+        <button class="accordion__trigger js-contentToggle__trigger greyBackground white30" type="button">Test Case Requirement Relation</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqTestcaseTable.php';?>
-            <div class="printBlock">        
+            <div class="printBlock">
                 <a href="printReport.php?print=3&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger blackBackground white30" type="button">Requirements with No TestCase</button>
+        <button class="accordion__trigger js-contentToggle__trigger blackBackground white30" type="button">Requirements without Test Case</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'reqNoTestcaseTable.php';?>
-            <div class="printBlock">       
+            <div class="printBlock">
                 <a href="printReport.php?print=4&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
           </div>
       </li>
       <li class="accordion__item js-contentToggle">
-        <button class="accordion__trigger js-contentToggle__trigger greyBackground white30" type="button">TestCases in special condition</button>
+        <button class="accordion__trigger js-contentToggle__trigger greyBackground white30" type="button">Test Cases in special condition</button>
         <div class="accordion__content is-hidden js-contentToggle__content">
         <?php require_once 'testcaseNoReqTable.php';?>
-            <div class="printBlock">       
+            <div class="printBlock">
                 <a href="printReport.php?print=5&pid=<?=$pid?> " target="_blank"><img src="../imgs/print.png"  class="print"></a>
             </div>
          </div>

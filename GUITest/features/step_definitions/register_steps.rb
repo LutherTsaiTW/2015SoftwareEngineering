@@ -12,6 +12,12 @@ def generate_account
 end
 
 Given /^I am in register page$/ do
+	@b.a(:href => "register.html").click()
+	begin
+		Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/register.html'}
+	rescue
+		@b.url.should == 'http://luthertsai.com/2015softwareengineering/register.html'
+	end
 	@b.text_field(:name => 'AccountID').exists?.should == true
 	@b.text_field(:name => 'Password').exists?.should == true
 	@b.text_field(:name => 'PasswordConfirm').exists?.should == true

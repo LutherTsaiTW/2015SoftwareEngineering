@@ -77,13 +77,13 @@ Then /^I can see my project on the project list$/ do
 		@b.table(:class => 'listTable').exists?.should == true
 	end
 	@size = @b.table(:class => 'listTable').rows.length
-	target = @b.table(:class => 'listTable')[size - 2]
+	target = @b.table(:class => 'listTable')[@size - 2]
 	target[0].a.text.should == @title
 	target[1].text.should == 'Test Team'
 	target[2].text.should == 'Dont Delete'
 	target[3].text.should == '2015/01/01'
 	target[4].text.should == '2015/01/02'
 	target[5].text.should == 'Open'
-	target[6].a.text.should == 'edit'
-	target[7].a.text.should == 'delete'
+	target[6].a.text.should == 'Edit'
+	target[7].a.text.should == 'Delete'
 end
