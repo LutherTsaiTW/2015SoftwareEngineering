@@ -67,10 +67,10 @@
 	}
 
 	if($size != 0 && !$error){
-		echo "<table class='reqNoTestcaseTable' border=1px><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:00px'>Status</th><th style='width:125px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
+		echo "<table class='reqNoTestcaseTable' border=1px><tr><th style='width:100px'>Number</th><th style='width:300px'>Name</th><th style='width:100px'>Status</th><th style='width:150px'>Type</th><th style='width:100px'>Version</th><th style='width:125px'>Priority</th></tr>";
 		foreach ($outputTable as $key) {
 		//for ($i = 0; $i < $size;$i++){outputTable[$i]
-			echo "<tr><td>" . $key['rnumber'] . "</td><td>" . $key['rname'] . "</td>";
+			echo "<tr><td>R" . $key['rnumber'] . "</td><td>" . $key['rname'] . "</td>";
 
 			switch ($key['rstatus']) {
 				case 1:
