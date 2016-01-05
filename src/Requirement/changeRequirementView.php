@@ -24,19 +24,16 @@
             //document.getElementById("mainForm").submit();
             //doExit();
 		// [BC] 取得form的資料
-		var form = document.getElementById("mainForm").value;
 			var form = {
-			'pid'				: $('input[id=pid]').val(),
-			'uid'				: $('input[id=uid]').val(),
-			'requirementName'	: $('input[id=requirementName]').val(),
-			'typeName'			: $('SELECT[id=typeName]').val(),
-			'priority'			: $('SELECT[id=priority]').val(),
-			'requirementDes'	: $('textarea[id=requirementDes]').val()
-		};
+			'old_rid'					: $('input[id=old_rid]').val(),
+			'version_type'				: $('input[name=version_type]:checked').val(),
+			'des'						: $('textarea[id=des]').val()
+			};
+			alert(form['version_type']);
 		// [BC] 做POST
 		var posting = $.post("changeRequirement.php", form);
 		// [BC] 完成POST之後，檢查response的內容
-		$("mainForm").done(
+		posting.done(
 			function(response){
 				try {
 		            var r = $.parseJSON(response);
@@ -47,7 +44,7 @@
 		        if(r.SUCCESS == 1){
 		        	doExit();
 		        } else {
-		        	alert('adding requirement failed\nthe error message = ' + r.MESSAGE);
+		        	alert('change requirement failed\nthe error message = ' + r.MESSAGE);
 		        }
 			}
 		);
@@ -90,7 +87,7 @@
 			<div class="leftBox">
                 <iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
 				<form id="mainForm" action="changeRequirement.php" method="POST" target="_iframe">
-					<input hidden="hidden" name="old_rid" value="<?php echo $rid?>">
+					<input id="old_rid"  hidden="hidden" name="old_rid" value="<?php echo $rid?>">
 					<table>
 						<tr>
 							<td class="align-left bold-20">Name: </td>
@@ -132,13 +129,13 @@
 						<tr>
 							<td class="align-left bold-20">Change: </td>
 							<td class="align-left font-20" >
-								<input class="radioBtn" type="radio"  name="version_type" value="1" checked> Significant</input>
+								<input id="version_type" class="radioBtn" type="radio"  name="version_type" value="1" checked> Significant</input>
 							</td>
 						</tr>
 						<tr>
 							<td></td>
 							<td class="align-left font-20">
-								<input class="radioBtn" type="radio"  name="version_type" value="0" > Minor</input>
+								<input id="version_type" class="radioBtn" type="radio"  name="version_type" value="0" > Minor</input>
 							</td>
 						</tr>
 					</table>
