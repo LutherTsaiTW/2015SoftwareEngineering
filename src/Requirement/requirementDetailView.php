@@ -158,12 +158,12 @@
 		border-radius: 15px;
 
 	}
-	
+
 	.detailBoxFont
 	{
 		font-size: 20px;
 	}
-	
+
 	.listTable {
 		text-decoration: none;
 		table-layout: fixed;
@@ -173,11 +173,11 @@
 		border-spacing: 0 10px;
 		margin-top: -10px;
 	}
-	
+
 	.listTable .items {
 		font-size: 20px;
 	}
-	
+
 	.listTable #header,.listTable #link
 	{
 		font-size: 22px;
@@ -189,11 +189,11 @@
 		background-color: rgb(40, 40, 40);
 		valign: center;
 	}
-	
+
 	.listTable .nonfunctional td {
 		background-color: rgb(127, 106, 0);
 	}
-	
+
 	.listTable .functional td {
 		background-color: rgb(82, 127, 63);
 	}
@@ -209,7 +209,7 @@
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
 	}
-	
+
 	.html5tooltip-box
 	{
 		color: black;
@@ -233,12 +233,12 @@
 			}
 			//Show Chinese Chracters Correctly
 			$sqli->query("SET NAMES 'UTF8'");
-			
+
 			//Start session
 			session_start();
 			$session = $_SESSION['sessionid'];
 			session_write_close();
-			
+
 			//Get User Info
 			$result = $sqli->query("SELECT uid, name, previlege FROM user_info WHERE user_session='" . $session . "'") or die($sqli->error);
 			if (!($userinfo = $result->fetch_array(MYSQLI_ASSOC)))
@@ -247,7 +247,7 @@
 				echo(json_encode($feedback));
 				exit;
 			}
-			
+
 			//Get REQ Info
 			$result = $sqli->query("SELECT * FROM req WHERE rid = '" . $rid . "'") or die($sqli->error);
 			if(!($req_info = $result->fetch_array(MYSQLI_ASSOC)))
@@ -498,12 +498,12 @@
 							function DoAddMemo() {
 								var req_id = "<?php echo $rid ?>";
 								var uid = "<?php echo $userinfo['uid']; ?>";
-								var currentdate = new Date(); 
+								var currentdate = new Date();
 								var datetime = currentdate.getFullYear() + "-"
-                								+ currentdate.getMonth()  + "-" 
-                								+ currentdate.getDate() + " "  
-               								 	+ currentdate.getHours() + ":"  
-                								+ currentdate.getMinutes() + ":" 
+                								+ currentdate.getMonth()  + "-"
+                								+ currentdate.getDate() + " "
+               								 	+ currentdate.getHours() + ":"
+                								+ currentdate.getMinutes() + ":"
                 								+ currentdate.getSeconds();
 								console.log(uid);
 								console.log(datetime);
@@ -536,22 +536,22 @@
 								<?php
 									foreach ($memoArray as $value) {
 										echo "<tr>";
-										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;\" class=\"w3-container fastAccount\">";
-										echo "<font style=\"float:left;font-size:20px;\"><b>" . $value['name'] . "</b></font>";
-										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;\"><b>at " . $value['datetime'] . "</b></font>";	
-										echo "<textarea style=\"width:520px;border:0px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);\" readonly>" . $value['content'] . "</textarea>";
+										echo "<div style=\"width:560px;margin-top:5px;margin-left:5px;margin-right:15px;padding-left: 0px; padding-right: 0px;\" class=\"w3-container fastAccount\">";
+										echo "<font style=\"float:left;font-size:20px;margin-left: 20px;\"><b>" . $value['name'] . "</b></font>";
+										echo "<font style=\"float:right;font-size:16px;color:rgb(64, 64, 64);margin-top:5px;margin-right: 20px;\"><b>at " . $value['datetime'] . "</b></font>";
+										echo "<textarea style=\"width:520px;border:0px;resize:none;color:white;border-radius:10px;font-size:20px;background-color:rgb(64, 64, 64);margin-left: 20px;margin-bottom: 10px;\" readonly>" . $value['content'] . "</textarea>";
 										echo "</div>";
 										echo "</tr>";
 										echo "<br><br>";
 									}
 								?>
 								<tr>
-									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;" class="w3-container fastAccount">
+									<div style="width:560px;height:205px;margin-top:5px;margin-left:5px;margin-right:15px;padding-left: 0px; padding-right: 0px;" class="w3-container fastAccount">
 									<form action="javascript:DoAddMemo();">
 										<br>
-											<textarea style="width:520px;height:140px;border:0px;border-radius:10px;resize:none;color:black;font-size:20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
+											<textarea style="width:520px;height:140px;border:0px;border-radius:10px;resize:none;color:black;font-size:20px;margin-left: 20px;" id="req_memo" name="req_memo" placeholder="Leave your message here..." required></textarea>
 										<br>
-											<input style="float:right;margin-right:10px;height:30px;width:70px" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
+											<input style="float:right;margin-right:10px;height:30px;width:70px;margin-right: 20px;margin-top: 5px;" id="submitBtn" type="submit" name="submit" value="Save" class="w3-teal">
 										<br>
 									</form>
 									</div>
@@ -684,7 +684,7 @@
 									}
 									echo "</font>";
 
-									if ($reviewRow['reviewerID'] == $userinfo['uid']) 
+									if ($reviewRow['reviewerID'] == $userinfo['uid'])
 									{
 										if ($reviewRow['decision'] == 1 || $reviewRow['decision'] == 2) {
 											if ($reviewRow['decision'] == 1)
@@ -721,7 +721,7 @@
 											echo "<div style=\"float:right;width:40px;height:30px;background-color:rgb(38,127,0);margin-top:5px;margin-right:5px;text-align:center;\" class=\"w3-container fastAccount\">";
 											echo "<a href=\"javascript:DoDecision(1," . $reviewRow['reqreviewID'] . ");\">V</a>";
 											echo "</div>";
-											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:14px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
+											echo "<textarea style=\"margin-top:5px;width:270px;height:50px;resize:none;color:black;font-size:14px;margin-bottom: 10px;\" id=\"review_comment\" name=\"review_comment\" required></textarea>";
 										}
 									}
 									else
