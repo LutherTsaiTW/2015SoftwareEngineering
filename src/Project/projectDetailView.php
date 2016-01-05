@@ -20,8 +20,8 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    margin: =0;
-    padding: =0;
+    margin: 0;
+    padding: 0;
     z-index: 998;
     visibility: hidden;
 }
@@ -115,11 +115,9 @@ a:active {
 
 .addMemberWindow {
     position: fixed;
-    top: 30%;
-    left: 40%;
     margin: 0px auto;
     height: 300px;
-    width: 400px;
+    width: 700px;
     background-color: rgb(80, 80, 80);
     z-index: 999;
     visibility: hidden;
@@ -152,7 +150,7 @@ a:active {
     margin-top: 10px;
     margin-left: 10px;
     height: 250px;
-    width: 150px;
+    width: 300px;
 }
 
 .successWindow {
@@ -243,7 +241,7 @@ a:active {
         exit();
     }
     $project = $result->fetch_array(MYSQLI_ASSOC);
-    
+
     // [BC] 取得參與專案人員
     $selectMember = "SELECT * FROM project_team WHERE project_id=" . $pid;
     $result = $sqli->query($selectMember);
@@ -256,7 +254,7 @@ a:active {
 
     $member = array();
     $memberCount = 0;
-    while ($data = $result->fetch_assoc()) 
+    while ($data = $result->fetch_assoc())
     {
         $memberCount++;
         array_push($member, getUser($data['user_id'], $sqli));
@@ -268,7 +266,7 @@ a:active {
     // [BC] 把Owner從ID轉成STRING
 
     $projectdetail['p_owner'] = GetUser($projectdetail['p_owner'], $sqli);
-    
+
     // [BC] Get User Info 中的uid和name
     $selectUser = "SELECT name, uid, company FROM user_info WHERE user_session='" . $session . "'";
     $result = $sqli->query($selectUser);
@@ -302,7 +300,7 @@ a:active {
 <body class="w3-container" style="height: 100%;background-color:rgb(61, 61, 61)">
     <div id="block"></div>
     <!--AddMemberWindow-->
-    <div>
+    <div style="margin: auto;width: 700px;">
         <div id="addMemberWindow" class="addMemberWindow">
             <form id="addMemberForm"   action="addMember.php" method="POST" target="_iframe">
                 <input hidden="hidden" name="pid" value="<?php echo $pid ?>">
@@ -317,7 +315,7 @@ a:active {
                         <button type="reset" onclick="addMember()" style="float:left;width:40px;height:20px; margin-top: 5px;text-align: center;font-size:10px;background-color: #282828 !important;color:white"><b>></b></button>
                         <font style="margin-left:-10px;font-size:16px;color:white">Remove</font>
                         <button type="reset" onclick="removeMember()" style="float:left;width:40px;height:20px; margin-top: 5px ;text-align: center;font-size:10px;background-color: #282828 !important;color:white"><b><</b></button>
-                    </div> 
+                    </div>
 
                 <select  multiple="yes" name="addusers[]" id="addZone" class="addZone" style="margin-left:20px;background-color:white">
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
@@ -326,10 +324,10 @@ a:active {
                     <?php for($i=0;$i<$countMemberInProject;$i++) { echo '<option value= "'.$membersInProject[$i][2].'">'.$membersInProject[$i][0].'-'.$membersInProject[$i][1].'</option>'; }?>
                 </select>
 
-                    <input type="button" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white;background-color:#009688!important;width:auto"> 
+                    <input type="button" onclick ="showSuccessWindow()"  value="Ok" class="addButton" style="color:white;background-color:#009688!important;width:auto">
                     <button type="reset" onclick="back();" class="addButton" style="color:white;background-color:#009688!important;width:auto">Cancel</button>
             </form>
-            <iframe id="_iframe" name="_iframe" style="display:none;"></iframe> 
+            <iframe id="_iframe" name="_iframe" style="display:none;"></iframe>
         </div>
     </div>
 
@@ -356,13 +354,13 @@ a:active {
 
         <br/>
         <div class="w3-row " style="vertical-align:center;Height:50px;color:white;text-align:center;background-color:grey;border-radius:5px">
-                     <font id="projectName" style="font-size:36px">                   
-                    <?php 
-                        echo $projectdetail['p_name'] ;   
-                        ?> 
-                        <?php   
-                        
-                    ?> 
+                     <font id="projectName" style="font-size:36px">
+                    <?php
+                        echo $projectdetail['p_name'] ;
+                        ?>
+                        <?php
+
+                    ?>
                     </font>
                     <a href="projectList.html" style="font-size:20px;float:left;margin-left:5px;margin-top:10px">Back</a>
                     <?php
@@ -379,7 +377,7 @@ a:active {
             <div >
                 <div id="description" class="detail" style="height:550px;Width:600px;float: left; margin-right: 10px;">
                 <?php
-                    echo "<font style=\"font-size:24\"><b>Description:</b></font><br><pre>" . $projectdetail['p_des'] . "</pre>";   
+                    echo "<font style=\"font-size:24\"><b>Description:</b></font><br><pre>" . $projectdetail['p_des'] . "</pre>";
                 ?>
                 </div>
                 <div style="float:left;Width:300px;">
@@ -388,19 +386,19 @@ a:active {
                             <tr >
                                 <td>
                                 <?php
-                                    $stime = explode(" ", $projectdetail['p_start_time'])[0]; 
+                                    $stime = explode(" ", $projectdetail['p_start_time'])[0];
 									$stime = str_replace("-", "/", $stime);
                                     echo "<font class=\"detailBoxFont\"> <b>Start Time: </b></font></td><td><font id=\"startTime\"  class=\"detailBoxFont\"style=\"color:white;float:left;margin-right:15px\">",$stime,"</font></td></tr>";
-								
+
 									$etime = explode(" ", $projectdetail['p_end_time'])[0];
 									$etime = str_replace("-", "/", $etime);
                                     echo "<tr><td><font class=\"detailBoxFont\"> <b>End Time: </b></font></td><td><font id=\"endTime\" class=\"detailBoxFont\" style=\"color:white;float:left;margin-right:15px\">",$etime,"</font></td></tr>";
-                                    
-                                    echo "<tr><td></td><td><font id=\"days\" class=\"detailBoxFont\" style=\"float:left;color:grey;font-size:16;margin-right:15px\"></font></td></tr>";  
+
+                                    echo "<tr><td></td><td><font id=\"days\" class=\"detailBoxFont\" style=\"float:left;color:grey;font-size:16;margin-right:15px\"></font></td></tr>";
 
                                     $Ow=mb_strimwidth  ( $projectdetail['p_owner']  ,0 ,15, "...", "UTF-8" );
-                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Owner: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$Ow,"</font></td></tr>";                             
-                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Company: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$projectdetail['p_company'],"</font></td></tr>"; 
+                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Owner: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$Ow,"</font></td></tr>";
+                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Company: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">",$projectdetail['p_company'],"</font></td></tr>";
                                 ?>
                                 <?php
                                     echo "<tr height='60'><td style=\"word-wrap:break-word;width:290px;vertical-align: baseline\" class=\"detailBoxFont\" ><font>";
@@ -409,15 +407,15 @@ a:active {
                                     for( $i = 0;  $i < $projectdetail['memberCount'];$i++)
                                     {
                                         if($i==0) $mem=$mem.$projectdetail[$i];
-                                        else $mem=$mem.", ".$projectdetail[$i];     
+                                        else $mem=$mem.", ".$projectdetail[$i];
 
                                     }
-                                    $longmem = $mem;  
+                                    $longmem = $mem;
                                     $mem = mb_strimwidth  ( $mem  ,0 ,45, "...", "UTF-8" );
                                     echo "<td height=\"60px\" style=\"word-wrap:break-word;width:290px\" class=\"detailBoxFont\" ><div style=\"height:58px;overflow:hidden\" data-tooltip=\"". $longmem ."\" data-tooltip-stickto=\"left\" data-tooltip-color=\"stone\" data-tooltip-animate-function=\"scalein\">".$mem."</div></td></tr>";
                                 ?>
                                 <?php
-                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Status: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">";     
+                                    echo "<tr><td><font class=\"detailBoxFont\"> <b>Status: </b></font></td><td><font  class=\"detailBoxFont\" style=\"float:left;margin-right:15px\">";
                                     if($projectdetail['status']==0) echo "Close </font></td></tr>";
                                     if($projectdetail['status']==1) echo "Open </font></td></tr>";
                                     if($projectdetail['status']==2) echo "Terminated </font></td></tr>";
@@ -436,7 +434,7 @@ a:active {
                                 <div class="listButton">
                                     <a href="../Report/reportView.php?pid=<?= $pid; ?>">Report</a>
                                 </div>
-                                 <?php   
+                                 <?php
                                     if($projectdetail['p_owner']==$user['name'])
                                     {
                                         echo "<div class=\"listButton\"> <a  onclick=\"showAddMemberWindow()\">Edit Members</a> </div>";
@@ -458,7 +456,7 @@ a:active {
         var diffDays = endTime.diff(startTime, 'days') + 1;
         document.getElementById("days").innerHTML ="Expect: "+  diffDays.toString() + " Day(s)";
 
-        
+
 </script>
 
 <script type="text/javascript">

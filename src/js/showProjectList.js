@@ -33,7 +33,7 @@ function insertHTML(response) {
     }catch (err){
         alert("error: " + err.message);
     }
-      
+
     var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Company</b></td><td><b>Owner</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td> </td><td> </td></tr>";
     document.getElementById("userName").innerHTML = "Welcome, " + arr.name + "!";
     if (arr.projects) {
@@ -69,7 +69,7 @@ function insertHTML(response) {
 
     }
     if (arr.previlege == 777 || arr.previlege == 999) {
-		out += "<tr><td><a href=\"addProject.html\"><b>Add Project</b></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+		out += "<tr><td colspan=8><a href=\"addProject.html\" style=\"float:left\"><b>Add Project</b></a></td></tr></table>";
 	}
     document.getElementById("listTable").innerHTML = out;
 }

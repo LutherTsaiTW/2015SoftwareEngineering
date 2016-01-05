@@ -39,6 +39,12 @@
 
         <br/>
         <div class="w3-row greyBox " style="text-align: center">
+        <?php
+            if($user['previlege'] == 999 || $user['previlege'] == 777)
+            {
+                echo"<a style='float:right;margin-right:10px' class='backLink' href='editTestCaseView.php?tid=" . $tid . "'>Edit</a>";
+            }
+        ?>
             <font class="title"><img src="../imgs/alert_36.png" style="visibility:<?php if($notConfirmed == 0) echo 'hidden' ?>"> <?php echo $tname?></font>
             <a href="testCaseListView.php?pid=<?=$tpid?>" class="backLink" style="float:left">Back</a>
         </div>
