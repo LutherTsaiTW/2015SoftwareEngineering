@@ -21,8 +21,30 @@
     <script type="text/javascript">
 
         function doChange () {
-            document.getElementById("mainForm").submit();
-            doExit();
+            //document.getElementById("mainForm").submit();
+            //doExit();
+            function addRequirement(){
+		// [BC] 取得form的資料
+		var form = document.getElementById("mainForm");
+
+		// [BC] 做POST
+		var posting = $.post("addRequirement.php", form);
+		// [BC] 完成POST之後，檢查response的內容
+		posting.done(
+			function(response){
+				try {
+		            var r = $.parseJSON(response);
+		        } catch (err) {
+		            alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + response);
+		            return;
+		        }
+		        if(r.SUCCESS == 1){
+		        	doExit();
+		        } else {
+		        	alert('adding requirement failed\nthe error message = ' + r.MESSAGE);
+		        }
+			}
+		);
         }
 
         function doExit(){
@@ -125,10 +147,10 @@
                     <?php
                         if(count($relReq)>0)
                         foreach ( $relReq['req'] as $va ) {
-                            echo "<a target='_block' class='font-20' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
+                            echo "<a target='_blank' class='font-20' href='requirementDetailView.php?rid=".$va['rid']."'>".$va['rname']."</a><br>";
                         }
                         else
-                            echo "None";
+                            echo "<font class='font-20'>None</font>";
                     ?>
                     </div>
                 </div>
@@ -138,10 +160,10 @@
                     <?php
                         if(count($relTestCase)>0)
                         foreach ( $relTestCase['testcase'] as $va ) {
-                            echo "<a target='_block' class='font-20' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
+                            echo "<a target='_blank' class='font-20' href='../TestCase/testCaseDetailView.php?tid=".$va['tid']."'>".$va['name']."</a><br>";
                         }
                         else
-                            echo "None";
+                            echo "<font class='font-20'>None</font>";
                     ?>
                     </div>   
                 </div>             
