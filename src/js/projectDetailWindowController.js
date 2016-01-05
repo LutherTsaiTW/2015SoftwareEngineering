@@ -7,7 +7,6 @@ function showAddMemberWindow() {
     document.getElementById("addMemberWindow").style.visibility = "visible";
 
     document.getElementById("addMemberWindow").style.top = document.documentElement.clientHeight / 2 - 200;
-    document.getElementById("addMemberWindow").style.left = document.documentElement.clientWidth / 2 - 150;
     document.getElementById("block").style.visibility = "visible";
 
 }
