@@ -29,7 +29,7 @@
 			'version_type'				: $('input[name=version_type]:checked').val(),
 			'des'						: $('textarea[id=des]').val()
 			};
-			alert(form['version_type']);
+			
 		// [BC] 做POST
 		var posting = $.post("changeRequirement.php", form);
 		// [BC] 完成POST之後，檢查response的內容
