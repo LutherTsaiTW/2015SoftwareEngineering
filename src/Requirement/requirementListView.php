@@ -289,7 +289,6 @@
 	.listTable td:first-child {
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
-		width: 264px;
 	}
 
 	.listTable td:last-child {
