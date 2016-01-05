@@ -84,6 +84,7 @@
         }
 
         // [BC] 排序req
+        if(count($relReq['req'])>0)
         sort($relReq['req']);
 
         //取得有關的testcase
