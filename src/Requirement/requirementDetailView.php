@@ -386,31 +386,33 @@
 				<div style="float:left;width:600px">
 					<div style="float:left;width:100%;margin-right:5px">
 						<div id="des_area" class="detail">
-							<table>
-								<font style="float:left;width:200px;margin-right:5px;font-size:24px;">
-									<b>Description:</b>
-								</font>
-								<br>
-								<font id="des_text" style="float:left;width:540px;margin-right:5px;font-size:20px;">
-								<?php
+							<table width='570px' style="table-layout:fixed;word-break:break-all;white-space:pre-line">
+							<tr>
+                				<td width='570px'></td>
+             				</tr>
+							<tr>
+								<td style="font-size:24px"><b>Description:</b></td>
+							</tr>
+							<tr>
+								<td style="font-size:20px;"><?php
 									if($req_info['oldVersion'] != NULL)
 									{
 										if($req_info['rstatus'] != 3 && $req_info['rstatus'] != 4)
 										{
-											echo "<pre>v" . $req_info['version'] . ":<br>" . $req_info['rdes'] . "</pre>";
-											echo "<pre style=\"color:rgb(0,255,0);\">v" . $req_old_info['version'] . ":<br>" . $req_old_info['rdes'] . "</pre>";
+											echo "v" . $req_info['version'] . ":<br>" . $req_info['rdes'] . "<br>";
+											echo "<font style=\"color:rgb(0,255,0);\">v" . $req_old_info['version'] . ":<br>" . $req_old_info['rdes'] . "</font>";
 										}
 										else
 										{
-											echo "<pre>" . $req_info['rdes'] . "</pre>";
+											echo trim($req_info['rdes']);
 										}
 									}
 									else
 									{
-										echo "<pre>" . $req_info['rdes'] . "</pre>";
+										echo trim($req_info['rdes']);
 									}
-								?>
-								</font>
+								?></td>
+								</tr>
 							</table>
 						</div>
 					</div>
