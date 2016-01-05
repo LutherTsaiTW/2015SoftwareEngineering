@@ -23,14 +23,20 @@
         function doChange () {
             //document.getElementById("mainForm").submit();
             //doExit();
-            function addRequirement(){
 		// [BC] 取得form的資料
-		var form = document.getElementById("mainForm");
-
+		var form = document.getElementById("mainForm").value;
+			var form = {
+			'pid'				: $('input[id=pid]').val(),
+			'uid'				: $('input[id=uid]').val(),
+			'requirementName'	: $('input[id=requirementName]').val(),
+			'typeName'			: $('SELECT[id=typeName]').val(),
+			'priority'			: $('SELECT[id=priority]').val(),
+			'requirementDes'	: $('textarea[id=requirementDes]').val()
+		};
 		// [BC] 做POST
-		var posting = $.post("addRequirement.php", form);
+		var posting = $.post("changeRequirement.php", form);
 		// [BC] 完成POST之後，檢查response的內容
-		posting.done(
+		$("mainForm").done(
 			function(response){
 				try {
 		            var r = $.parseJSON(response);
@@ -45,7 +51,8 @@
 		        }
 			}
 		);
-        }
+	}
+        
 
         function doExit(){
             document.getElementById("backLink").click();
