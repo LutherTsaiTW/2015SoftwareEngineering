@@ -43,8 +43,8 @@
 			continue;
 		}
 		$class = str_replace(" ", "",$table);
-		echo '<reqtitle style = "font-size:20pt;">Status: <reqTitle class="'
-		. $class . '">' . $table . '</reqTitle></reqtitle>
+		echo '<div style = "font-size:20pt;">Status: <span class="'
+		. $class . '">' . $table . '</span></div>
 		';
 		echo $table_start;
 		echo $heads;
