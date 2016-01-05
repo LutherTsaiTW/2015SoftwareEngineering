@@ -379,7 +379,7 @@ a:active {
             <div >
                 <div id="description" class="detail" style="height:550px;Width:600px;float: left; margin-right: 10px;">
                 <?php
-                    echo "<font style=\"font-size:24\"><b>Description:</b></font><br>",$projectdetail['p_des'];   
+                    echo "<font style=\"font-size:24\"><b>Description:</b></font><br><pre>" . $projectdetail['p_des'] . "</pre>";   
                 ?>
                 </div>
                 <div style="float:left;Width:300px;">
