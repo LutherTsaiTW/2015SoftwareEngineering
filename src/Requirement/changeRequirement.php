@@ -90,7 +90,7 @@
 		exit(json_encode($response));
 	}
 
-	$response = array('success' => 1);
+	$response = array('SUCCESS' => 1);
 	echo json_encode($response);
 	
 ?>

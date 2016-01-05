@@ -20,19 +20,19 @@
 			}
 			if($print == 0 || $print == 3)
 			{
-				echo('<div style="font-size:30px"><b>TestCase Requirement Relation</b></div>');
+				echo('<div style="font-size:30px"><b>Test Case Requirement Relation</b></div>');
 				require_once('reqTestcaseTable.php');
 				echo('<br><br>');
 			}
 			if($print == 0 || $print == 4)
 			{
-				echo('<div style="font-size:30px"><b>Requirements with No TestCase</b></div>');
+				echo('<div style="font-size:30px"><b>Requirements without Test Case</b></div>');
 				require_once('reqNoTestcaseTable.php');
 				echo('<br><br>');
 			}
 			if($print == 0 || $print == 5)
 			{
-				echo('<div style="font-size:30px"><b>TestCase in special condition</b></div>');
+				echo('<div style="font-size:30px"><b>Test Case in special condition</b></div>');
 				require_once('testcaseNoReqTable.php');
 				echo('<br><br>');
 			}
