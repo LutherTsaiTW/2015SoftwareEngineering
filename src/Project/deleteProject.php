@@ -8,17 +8,21 @@
 	// 反之會顯示錯誤資訊
 	
 	// [BC] include一個可以呼叫函式，取得資料庫連線的的php
-	include_once '../assist/getDataBaseConnection.php';
+	require_once '../assist/DBConfig.php';
 
 	// [BC] 取得參數
 	$pid = $_GET["pid"];
 
 	// [BC] 取得連線
-	$sqli = getDBConnection();
-	if(is_null($sqli)){
-		echo "<br>data base connection is fail in deleteReoject.php<br>";
+	$sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
+	$errno = mysqli_connect_errno();
+	if($errno)
+	{
+		$user = array('success' => 0, 'message' => 'there is an error when getting DB connection in deleteProject.php');
+		echo(json_encode($user));
 		exit();
 	}
+	$sqli->query("SET NAMES 'UTF8'");
 
 	// [BC] 設定專案的狀態改成3，也就是delete的狀態
 	$delete = "UPDATE project SET status=3 WHERE p_id=" . $pid;

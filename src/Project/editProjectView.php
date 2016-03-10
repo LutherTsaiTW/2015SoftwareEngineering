@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../js/moment-with-locales.js"></script>
     <script type="text/javascript" src="../js/jquery.daterangepicker.js"></script>
+    <script type="text/javascript" src="../js/sessionCheck.js"></script>
 </head>
 <style>
 .fastAccount {
@@ -22,6 +23,58 @@
     float: right;
 }
 </style>
+<?php
+	// [BC]
+	// 決定要回去的地方
+	// 抓輸入參數，from
+	// 如果 from 是 0，就回到projectList頁面，反之，回到projectDetail頁面
+	$from = $_GET['from'];
+
+	if($from == '0'){
+		$goto = "projectList.html";
+	}else {
+		$goto = "projectDetailView.php?pid=" . $_GET['pid'];
+	}
+?>
+<script type="text/javascript">
+	// [BC] 這個function是做處理，把edit頁面轉回到正確的頁面
+	function doEdit(){
+		// [BC] 檢查是不是ntut，大小寫不管，只要是這四個字母，就會回傳錯誤
+		var company = $('input[id=company]').val();
+		if(company.toLowerCase().indexOf("ntut") > -1){
+			alert("your company can't be NTUT or ntut");
+			return;
+		}
+		
+		var form = {
+			'pid'			: $('input[id=pid]').val(),
+			'name'			: $('input[id=name]').val(),
+			'company'		: $('input[id=company]').val(),
+			'startTime'		: $('input[id=startTime]').val(),
+			'endTime'		: $('input[id=endTime]').val(),
+			'des'			: $('textarea[id=des]').val(),
+			'status'		: $('select[id=status]').val()
+		}
+		// [BC] 做POST
+		var posting = $.post("editProject.php", form);
+		// [BC] 完成POST之後，檢查response的內容
+		posting.done(
+			function(response){
+				try {
+		            var r = $.parseJSON(response);
+		        } catch (err) {
+		            alert("Parsing JSON Fail!: " + err.message + "\nJSON: " + response);
+		            return;
+		        }
+		        if(r.success == 1){
+		        	document.location.href = "<?=$goto;?>";
+		        } else {
+		        	alert('edit project failed\nthe error message = ' + r.message);
+		        }
+			}
+		);
+	}
+</script>
 
 <body class="w3-container" style="background-color:rgb(61, 61, 61)">
     <?php $pid = $_GET['pid']; ?>
@@ -29,6 +82,9 @@
     <div class="w3-row ">
         <div style="float:left">
             <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
+        </div>
+        <div class="w3-container fastAccount">
+            <a href="../logout.php" style="color:white">Logout</a>
         </div>
         <div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
 			Welcome!
@@ -40,18 +96,18 @@
 					Edit Project
 			</h1>
     </div>
-    <div class="w3-row " style="Height:40%">
-        <div class="w3-col m4">
+    <div class="w3-row " style="Height:40%" align="center">
+        <div class="w3-col m5">
             <p></p>
         </div>
-        <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px">
+        <div class="w3-col m4 " style="background-color:rgb(40, 40, 40);border-radius: 15px;width:382px">
             <div class="w3-col m4">
                 <p></p>
             </div>
-            <form action="editProject.php" method="POST" id="editProject">
+            <form action="javascript:doEdit()" method="POST" id="editProject">
                 <br>
-                <div class="w3-row formBlock" style>
-                    <div class="w3-col m2">
+                <div class="w3-row formBlock">
+                    <div class="w3-col m1">
 						<p></p>
                     </div>
                     <div class="w3-col m4" align="left">
@@ -90,6 +146,7 @@
                         <font color="white">Name:</font>
                         <br>
                         <input id="name" type="text" name="name" required style="border-radius: 3px" placeholder="Enter a name" value="<?=$row["p_name"] ?>"/>
+                        <br>
                         <font color="white">Company:</font>
                         <br>
                         <input id="company" type="text" name="company" required style="border-radius: 3px" placeholder="Enter the company's name" value="<?=$row["p_company"] ?>"/>
@@ -97,11 +154,17 @@
                         <font color="white">Start Time:</font>
                         <br>
                         <div id="date_picker">
-							<input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value="<?=$row["p_start_time"] ?>"/>
+							<?php
+                                $stime = explode(" ", $row["p_start_time"])[0];
+							?>
+							<input id="startTime" type="datetime" name="startTime" required style="border-radius: 3px" value="<?=$stime ?>"/>
 							<br>
 							<font color="white">End Time:</font>
 							<br>
-							<input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value="<?=$row["p_end_time"] ?>"/>
+							<?php
+								$etime = explode(" ", $row["p_end_time"])[0];
+							?>
+							<input id="endTime" type="datetime" name="endTime" required style="border-radius: 3px" value="<?=$etime ?>"/>
                         </div>
                         <script>
 							function getExceptDays() {
@@ -110,15 +173,15 @@
 									var endTimeObj = document.getElementById("endTime");
 									var endTime = endTimeObj.value;
 									var days = document.getElementById("days");
-									startTime = moment(startTime, "YYYY-MM-DD HH:mm:ss");
-									endTime = moment(endTime, "YYYY-MM-DD HH:mm:ss");
+									startTime = moment(startTime, "YYYY-MM-DD");
+									endTime = moment(endTime, "YYYY-MM-DD");
 									var diffDays = endTime.diff(startTime, 'days') + 1;
 									days.innerHTML = "Except: " + diffDays.toString() + " Days";
 							}
 							
 							$("#date_picker").dateRangePicker({
 								separator : 'to',
-								format: 'YYYY-MM-DD HH:mm:ss',
+								format: 'YYYY-MM-DD',
 								getValue: function()
 								{
 									if ($('#startTime').val() && $('#endTime').val() )
@@ -156,11 +219,11 @@
                         <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea rows="4" name="des" id="des" width="322px"><?=$row["p_des"] ?></textarea> 
+                        <textarea rows="4" name="des" id="des" width="322px" style="resize: none;"><?=$row["p_des"] ?></textarea> 
                         <br>
                         <font color="red"><span id="error"></span></font>
                         <br>
-                        <input id="submitBtn" type="button" value="Add" class="w3-teal">
+                        <input id="submitBtn" type="button" value="Edit" class="w3-teal">
                         <script>
 							$('#submitBtn').click(function() {
 								$.post("projectCheck.php",{Company:$("#company").val(), Project_Name:$("#name").val(), ProjectID: $("#pid").val()})
@@ -181,12 +244,12 @@
 									});
 							});
                         </script>
-                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="location.href='projectList.html';">
+                        <input type="button" name="exit" value="Exit" class="w3-teal" onclick="document.location.href = '<?=$goto;?>';">
                         <br>
                         <br>
                 </div>
             </form>
-            <div class="w3-col m4">
+            <div class="w3-col m2">
                 <p></p>
             </div>
         </div>
@@ -198,8 +261,5 @@
         <p></p>
     </div>
 </body>
-<footer style="Height:rest;text-align:center">
-    <span style="text-decoration:underline;color:white">About Us</span>
-</footer>
 
 </html>

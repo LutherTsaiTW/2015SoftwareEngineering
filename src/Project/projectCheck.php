@@ -25,7 +25,7 @@
 	mysqli_query($conn, "SET NAMES 'UTF8'");
 
 	//Select SQL Statement FOR check ACCOUNT
-	$select = "SELECT `p_name` FROM project WHERE `p_id` != '$pID' AND`p_name` = '$pName' AND `p_company` = '$pCompany'";
+	$select = "SELECT `p_name` FROM project WHERE `p_id` != '$pID' AND`p_name` = '$pName' AND `p_company` = '$pCompany' AND `status` != '3' ";
 	$searchResult = mysqli_query($conn, $select);
 	$searchResultCount = mysqli_num_rows($searchResult);
 

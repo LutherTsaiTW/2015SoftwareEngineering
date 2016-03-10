@@ -3,18 +3,22 @@
 <head>
     <title>Project List</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="../css/w3.css">
+    <script type="text/javascript" src="../js/sessionCheck.js"></script>
+    <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 </head>
 <style>
 a {
-	text-decoration: none;
-        cursor: pointer;
+    text-decoration: none;
+    cursor: pointer;
 }
+
 a:hover {
     color: white;
     background-color: transparent;
     text-decoration: underline;
 }
+
 .fastAccount {
     background-color: grey;
     border-radius: 5px;
@@ -68,7 +72,7 @@ a:hover {
     border-radius: 15px;
     font-size: 25;
     font-weight: 400;
-    color:white;
+    color: white;
 }
 
 #block {
@@ -118,8 +122,10 @@ a:hover {
     <!--block-->
     <div id="block"></div>
     <!--deleteWindow-->
-    <div id="deleteWindow" ><br>Are You Sure?
-        <br><br><a id="deleteButton" style="padding-left:10px">Delete</a><a onclick="closeDeleteWindow()" style="padding-left:200px">Cancel</a>
+    <div id="deleteWindow">
+        <br>Are You Sure?
+        <br>
+        <br><a id="deleteButton" style="padding-left:10px">Delete</a><a onclick="closeDeleteWindow()" style="padding-left:200px">Cancel</a>
     </div>
 </body>
 <script type="text/javascript" src="../js/showProjectList.js"></script>

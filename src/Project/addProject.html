@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../js/moment-with-locales.js"></script>
     <script type="text/javascript" src="../js/jquery.daterangepicker.js"></script>
+    <script type="text/javascript" src="../js/sessionCheck.js"></script>
 </head>
 <style>
 a:link {
@@ -62,6 +63,56 @@ a:active {
     width: 400;
 }
 </style>
+<script>
+function getExpectDays() {
+	var startTimeObj = document.getElementById("startTime");
+	var startTime = startTimeObj.value;
+	var endTimeObj = document.getElementById("endTime");
+	var endTime = endTimeObj.value;
+	var days = document.getElementById("days");
+	startTime = moment(startTime, "YYYY-MM-DD");
+	endTime = moment(endTime, "YYYY-MM-DD");
+	var diffDays = endTime.diff(startTime, 'days') + 1;
+	days.innerHTML = "Expect: " + diffDays.toString() + " Days";
+}
+								
+function submitAddProject() {
+	// [BC] 檢查是不是ntut，大小寫不管，只要是這四個字母，就會回傳錯誤
+	var company = $('input[id=project_company]').val();
+	if(company.toLowerCase().indexOf("ntut") > -1){
+		alert("your company can't be NTUT or ntut");
+		return;
+	}
+
+    $.post("projectCheck.php", {
+            Company: $("#project_company").val(),
+            Project_Name: $("#project_name").val(),
+            ProjectID: 0
+        })
+        .done(function(data) {
+            var check_result = $.parseJSON(data);
+            if (check_result.SUCCESS == "1") {
+                $.post("addProject.php", {
+                    Company: $("#project_company").val(),
+                    Name: $("#project_name").val(),
+                    StartTime: $("#startTime").val(),
+                    EndTime: $("#endTime").val(),
+                    Status: $("#status").val(),
+                    Description: $("#project_des").val()
+                }).done(function(parseData) {
+                    var response = $.parseJSON(parseData);
+                    if (response.SUCCESS == 1) {
+                        window.location.href = "projectList.html";
+                    } else {
+                        alert("Add Project Failure");
+                    }
+                });;
+            } else {
+                alert("Please check if the project is exist!!!");
+            }
+        });
+}
+</script>
 
 <body class="w3-container" style="background-color:rgb(60, 60, 60)">
     <br/>
@@ -69,8 +120,8 @@ a:active {
         <div style="float:left">
             <img src="../imgs/ptsIcon.png" alt="ICON" width="100" Height="30" />
         </div>
-        <div class="fastAccountBlock">
-            <p/>
+        <div class="w3-container fastAccount">
+            <a href="../logout.php" style="color:white">Logout</a>
         </div>
         <div class="w3-container" id="userName" style="float:right;color:white;font-size:18">
             Welcome!
@@ -84,10 +135,10 @@ a:active {
     </div>
     <div class="w3-row" align="center">
         <div class="w3-col">
-            <form action="addProject.php" method="POST">
+            <form action="javascript:submitAddProject();">
                 <br>
-                <div class="w3-row formBlock" style>
-                    <div class="w3-col m4">
+                <div class="w3-row formBlock" style="width:382px">
+                    <div class="w3-col m1">
                         <p/>
                     </div>
                     <div class="w3-third" align="left">
@@ -98,60 +149,54 @@ a:active {
                         <br>
                         <font color="white">Company:</font>
                         <br>
-                        <input id="project_company" type="text" name="Company" autofocus required style="border-radius: 3px" placeholder="Enter the company" />
-                        <br>
-                        <font color="white">Start Time:</font>
+                        <input id="project_company" type="text" name="Company" autofocus required pattern="^(?:(?!\NTUT).)*$\r?\n?" style="border-radius: 3px" placeholder="Enter the company" />
                         <br>
                         <div id="date_picker">
+							<font color="white">Start Time:</font>
+                            <br>
                             <input id="startTime" type="datetime" name="StartTime" required style="border-radius: 3px" value="" />
                             <br>
                             <font color="white">End Time:</font>
-                            <br>
                             <input id="endTime" type="datetime" name="EndTime" required style="border-radius: 3px" value="" />
+							<script>
+							$("#date_picker").dateRangePicker({
+								separator: 'to',
+								format: 'YYYY-MM-DD',
+								getValue: function() {
+									if ($('#startTime').val() && $('#endTime').val())
+										return $('#startTime').val() + ' to ' + $('#endTime').val();
+									else
+										return '';
+								},
+								setValue: function(s, s1, s2) {
+									$('#startTime').val(s1);
+									$('#endTime').val(s2);
+									var startTimeObj = document.getElementById("startTime");
+									var startTime = startTimeObj.value;
+									var endTimeObj = document.getElementById("endTime");
+									var endTime = endTimeObj.value;
+									var days = document.getElementById("days");
+									startTime = moment(startTime, "YYYY-MM-DD");
+									endTime = moment(endTime, "YYYY-MM-DD");
+									var diffDays = endTime.diff(startTime, 'days') + 1;
+									days.innerHTML = "Expect: " + diffDays.toString() + " Days";
+								}
+							});
+							</script>
+							<font color="gray"><span id="days">Expect:</span></font>
+							<script>
+							$(document).ready(function() {								
+								getExpectDays();
+								var startTimeObj = document.getElementById("startTime");
+								var endTimeObj = document.getElementById("endTime");
+								startTimeObj.onchange = getExpectDays;
+								endTimeObj.onchange = getExpectDays;
+							});
+							</script>
                         </div>
-                        <script>
-                        function getExceptDays() {
-                            var startTimeObj = document.getElementById("startTime");
-                            var startTime = startTimeObj.value;
-                            var endTimeObj = document.getElementById("endTime");
-                            var endTime = endTimeObj.value;
-                            var days = document.getElementById("days");
-                            startTime = moment(startTime, "YYYY-MM-DD HH:mm:ss");
-                            endTime = moment(endTime, "YYYY-MM-DD HH:mm:ss");
-                            var diffDays = endTime.diff(startTime, 'days') + 1;
-                            days.innerHTML = "Except: " + diffDays.toString() + " Days";
-                        }
-
-                        $("#date_picker").dateRangePicker({
-                            separator: 'to',
-                            format: 'YYYY-MM-DD HH:mm:ss',
-                            getValue: function() {
-                                if ($('#startTime').val() && $('#endTime').val())
-                                    return $('#startTime').val() + ' to ' + $('#endTime').val();
-                                else
-                                    return '';
-                            },
-                            setValue: function(s, s1, s2) {
-                                $('#startTime').val(s1);
-                                $('#endTime').val(s2);
-                                getExceptDays();
-                            }
-                        });
-                        </script>
-                        <font color="gray"><span id="days">Expect:</span></font>
-                        <script>
-                        $(document).ready(function() {
-                            getExceptDays();
-                            var startTimeObj = document.getElementById("startTime");
-                            var endTimeObj = document.getElementById("endTime");
-                            startTimeObj.onchange = getExceptDays;
-                            endTimeObj.onchange = getExceptDays;
-                        });
-                        </script>
-                        <br>
                         <font color="white">Status:</font>
                         <br>
-                        <select name="Status">
+                        <select name="Status" id="status">
                             <option value="0">Close</option>
                             <option value="1">Open</option>
                             <option value="2">Terminated</option>
@@ -159,7 +204,8 @@ a:active {
                         <br>
                         <font color="white">Description:</font>
                         <br>
-                        <textarea id="project_des" name="Description" cols="40" rows="5" required></textarea>
+                        <textarea id="project_des" name="Description" cols="40" rows="5" required style="resize:none;width:322px"></textarea>
+                        <br>
                         <br>
                         <input id="submitBtn" type="submit" name="submit" value="Add" class="w3-teal">
                         <input type="button" name="exit" value="Cancel" class="w3-teal" onclick="location.href='projectList.html';">

@@ -1,0 +1,114 @@
+.accordion__item {
+  width: 900px;
+
+}
+
+.accordion__item:first-child {
+  border: none;
+}
+
+.accordion__trigger{
+
+  font-size: 22px;
+  border-radius: 10px;
+  display: block;
+  width: 900px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+}
+.greyBackground{
+    background-color: rgb(128,128,128);
+}
+.blackBackground {
+    background-color: rgb(100,100,100);
+}
+
+.accordion__item.is-open .accordion__trigger {
+  color: #fff;
+}
+
+.accordion__content {
+  min-height: 1px;
+  width: 900px;
+    margin: 0px auto;
+  padding-top: 20px;
+  border-radius: 10px;
+  background-color: black;
+}
+
+.accordion__content p {
+
+  margin: 0;
+  padding: 20px;
+}
+.main
+{
+    width: 900px;
+    margin: 0px auto;
+}
+ul
+{
+    padding: 0px;
+}
+.printBtn
+{
+    height: 32px;
+    width: 32px;
+    position: fixed;
+}
+.printAll
+{
+  margin-right: 15px;
+  margin-top:5px;
+    float: right;
+    height: 42px;
+    width: 42px;
+}
+.print
+{
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    height: 32px;
+    width: 32px;
+}
+.printBlock
+{
+   height: 50px;
+   width: 100%;
+}
+.Open
+{
+    font-size: 20pt;
+}
+.InReview
+{
+    color:yellow;
+    font-size: 20pt;
+}
+.Approved
+{
+    color: green; 
+    font-size: 20pt;
+}
+.Disapproved
+{
+    color: rgb(255,32,32);
+    font-size: 20pt;
+}
+.gap
+{
+    height: 10px;
+}
+table,th,td {
+  font-size: 12pt;
+  border-color: white;
+  border-width: 5px;
+}
+
+.white30{
+  font-size: 30px;
+  color: white;
+}
+.reqRelation

@@ -28,8 +28,13 @@ function closeDeleteWindow() {
 }
 
 function insertHTML(response) {
-    var arr = JSON.parse(response);
-    var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Owner</b></td><td><b>Company</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td></td><td></td></tr>";
+    try{
+        var arr = $.parseJSON(response);
+    }catch (err){
+        alert("error: " + err.message);
+    }
+
+    var out = "<table class=\"listTable\"> <tr ><td><b>Name</b></td><td><b>Company</b></td><td><b>Owner</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Status</b></td><td> </td><td> </td></tr>";
     document.getElementById("userName").innerHTML = "Welcome, " + arr.name + "!";
     if (arr.projects) {
         var project = arr.projects;
@@ -39,12 +44,12 @@ function insertHTML(response) {
         var i;
         for (i = 0; i < project.length; i++) {
             if (project[i].status != 3) {
-                out += "<tr><td><a href=\"projectDetail.php?pid=" + project[i].pid + "\">" +
+                out += "<tr><td><a href=\"projectDetailView.php?pid=" + project[i].pid + "\">" +
                     project[i].name +
                     "</a></td><td>" +
-                    project[i].owner +
-                    "</td><td>" +
                     project[i].company +
+                    "</td><td>" +
+                    project[i].owner +
                     "</td><td>" +
                     project[i].start_time.substr(0, 10) +
                     "</td><td>" +
@@ -54,8 +59,8 @@ function insertHTML(response) {
                 else if (project[i].status == 1) out += "Open";
                 else if (project[i].status == 2) out += "Terminated";
                 out += "</td> ";
-                if (project[i].owner == arr.name) {
-                    out += "<td style=\"text-align:right;\"><a href=\"editProjectView.php?pid=" + project[i].pid + "\">edit</a></td><td ><a onclick=\"showDeleteWindow(" + project[i].pid + ")\">delete</a></td></tr>";
+                if (project[i].owner == arr.name && (arr.previlege == 777 || arr.previlege == 999)) {
+                    out += "<td style=\"text-align:right;\"><a href=\"editProjectView.php?pid=" + project[i].pid + "&from=0\">Edit</a></td><td ><a onclick=\"showDeleteWindow(" + project[i].pid + ")\">Delete</a></td></tr>";
                 } else {
                     out += "<td></td><td></td></tr>";
                 }
@@ -63,6 +68,8 @@ function insertHTML(response) {
         }
 
     }
-    out += "<tr><td><a href=\"addProject.html\"><b>Add Project</b></a></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
+    if (arr.previlege == 777 || arr.previlege == 999) {
+		out += "<tr><td colspan=8><a href=\"addProject.html\" style=\"float:left\"><b>Add Project</b></a></td></tr></table>";
+	}
     document.getElementById("listTable").innerHTML = out;
 }

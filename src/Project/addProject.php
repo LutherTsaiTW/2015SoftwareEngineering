@@ -8,7 +8,6 @@
 	// $Connect -> 目前連接的資料庫
 	function getProject($Name, $Description, $Company, $Connect){
 		$select = "SELECT p_id FROM project WHERE project.p_name = \"" . $Name . "\" AND project.p_des = \"" . $Description . "\" AND project.p_company = \"" . $Company . "\"";
-		echo "select -> " . $select . "<br>";
 		$result = $Connect->query($select);
 		if(!$result)
 		{
@@ -62,7 +61,7 @@
 	$sqli->query("SET NAMES 'UTF8'");
 	
 	// [BC] get user info
-	$query = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
+	$query = "SELECT uid FROM user_info WHERE user_session='" . $session . "'";
 	$result = $sqli->query($query) or die('Query Error when SELECT USER in addProject.php');
 	
 	if ($user = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -98,5 +97,7 @@
 	}
 
 	// [BC] 重新導到專案列表頁面，如果沒有錯誤的話
-	header("Location: projectList.html");
+	//header("Location: projectList.html");
+	$response = array('SUCCESS' => 1);
+	exit(json_encode($response));
 ?>

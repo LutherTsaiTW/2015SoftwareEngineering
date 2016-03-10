@@ -1,0 +1,16 @@
+/* Base styles */
+
+
+ul {
+  padding: 0 40px;
+}
+
+li {
+  list-style-type: none;
+}
+
+
+/* Helpers */
+.is-hidden {
+  display: none;
+}

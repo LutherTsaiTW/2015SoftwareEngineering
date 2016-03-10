@@ -1,0 +1,103 @@
+﻿/* [BC] 一些基礎的元素CSS */
+
+.greyBox {
+    background-color: grey;
+    border-radius: 5px;
+}
+
+.logoutLink,
+.WelcomeMessage {
+    float: right;
+    font-size: 20px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.backLink {
+    font-size: 20px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 10px
+}
+
+.blackBox {
+    background-color: rgb(40, 40, 40);
+    border-radius: 15px;
+    width: 400;
+    float: none;
+}
+
+.formBox {
+    float: left;
+    width: 450;
+    height: 500;
+    padding: 0px 25px 0 25px;
+}
+
+.formElement {
+    width: 100%;
+    float: left;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.textBoxStyle {
+    width: 100%;
+    color: black;
+    float: left;
+    border-radius: 7px;
+    resize: none;
+}
+
+.selectBoxStyle {
+    width: 50%;
+    color: black;
+    float: left;
+    border-radius: 7px;
+}
+
+.formButton {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+/*--[KL] link的表示 */
+    a {
+    color: lightgrey;
+    cursor: pointer;
+    }
+
+    a:link {
+
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: lightgrey;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: white;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: white;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+ 
+/*[KL] link的表示 --*/

@@ -8,19 +8,18 @@
 	// $NotInProject -> 判斷要取的人是在該專案中，或是沒有在專案中的人，這是一個boolean
 	// $array -> 要把資料放進去的陣列，採用reference輸入
 	// $count -> 資料的總量，採用reference輸入
+	// $owner -> 專案的owner ID，不能被加到陣列裡面
 	// 此FUNCTION沒有回傳值，因為$array和$count是pass by reference
-	function getUserWithTheSameCompany($connection, $company, $pid, $NotInProject, &$array, &$count)
+	function getUserWithTheSameCompany($connection, $company, $pid, $NotInProject, &$array, &$count, $owner)
 	{
 		// [BC] 如果要取的人是當前沒有在專案中的人
 		if($NotInProject)
 		{
 			$selectUser = "SELECT u.uid, u.name, u.company FROM user_info as u WHERE u.company=\"" . $company . "\" AND u.uid NOT IN (SELECT uid FROM project_team as t WHERE t.project_id=" . $pid . " AND t.user_id=u.uid)";
-			//echo "SELECT = " . $selectUser . "<br>";
 		}
 		else   // [BC] 要不然要取的人就是已經在專案中了
 		{
 			$selectUser = "SELECT u.uid, u.name, u.company FROM user_info as u WHERE u.company=\"" . $company . "\" AND u.uid IN (SELECT uid FROM project_team as t WHERE t.project_id=" . $pid . " AND t.user_id=u.uid)";
-			//echo "SELECT = " . $selectUser . "<br>";
 		}
 		// [BC] 在MySQL中做測試的指令
 		// [BC] SELECT DISTINCT u.uid, u.name, u.company FROM user_info as u WHERE u.company="PTS" AND u.uid NOT IN (SELECT uid FROM project_team as t WHERE t.project_id=64 AND t.user_id=u.uid)
@@ -34,7 +33,9 @@
 		// [BC] 把取得的資料加到ARRAY中，並另外設定一個變數儲存總共有多少MEMBER被抓到
 		while ($data = $result->fetch_array()) 
 		{
-			//echo "name = " . $data['name'] . " company = " . $data['company'] . " uid = " . $data['uid'] . "<br>";
+			if($data['uid'] == $owner){
+				continue;
+			}
 			array_push($array, array($data['name'], $data['company'], $data['uid']));
 			$count++;
 		}
@@ -47,25 +48,17 @@
 	// 若成功取得成員，會回傳一個陣列，儲存所有可被加入的成員名稱、公司和ID
 	// 反之，SUCCESS為0，並回傳錯誤訊息
 	// 這個API會和projectDetail.php放一起，所以資料庫連線、seeionid這兩項變數不需要取得，就可以直接使用
-	// 另外，因為projectDetail.php會事先取得pid，所以也不需要用POST或是GET拿到pid
+	// 另外，因為projectDetail.php會事先取得pid和owner的user_info，所以也不需要用POST或是GET拿到pid 和 uid
 	
 	// [BC] 作為單獨測試此API時，所需要的必要資訊，請別輕易刪除，為了日後測試時，可以比較方便
 	// session_start();
 	// $session = $_SESSION['sessionid'];
 	// $pid=$_GET['pid'];
+	// $uid = $_GET['uid'];
 	// require_once '../assist/DBConfig.php';
 	// $sqli = @new mysqli($dburl, $dbuser, $dbpass, $db);
 	// $sqli->query("SET NAMES 'UTF8'");
-
-	$selectUser = "SELECT * FROM user_info WHERE user_session='" . $session . "'";
-    $result = $sqli->query($selectUser);
-    if(!$result)
-    {
-        $error = array('success' => 0, 'message' => 'there is an error when SELECT user_info in getMember.php');
-        echo(json_encode($error));
-        exit();
-    }
-    $user = $result->fetch_array(MYSQLI_ASSOC);
+	$ownerID = $user['uid'];
 
 	// [BC] 取得專案的對應公司，也就是pCompany
 	$selectProjectCompany = "SELECT p_company FROM project WHERE p_id=" . $pid;
@@ -88,19 +81,24 @@
 	$countMemberInProject = 0;
 	$membersInProject = array();
 
-	// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
-	getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject);
-	
-	// [BC] 取得和專案相同公司的使用者，且目前不是在專案中的人
-	getUserWithTheSameCompany($sqli, $pCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject);
+	if(strtoupper($pCompany) != strtoupper($oCompany)){		// [BC] 因為公司不一樣，所以要做四次query
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
+		
+		// [BC] 取得和專案相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $pCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
 
 
-	// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
-	getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject);
-	
-	// [BC] 取得和專案相同公司的使用者，且目前在專案中的人
-	getUserWithTheSameCompany($sqli, $pCompany, $pid, FALSE, $membersInProject, $countMemberInProject);
-
-	// echo "Not In Project COUNT = " . $countMemberNotInProject . " ". json_encode($membersNotInProject) . "<br>";
-	// echo "In Project COUNT = " . $countMemberInProject . " ". json_encode($membersInProject) . "<br>";
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+		
+		// [BC] 取得和專案相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $pCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+	} else {												// [BC] 公司一樣，所以做兩次就好了
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前不是在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, TRUE, $membersNotInProject, $countMemberNotInProject, $ownerID);
+		
+		// [BC] 取得與專案擁有者相同公司的使用者，且目前在專案中的人
+		getUserWithTheSameCompany($sqli, $oCompany, $pid, FALSE, $membersInProject, $countMemberInProject, $ownerID);
+	}
 ?>
