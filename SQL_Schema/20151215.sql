@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 4.0.10.7
--- http://www.phpmyadmin.net
+-- https://www.phpmyadmin.net
 --
 -- 主機: localhost
 -- 建立日期: 2015 年 12 月 15 日 04:55

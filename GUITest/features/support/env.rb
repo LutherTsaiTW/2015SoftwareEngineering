@@ -1,6 +1,6 @@
 Before do
 	@b = Watir::Browser.new
-	@b.goto "http://luthertsai.com/2015softwareengineering/login.html"
+	@b.goto "https://luthertsai.com/2015softwareengineering/login.html"
 end
 
 After do

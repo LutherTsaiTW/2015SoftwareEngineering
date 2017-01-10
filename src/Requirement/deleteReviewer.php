@@ -19,8 +19,8 @@ $reviewID = $_GET['rvid'];
 $result = array();
 
 $sql = "DELETE FROM `req_review` WHERE `reqreviewID` = ?";
-$stmt = $database->prepare($sql); //[MKZ] http://blog.roga.tw/2010/06/%E6%B7%BA%E8%AB%87-php-mysql-php-mysqli-pdo-%E7%9A%84%E5%B7%AE%E7%95%B0/
-$stmt->bind_param('i', $reviewID); //[MKZ] http://php.net/manual/en/mysqli-stmt.bind-param.php
+$stmt = $database->prepare($sql); //[MKZ] https://blog.roga.tw/2010/06/%E6%B7%BA%E8%AB%87-php-mysql-php-mysqli-pdo-%E7%9A%84%E5%B7%AE%E7%95%B0/
+$stmt->bind_param('i', $reviewID); //[MKZ] https://php.net/manual/en/mysqli-stmt.bind-param.php
 $stmt->execute();
 
 $result['success'] = 1;

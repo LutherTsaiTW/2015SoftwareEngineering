@@ -6,7 +6,7 @@ password = ''
 
 Then /^I can see the project list title$/ do
 	begin
-		Watir::Wait.until(timeout = 10) {@b.url == "http://luthertsai.com/2015softwareengineering/Project/projectList.html"}
+		Watir::Wait.until(timeout = 10) {@b.url == "https://luthertsai.com/2015softwareengineering/Project/projectList.html"}
 	rescue
 		@b.url.should == ""
 	end

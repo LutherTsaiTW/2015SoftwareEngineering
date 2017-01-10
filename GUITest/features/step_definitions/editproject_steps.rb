@@ -29,7 +29,7 @@ Given /^I have a project$/  do
 end
 
 When /^I login and click the edit button$/ do
-  Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'}
+  Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'}
   Watir::Wait.until(timeout = 10) {@b.table(:class => 'listTable').exists?}
   size = @b.table(:class => 'listTable').rows.length
   target = @b.table(:class => 'listTable')[size - 2]
@@ -70,9 +70,9 @@ end
 
 Then /^I go to the project list Page$/ do
   begin
-    Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'}
+    Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'}
   rescue
-    @b.url.should == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'
+    @b.url.should == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'
   end
 end
 

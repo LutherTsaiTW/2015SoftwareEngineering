@@ -4,7 +4,7 @@
     	<link rel="stylesheet" href="../css/w3.css">
     	<link rel="stylesheet" type="text/css" href="../css/basicPageElement.css">
     	<title>Add Requirement</title>
-    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script type="text/javascript" src="../js/sessionCheck.js"></script>
 	</head>
 	<?php

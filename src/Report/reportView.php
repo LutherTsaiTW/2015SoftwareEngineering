@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="../css/reportViewElement.css">
 
             <script type="text/javascript" src="../js/sessionCheck.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   </head>
 
 
@@ -123,7 +123,7 @@
       </li>
     </ul>
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="../js/jquery.contenttoggle.js"></script>
     <script src="../js/reportView.js"></script>
     </div>

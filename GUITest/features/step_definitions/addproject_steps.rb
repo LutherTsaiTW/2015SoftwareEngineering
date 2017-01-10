@@ -33,7 +33,7 @@ end
 
 And /^I can link to the add project page$/ do
 	@b.a(:href => 'addProject.html').click
-	@b.url.should == 'http://luthertsai.com/2015softwareengineering/Project/addProject.html'
+	@b.url.should == 'https://luthertsai.com/2015softwareengineering/Project/addProject.html'
 	@b.text_field(:name => 'Name').exists?.should == true
 	@b.text_field(:name => 'Company').exists?.should == true
 	@b.input(:name => 'StartTime').exists?.should == true
@@ -70,10 +70,10 @@ end
 
 Then /^I can see my project on the project list$/ do
 	begin
-		Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'}
+		Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'}
 		Watir::Wait.until(timeout = 10) {@b.table(:class => 'listTable').exists?}
 	rescue
-		@b.url.should == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'
+		@b.url.should == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'
 		@b.table(:class => 'listTable').exists?.should == true
 	end
 	@size = @b.table(:class => 'listTable').rows.length

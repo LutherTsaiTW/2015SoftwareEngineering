@@ -14,9 +14,9 @@ end
 Given /^I am in register page$/ do
 	@b.a(:href => "register.html").click()
 	begin
-		Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/register.html'}
+		Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/register.html'}
 	rescue
-		@b.url.should == 'http://luthertsai.com/2015softwareengineering/register.html'
+		@b.url.should == 'https://luthertsai.com/2015softwareengineering/register.html'
 	end
 	@b.text_field(:name => 'AccountID').exists?.should == true
 	@b.text_field(:name => 'Password').exists?.should == true
@@ -52,9 +52,9 @@ end
 
 Then /^Browser must go back to login page$/ do
 	begin
-		Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/login.html'}
+		Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/login.html'}
 	rescue
-		@b.url.should == 'http://luthertsai.com/2015softwareengineering/login.html'
+		@b.url.should == 'https://luthertsai.com/2015softwareengineering/login.html'
 	end
 end
 

@@ -538,7 +538,7 @@
         return regexes[token](config._strict, config._locale);
     }
 
-    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    // Code from https://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
     function unescapeFormat(s) {
         return s.replace('\\', '').replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
             return p1 || p2 || p3 || p4;
@@ -833,7 +833,7 @@
 
     function createDate (y, m, d, h, M, s, ms) {
         //can't just apply() to create a date:
-        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
+        //https://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
         var date = new Date(y, m, d, h, M, s, ms);
 
         //the date constructor doesn't accept years < 1970
@@ -999,7 +999,7 @@
 
     // HELPERS
 
-    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
+    //https://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
     function dayOfYearFromWeeks(year, week, weekday, firstDayOfWeekOfYear, firstDayOfWeek) {
         var week1Jan = 6 + firstDayOfWeek - firstDayOfWeekOfYear, janX = createUTCDate(year, 0, 1 + week1Jan), d = janX.getUTCDay(), dayOfYear;
         if (d < firstDayOfWeek) {
@@ -1672,7 +1672,7 @@
 
     var aspNetRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/;
 
-    // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+    // from https://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
     // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
     var create__isoRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/;
 
@@ -3660,7 +3660,7 @@
     //! moment.js locale configuration
     //! locale : belarusian (be)
     //! author : Dmitry Demidov : https://github.com/demidov91
-    //! author: Praleska: http://praleska.pro/
+    //! author: Praleska: https://praleska.pro/
     //! Author : Menelion Elensúle : https://github.com/Oire
 
     function be__plural(word, num) {
@@ -6283,7 +6283,7 @@
     //! moment.js locale configuration
     //! locale : Bahasa Indonesia (id)
     //! author : Mohammad Satrio Utomo : https://github.com/tyok
-    //! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
+    //! reference: https://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
     var id = _moment__default.defineLocale('id', {
         months : 'Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_November_Desember'.split('_'),
@@ -6584,7 +6584,7 @@
     //! moment.js locale configuration
     //! locale : Boso Jowo (jv)
     //! author : Rony Lantip : https://github.com/lantip
-    //! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
+    //! reference: https://jv.wikipedia.org/wiki/Basa_Jawa
 
     var jv = _moment__default.defineLocale('jv', {
         months : 'Januari_Februari_Maret_April_Mei_Juni_Juli_Agustus_September_Oktober_Nopember_Desember'.split('_'),
@@ -9128,7 +9128,7 @@
         ordinal : function (number) {
             return number + 'வது';
         },
-        // refer http://ta.wikipedia.org/s/1er1
+        // refer https://ta.wikipedia.org/s/1er1
         meridiemParse: /யாமம்|வைகறை|காலை|நண்பகல்|எற்பாடு|மாலை/,
         meridiem : function (hour, minute, isLower) {
             if (hour < 2) {

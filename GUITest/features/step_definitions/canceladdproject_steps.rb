@@ -23,9 +23,9 @@ end
 
 Then /^I go to the project list page$/ do
 	begin
-		Watir::Wait.until(timeout = 10) {@b.url == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'}
+		Watir::Wait.until(timeout = 10) {@b.url == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'}
 	rescue
-		@b.url.should == 'http://luthertsai.com/2015softwareengineering/Project/projectList.html'
+		@b.url.should == 'https://luthertsai.com/2015softwareengineering/Project/projectList.html'
 	end
 end
 
